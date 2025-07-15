@@ -37,26 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load all question files from data directory
     async function loadAllQuestions() {
         try {
-            // First, fetch the list of all files in the data directory
-            const directoryResponse = await fetch('data/');
-            if (!directoryResponse.ok) throw new Error('Failed to access data directory');
+            // Instead of trying to fetch the directory listing, we now use a manifest file
+            const manifestResponse = await fetch('data/manifest.json');
+            if (!manifestResponse.ok) throw new Error('Failed to access data manifest');
             
-            const directoryText = await directoryResponse.text();
+            const manifest = await manifestResponse.json();
+            const fileLinks = manifest.files;
             
-            // Parse the HTML response to find all JSON files
-            // This creates a temporary div element to parse the HTML
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(directoryText, 'text/html');
-            
-            // Extract all links that end with .json
-            const fileLinks = Array.from(doc.querySelectorAll('a'))
-                .map(a => a.getAttribute('href'))
-                .filter(href => href && href.endsWith('.json'));
-                
-            console.log('Found JSON files:', fileLinks);
+            console.log('Found JSON files from manifest:', fileLinks);
             
             if (fileLinks.length === 0) {
-                throw new Error('No JSON files found in the data directory');
+                throw new Error('No JSON files found in the manifest');
             }
             
             // Load and merge all question files
