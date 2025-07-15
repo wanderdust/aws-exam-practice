@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Architect Associate Exam Practice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AWS Architect Associate Exam Practice</h1>
+        </header>
+        
+        <div class="controls">
+            <div class="filter-section">
+                <h3>Filter by Tags</h3>
+                <div id="tags-container"></div>
+                <button id="clear-filters">Clear Filters</button>
+            </div>
+            <div class="question-controls">
+                <button id="next-question">Next Question</button>
+                <span id="question-counter">Question 0 of 0</span>
+            </div>
+        </div>
+        
+        <div class="question-container">
+            <div id="question-text"></div>
+            
+            <div id="multiple-choice-container" class="hidden">
+                <div id="options-container"></div>
+                <button id="submit-answer">Submit</button>
+                <div id="feedback" class="hidden"></div>
+            </div>
+            
+            <div id="open-ended-container" class="hidden">
+                <button id="reveal-answer">Reveal Answer</button>
+                <div id="answer-text" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
