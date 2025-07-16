@@ -67,22 +67,47 @@ header h1 {
 }
 
 /* Tags styling */
+.filter-section {
+    position: relative;
+}
+
 #tags-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 10px;
+    max-height: 120px;
+    overflow-y: auto;
+    padding: 5px;
+    border-radius: 4px;
+    scrollbar-width: thin;
+}
+
+#tags-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#tags-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#tags-container::-webkit-scrollbar-thumb {
+    background: #b3e5fc;
+    border-radius: 4px;
 }
 
 .tag {
     background-color: #e1f5fe;
     border: 1px solid #b3e5fc;
     color: #0288d1;
-    padding: 4px 10px;
-    border-radius: 16px;
-    font-size: 13px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.2s;
+    margin: 2px;
+    white-space: nowrap;
 }
 
 .tag:hover {
