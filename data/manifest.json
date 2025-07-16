@@ -1,6 +1,7 @@
 {
   "files": [
     "ec2-questions.json",
-    "iam-questions.json"
+    "iam-questions.json",
+    "elb-asg-questions.json"
   ]
 }
