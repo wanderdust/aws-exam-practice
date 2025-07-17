@@ -1,0 +1,626 @@
+[
+    {
+        "id": "db-q1",
+        "type": "multiple-choice",
+        "question": "A company runs its primary MySQL workload on Amazon RDS in a single Availability Zone. Management wants higher availability with automatic failover but does not want to serve read traffic from the standby database. Which solution meets the requirement with the LEAST operational effort?",
+        "options": [
+            "Convert the DB instance to a Multi-AZ deployment using the Modify action in the console",
+            "Create an Aurora MySQL cluster with one writer and one reader",
+            "Add two cross-Region read replicas and place Route 53 health checks in front",
+            "Place the database on Amazon EC2 instances in an Auto Scaling group across two Availability Zones"
+        ],
+        "correctIndex": 0,
+        "explanation": "Modifying an RDS instance to enable Multi-AZ creates a standby in a different Availability Zone and provides synchronous replication with automatic failover. Read replicas (Options 2 and 3) are designed for scaling reads, not standby-only failover, and failover between Regions is manual. Managing EC2 databases (Option 4) adds considerable operational overhead.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "High Availability",
+            "MultiAZ"
+        ]
+    },
+    {
+        "id": "db-q2",
+        "type": "multiple-choice",
+        "question": "A solutions architect needs to reduce connection management overhead for thousands of AWS Lambda functions that open short-lived connections to a highly loaded Amazon RDS PostgreSQL database. What is the MOST efficient solution?",
+        "options": [
+            "Place an RDS Proxy in front of the database and have Lambda connect through the proxy",
+            "Scale the RDS instance vertically to the largest possible instance class",
+            "Deploy the database on Amazon Aurora Serverless v2",
+            "Configure Amazon ElastiCache for Redis in front of the database"
+        ],
+        "correctIndex": 0,
+        "explanation": "RDS Proxy manages and pools database connections, dramatically reducing the number of open connections from Lambda functions. Vertical scaling (Option 2) does not solve connection storm issues. Aurora Serverless v2 (Option 3) changes the engine and pricing model but still faces connection storms. Redis caching (Option 4) helps with read latency, not connection pooling.",
+        "tags": [
+            "High-Performing Architectures",
+            "RDS",
+            "RDS Proxy",
+            "Lambda"
+        ]
+    },
+    {
+        "id": "db-q3",
+        "type": "multiple-choice",
+        "question": "An application stores session data in Amazon ElastiCache for Memcached. After several cache node failures, the operations team decides that the workload needs data persistence and automatic failover. Which change will satisfy these requirements?",
+        "options": [
+            "Migrate to ElastiCache for Redis with cluster mode disabled and replication enabled",
+            "Switch Memcached to multi-node sharding in two Availability Zones",
+            "Enable append-only file (AOF) persistence on the existing Memcached cluster",
+            "Move the session store to Amazon S3 with Amazon CloudFront in front"
+        ],
+        "correctIndex": 0,
+        "explanation": "Only ElastiCache for Redis supports replication, persistence (AOF or RDB), and automatic failover. Memcached lacks built-in persistence and replication, so Options 2 and 3 cannot meet the requirements. S3 with CloudFront (Option 4) is not a suitable low-latency session store.",
+        "tags": [
+            "Resilient Architectures",
+            "ElastiCache",
+            "Redis",
+            "High Availability"
+        ]
+    },
+    {
+        "id": "db-q4",
+        "type": "multiple-choice",
+        "question": "A retail company wants to run analytical queries on its Amazon Aurora MySQL production data without affecting transaction latency. Which approach meets the requirement with the LEAST additional cost?",
+        "options": [
+            "Create Aurora read replicas and direct analytical queries to the reader endpoint",
+            "Export snapshots to Amazon S3 and analyze the data with Amazon Athena",
+            "Enable Aurora fast cloning and run analytics on the clone",
+            "Increase the writer instance size during analytic runs"
+        ],
+        "correctIndex": 0,
+        "explanation": "Aurora read replicas share the same storage layer, provide near-real-time replication, and allow offloading reads through the reader endpoint without affecting the writer. Fast cloning (Option 2) incurs additional storage on write and still requires running an extra instance. Snapshot export and Athena (Option 3) introduce data latency and extra processing steps. Scaling up the writer (Option 4) adds cost and does not isolate the workload.",
+        "tags": [
+            "High-Performing Architectures",
+            "Aurora",
+            "Read Replicas",
+            "Analytics"
+        ]
+    },
+    {
+        "id": "db-q5",
+        "type": "multiple-choice",
+        "question": "A SaaS provider uses an Amazon RDS PostgreSQL database in a Multi-AZ deployment. Compliance now requires the ability to recover to any 5-minute point within the last 30 days. Which configuration change is NECESSARY?",
+        "options": [
+            "Extend the automated backup retention period to 30 days",
+            "Enable RDS manual snapshots on a daily schedule",
+            "Create an AWS Backup plan with a 30-day lifecycle policy",
+            "Increase the transaction log backup frequency to 1 minute"
+        ],
+        "correctIndex": 0,
+        "explanation": "RDS automated backups capture daily snapshots and transaction logs, enabling point-in-time recovery (PITR) up to the retention period. Setting retention to 30 days satisfies the compliance need. Manual snapshots (Option 2) provide specific points, not PITR. AWS Backup (Option 3) can manage RDS backups but still relies on RDS retention settings. Changing log frequency (Option 4) is not customer-configurable.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "Backups",
+            "Compliance"
+        ]
+    },
+    {
+        "id": "db-q6",
+        "type": "multiple-choice",
+        "question": "An on-premises Oracle database will be migrated to AWS. The DBA team needs OS-level access for custom scripts but wants to keep managed backups and patches. Which service is the BEST fit?",
+        "options": [
+            "Amazon RDS Custom for Oracle",
+            "Standard Amazon RDS for Oracle",
+            "Amazon EC2 instances running Oracle with AWS Backup configured",
+            "Amazon Aurora PostgreSQL using Babelfish"
+        ],
+        "correctIndex": 0,
+        "explanation": "RDS Custom for Oracle allows shell access to the underlying EC2 instance while still providing managed monitoring, backups, and patch orchestration. Standard RDS (Option 2) blocks OS access. EC2 self-managed (Option 3) loses managed maintenance. Aurora with Babelfish (Option 4) is PostgreSQL-compatible, not Oracle.",
+        "tags": [
+            "Secure Architectures",
+            "RDS",
+            "RDS Custom",
+            "Migration"
+        ]
+    },
+    {
+        "id": "db-q7",
+        "type": "multiple-choice",
+        "question": "A global application uses an Aurora MySQL global database spanning five Regions. The writer Region becomes unavailable. What is the FASTEST way to promote another Region for write operations?",
+        "options": [
+            "Initiate a managed planned failover to the secondary Region in the console",
+            "Modify the cluster parameter group to enable cross-Region writes",
+            "Manually restore the latest snapshot into a new Aurora cluster",
+            "Convert all secondary clusters to read replicas of each other"
+        ],
+        "correctIndex": 0,
+        "explanation": "Aurora global database offers managed planned failover (or unplanned for disaster) that promotes a secondary Region typically in under one minute. Parameter changes (Option 2) do not trigger promotion. Snapshot restore (Option 3) is slow. Cross-replica conversions (Option 4) are not supported.",
+        "tags": [
+            "Resilient Architectures",
+            "Aurora",
+            "Global Database",
+            "Disaster Recovery"
+        ]
+    },
+    {
+        "id": "db-q8",
+        "type": "multiple-choice",
+        "question": "A finance application mandates that all database connections use IAM authentication instead of static credentials. Which combination satisfies this requirement for MySQL engines? (Choose TWO)",
+        "options": [
+            "Amazon RDS MySQL with IAM database authentication enabled",
+            "Amazon Aurora MySQL with IAM database authentication enabled",
+            "Amazon RDS Proxy with Secrets Manager secrets",
+            "Amazon ElastiCache for Redis with TLS",
+            "Amazon DynamoDB with IAM roles"
+        ],
+        "correctIndex": 0,
+        "explanation": "Both RDS MySQL and Aurora MySQL support native IAM database authentication. RDS Proxy with Secrets Manager (Option 3) still uses stored credentials, not temporary IAM tokens. Redis (Option 4) and DynamoDB (Option 5) are different services.",
+        "tags": [
+            "Secure Architectures",
+            "RDS",
+            "Aurora",
+            "IAM"
+        ]
+    },
+    {
+        "id": "db-q9",
+        "type": "multiple-choice",
+        "question": "A developer loads data into an Amazon RDS read replica endpoint and is surprised when the data is not visible to other sessions. What is the PRIMARY reason?",
+        "options": [
+            "Read replicas are read-only and will not accept writes",
+            "Replication lag temporarily hides data",
+            "The replica is in a different time zone so queries return older data",
+            "The replica uses snapshot isolation that delays visibility"
+        ],
+        "correctIndex": 0,
+        "explanation": "Read replicas are strictly read-only. Any attempted writes are either denied or silently discarded depending on the client driver. Replication lag (Option 2) only affects replication from the primary. Time zone (Option 3) and isolation level (Option 4) are irrelevant to write capability.",
+        "tags": [
+            "High-Performing Architectures",
+            "RDS",
+            "Read Replicas"
+        ]
+    },
+    {
+        "id": "db-q10",
+        "type": "multiple-choice",
+        "question": "An application requires Redis encryption at rest and in transit, as well as replication and automatic failover. Which deployment option should the architect choose?",
+        "options": [
+            "ElastiCache for Redis with cluster mode disabled, Multi-AZ, encryption enabled",
+            "ElastiCache for Memcached with encryption in transit",
+            "Redis on EC2 instances with dm-crypt enabled",
+            "ElastiCache for Redis with cluster mode enabled but no replication"
+        ],
+        "correctIndex": 0,
+        "explanation": "ElastiCache for Redis supports both in-flight and at-rest encryption, replication, and automatic failover when Multi-AZ is enabled. Memcached (Option 2) lacks encryption at rest and replication. Self-managed EC2 (Option 3) requires undifferentiated heavy lifting. Cluster mode without replicas (Option 4) lacks failover.",
+        "tags": [
+            "Secure Architectures",
+            "ElastiCache",
+            "Redis",
+            "Encryption"
+        ]
+    },
+    {
+        "id": "db-q11",
+        "type": "multiple-choice",
+        "question": "A team wants to clone a 15 TB Aurora PostgreSQL cluster for test purposes as quickly as possible while minimizing storage costs. Which feature accomplishes this?",
+        "options": [
+            "Aurora fast database cloning",
+            "Exporting a snapshot to Amazon S3 and restoring",
+            "Creating a read replica and promoting it",
+            "Using AWS Database Migration Service with full load only"
+        ],
+        "correctIndex": 0,
+        "explanation": "Fast database cloning uses the underlying distributed storage and copy-on-write, creating a new cluster instantly while incurring storage cost only for changed blocks. Snapshot export (Option 2) and promotion (Option 3) require full data copies. DMS (Option 4) reads and writes the entire dataset.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Aurora",
+            "Cloning",
+            "Testing"
+        ]
+    },
+    {
+        "id": "db-q12",
+        "type": "multiple-choice",
+        "question": "Which Amazon RDS feature allows online conversion of a running single-AZ database to a Multi-AZ deployment with ZERO downtime for write operations?",
+        "options": [
+            "RDS storage-optimized snapshot",
+            "Multi-AZ with primary and standby switch",
+            "Live re-sharding",
+            "Fast recovery area"
+        ],
+        "correctIndex": 1,
+        "explanation": "Enabling Multi-AZ on a running RDS instance initiates snapshot creation and syncs a standby without pausing writes. There is no live re-sharding feature for RDS, and the other options are not RDS terms.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "MultiAZ",
+            "Zero Downtime"
+        ]
+    },
+    {
+        "id": "db-q13",
+        "type": "multiple-choice",
+        "question": "A media company needs cross-Region disaster recovery for its Amazon RDS MariaDB instance with an RPO of under 5 minutes and minimal operational overhead. Which approach should be taken?",
+        "options": [
+            "Create a cross-Region read replica and promote it during a disaster",
+            "Schedule AWS Backup cross-Region copies every hour",
+            "Enable S3 import/export of snapshots to the target Region",
+            "Use Amazon DMS with ongoing replication from source to target"
+        ],
+        "correctIndex": 0,
+        "explanation": "Cross-Region read replicas replicate asynchronously in near real time and can be promoted quickly, achieving an RPO of minutes with little management. AWS Backup (Option 2) and snapshots (Option 3) have longer RPOs. DMS (Option 4) adds complexity and still depends on binlog lag.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "Disaster Recovery",
+            "Read Replicas"
+        ]
+    },
+    {
+        "id": "db-q14",
+        "type": "multiple-choice",
+        "question": "Which statement BEST describes the difference between Aurora Serverless v2 and traditional provisioned Aurora in terms of scaling?",
+        "options": [
+            "Serverless v2 scales compute in fine-grained increments based on load without pausing connections",
+            "Serverless v2 automatically creates additional reader instances for read scaling",
+            "Provisioned Aurora cannot scale storage automatically",
+            "Provisioned Aurora charges only for actual compute usage"
+        ],
+        "correctIndex": 0,
+        "explanation": "Aurora Serverless v2 adds or removes fractionally sized compute capacity on demand without connection interruptions. Provisioned Aurora uses fixed instance sizes. Storage auto-growth exists in both models, and provisioned charges for instance uptime, not actual usage.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Aurora",
+            "Serverless",
+            "Autoscaling"
+        ]
+    },
+    {
+        "id": "db-q15",
+        "type": "multiple-choice",
+        "question": "An application writes large binary files directly into Amazon RDS storage, causing rapid database growth. What is the MOST cost-effective redesign?",
+        "options": [
+            "Store the files in Amazon S3 and reference them with object URLs in the database",
+            "Migrate to Aurora and rely on storage auto-scaling",
+            "Compress the files before storing them in RDS BLOB columns",
+            "Enable RDS storage auto-scaling and monitor thresholds"
+        ],
+        "correctIndex": 0,
+        "explanation": "S3 is purpose-built for object storage and offers lower cost, infinite scalability, and native durability. Storing large binaries in the database is inefficient. Aurora (Option 2) and compression (Option 3) still keep data in the database. Auto-scaling (Option 4) only postpones cost issues.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "RDS",
+            "Storage"
+        ]
+    },
+    {
+        "id": "db-q16",
+        "type": "multiple-choice",
+        "question": "Which ElastiCache pattern minimizes stale data at the cost of higher write latency?",
+        "options": [
+            "Write-through caching",
+            "Lazy loading",
+            "Cache-aside with TTL set high",
+            "Read-through with negative caching"
+        ],
+        "correctIndex": 0,
+        "explanation": "Write-through updates the cache whenever the database is updated, keeping cache entries fresh but adding latency to write operations. Lazy loading (Option 2) may return stale data. High TTL (Option 3) increases staleness risk. Negative caching (Option 4) is unrelated to freshness.",
+        "tags": [
+            "High-Performing Architectures",
+            "ElastiCache",
+            "Caching Patterns"
+        ]
+    },
+    {
+        "id": "db-q17",
+        "type": "multiple-choice",
+        "question": "A database administrator wants to encrypt an existing unencrypted RDS Aurora cluster. What is the SIMPLEST way to achieve this?",
+        "options": [
+            "Take a manual snapshot, copy it with encryption enabled, and restore the copy",
+            "Enable encryption in place with the Modify action",
+            "Add a KMS key to the cluster parameter group",
+            "Enable Transparent Data Encryption (TDE) in the engine"
+        ],
+        "correctIndex": 0,
+        "explanation": "RDS encryption requires restoring from an encrypted snapshot. There is no in-place toggle for existing clusters. Parameter groups (Option 3) and TDE settings (Option 4) do not encrypt storage.",
+        "tags": [
+            "Secure Architectures",
+            "Aurora",
+            "Encryption",
+            "KMS"
+        ]
+    },
+    {
+        "id": "db-q18",
+        "type": "multiple-choice",
+        "question": "Which combination of features provides the SHORTEST recovery time objective (RTO) for an Aurora MySQL writer instance failure? (Choose TWO)",
+        "options": [
+            "Multiple read replicas",
+            "Aurora failover priority tiering",
+            "RDS Proxy connection management",
+            "Cross-Region snapshots",
+            "Backtrack enabled"
+        ],
+        "correctIndex": 0,
+        "explanation": "Failover priority tiering promotes the highest priority replica quickly. RDS Proxy keeps connections warm, reducing application recovery time. Read replicas (Option 1) help but are not a feature pair; only one answer is needed. Cross-Region snapshots (Option 4) and Backtrack (Option 5) do not affect immediate failover.",
+        "tags": [
+            "Resilient Architectures",
+            "Aurora",
+            "Failover",
+            "RDS Proxy"
+        ]
+    },
+    {
+        "id": "db-q19",
+        "type": "multiple-choice",
+        "question": "During a security audit, the team wants to ensure that failed login attempts to Amazon RDS instances are captured for analysis. Which service and feature combination fulfills this requirement MOST effectively?",
+        "options": [
+            "Enable database audit logs and publish them to Amazon CloudWatch Logs",
+            "Turn on AWS Config rules for RDS instances",
+            "Enable VPC Flow Logs at the subnet level",
+            "Capture query metrics in Amazon CloudWatch Contributor Insights"
+        ],
+        "correctIndex": 0,
+        "explanation": "RDS audit or error logs record failed login attempts and can be exported to CloudWatch Logs for centralized monitoring. AWS Config (Option 2) tracks configuration, not logins. VPC Flow Logs (Option 3) capture network metadata, not authentication context. Contributor Insights (Option 4) analyzes query patterns, not failed logins.",
+        "tags": [
+            "Secure Architectures",
+            "RDS",
+            "CloudWatch",
+            "Logging"
+        ]
+    },
+    {
+        "id": "db-q20",
+        "type": "multiple-choice",
+        "question": "A workload requires sub-millisecond latency for frequently accessed leaderboard data and durability is critical. Which AWS database solution meets the requirement with MINIMAL operational overhead?",
+        "options": [
+            "ElastiCache for Redis with AOF persistence and Multi-AZ",
+            "Amazon DynamoDB with DynamoDB Accelerator (DAX)",
+            "Amazon RDS MySQL with provisioned IOPS",
+            "Amazon Neptune with cache snapshots"
+        ],
+        "correctIndex": 0,
+        "explanation": "Redis with AOF persistence and Multi-AZ delivers in-memory performance, durability, and automatic failover. DynamoDB + DAX (Option 2) offers low latency but eventual consistency with DAX and higher cost for leaderboard sorting. RDS MySQL (Option 3) cannot reach sub-millisecond latency. Neptune (Option 4) is a graph database, not optimized for leaderboard queries.",
+        "tags": [
+            "High-Performing Architectures",
+            "ElastiCache",
+            "Redis",
+            "Latency"
+        ]
+    },
+    {
+        "id": "db-q21",
+        "type": "multiple-choice",
+        "question": "Which networking configuration is REQUIRED to allow Lambda functions in one VPC to access an Amazon RDS instance in another VPC within the same Region?",
+        "options": [
+            "Create a VPC peering connection between the VPCs and update route tables",
+            "Place both Lambda functions and RDS in the same subnet",
+            "Enable NAT Gateway on the RDS VPC",
+            "Use AWS Direct Connect private VIF"
+        ],
+        "correctIndex": 0,
+        "explanation": "VPC peering provides private IP connectivity between VPCs in the same Region. Subnet placement (Option 2) is impossible across VPCs. NAT Gateway (Option 3) is for outbound internet access. Direct Connect (Option 4) is for on-premises connectivity.",
+        "tags": [
+            "High-Performing Architectures",
+            "VPC",
+            "RDS",
+            "Networking"
+        ]
+    },
+    {
+        "id": "db-q22",
+        "type": "multiple-choice",
+        "question": "A startup with unpredictable traffic wants to minimize database costs while ensuring capacity during spikes. Which solution is MOST cost-effective?",
+        "options": [
+            "Aurora Serverless v2",
+            "RDS provisioned instances with reserved instances",
+            "Aurora provisioned with read replicas",
+            "RDS on-demand EC2 deployment with Auto Scaling instances"
+        ],
+        "correctIndex": 0,
+        "explanation": "Aurora Serverless v2 scales compute on demand in fine-grained increments and bills per second, ideal for spiky workloads. Reserved instances (Option 2) are cost-effective only for steady usage. Provisioned Aurora (Option 3) incurs constant instance cost. EC2 self-managed (Option 4) adds overhead and slower scaling.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Aurora",
+            "Serverless",
+            "Autoscaling"
+        ]
+    },
+    {
+        "id": "db-q23",
+        "type": "multiple-choice",
+        "question": "A developer needs to run short-lived read-only analytic jobs directly against a recent snapshot of the RDS production database without impacting ongoing backups. What is the BEST way to satisfy this requirement?",
+        "options": [
+            "Create a manual snapshot and restore it to a new RDS instance for analytics",
+            "Pause automated backups temporarily and attach an EC2 instance to the storage",
+            "Enable RDS backtrack and query historical states",
+            "Use AWS Glue crawlers to connect to the RDS database"
+        ],
+        "correctIndex": 0,
+        "explanation": "Restoring a manual snapshot to a new instance isolates analytics from production and does not interfere with automated backups. Pausing backups (Option 2) breaks compliance. Backtrack (Option 3) works only for Aurora. Glue (Option 4) still queries live production.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "Snapshots",
+            "Analytics"
+        ]
+    },
+    {
+        "id": "db-q24",
+        "type": "multiple-choice",
+        "question": "Which Amazon RDS customization option is available ONLY with RDS Custom and not with standard RDS?",
+        "options": [
+            "Operating system access via SSH to install custom drivers",
+            "Automated minor version upgrades",
+            "Automated backups up to 35 days",
+            "Instance monitoring with Enhanced Monitoring"
+        ],
+        "correctIndex": 0,
+        "explanation": "RDS Custom permits SSH access for customized OS changes. Standard RDS blocks OS access. All other features are available in both offerings.",
+        "tags": [
+            "Secure Architectures",
+            "RDS Custom",
+            "Customization",
+            "Operations"
+        ]
+    },
+    {
+        "id": "db-q25",
+        "type": "multiple-choice",
+        "question": "Which Aurora feature allows a single endpoint to load-balance connections across all read replicas?",
+        "options": [
+            "Reader endpoint",
+            "Cluster endpoint",
+            "Writer endpoint",
+            "Instance endpoint"
+        ],
+        "correctIndex": 0,
+        "explanation": "The reader endpoint automatically distributes incoming connections across available replicas for read scaling. Cluster endpoint (Option 2) points to the writer. Writer and instance endpoints (Options 3 and 4) map to specific instances.",
+        "tags": [
+            "High-Performing Architectures",
+            "Aurora",
+            "Read Replicas",
+            "Load Balancing"
+        ]
+    },
+    {
+        "id": "db-q26",
+        "type": "open-ended",
+        "question": "Explain how the Aurora storage layer achieves durability and fault tolerance without requiring traditional RAID configurations.",
+        "answer": "Aurora decouples compute from storage. Every cluster stores six copies of each data block across three Availability Zones, with two copies in each AZ. Writes are considered durable when at least four of the six copies acknowledge the write, and reads require three of six. Peer-to-peer replication and continuous scrubbing detect and repair bad blocks automatically. This distributed, quorum-based model removes the need for RAID on a single node and provides high durability and availability even if an entire AZ or multiple volumes fail.",
+        "tags": [
+            "Resilient Architectures",
+            "Aurora",
+            "Storage",
+            "Durability"
+        ]
+    },
+    {
+        "id": "db-q27",
+        "type": "open-ended",
+        "question": "Describe the differences between RDS Multi-AZ deployments and read replicas, focusing on use cases, replication type, and failover behavior.",
+        "answer": "Multi-AZ deployments provide high availability for writes. A synchronous replica is created in a different Availability Zone. The standby cannot serve traffic, but automatic failover to the standby occurs transparently via the same DNS name if the primary fails. Read replicas are designed for read scaling and disaster recovery. Replication is asynchronous, so replicas are eventually consistent. They can serve read traffic and can be promoted manually to a standalone primary. However, promotion involves a DNS or connection string change and possible data loss equal to the replication lag at promotion time.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "MultiAZ",
+            "Read Replicas"
+        ]
+    },
+    {
+        "id": "db-q28",
+        "type": "open-ended",
+        "question": "What advantages does RDS Proxy provide during a database failover event compared to connecting directly to the database endpoint?",
+        "answer": "RDS Proxy maintains a pool of persistent connections to the database. When a failover occurs, the proxy automatically redirects traffic to the new instance without waiting for clients to refresh DNS. Existing client sessions stay open because they connect to the proxy endpoint, not directly to the database. The proxy also reduces cold-start latency by reusing existing authenticated connections, leading to faster application recovery and fewer connection errors during failover.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS Proxy",
+            "Failover",
+            "Connection Pooling"
+        ]
+    },
+    {
+        "id": "db-q29",
+        "type": "open-ended",
+        "question": "Outline a cost-optimized disaster recovery strategy for an RDS PostgreSQL production database that must meet an RPO of 15 minutes and an RTO of 8 hours.",
+        "answer": "Implement a cross-Region read replica in a smaller, cost-effective instance class. Because replication lag is typically well below 15 minutes, the RPO is satisfied. During normal operations the replica is stopped outside business hours (up to seven days at a time) to reduce cost, then started daily via an automation script. Automated backups are retained in both Regions. If disaster strikes, start the replica (if stopped), promote it to primary, grow instance size as needed, and point applications to the new endpoint. This meets the 8-hour RTO while keeping standby costs low.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "RDS",
+            "Disaster Recovery",
+            "Read Replicas"
+        ]
+    },
+    {
+        "id": "db-q30",
+        "type": "open-ended",
+        "question": "Explain how IAM database authentication improves security posture compared to traditional username and password methods in RDS MySQL.",
+        "answer": "IAM authentication replaces static passwords with short-lived authentication tokens generated through AWS Security Token Service. Users and applications assume an IAM role and request a signed token valid for 15 minutes. Because tokens are ephemeral, there is no long-term secret to rotate or compromise. Access can be centrally managed through IAM policies and revoked immediately. This reduces credential leakage risks, simplifies rotation, and supports fine-grained, audited access control across the AWS account.",
+        "tags": [
+            "Secure Architectures",
+            "RDS",
+            "IAM",
+            "Authentication"
+        ]
+    },
+    {
+        "id": "db-q31",
+        "type": "multiple-choice",
+        "question": "In a standard Amazon RDS Multi-AZ deployment for MySQL, which statement about the database endpoint is CORRECT during a failover event?",
+        "options": [
+            "The primary endpoint DNS name remains the same and automatically points to the new primary",
+            "A new endpoint is created for the standby and applications must update the connection string",
+            "Both primary and standby share the same physical IP address so no DNS change occurs",
+            "The standby instance promotes itself but retains its own unique read-only endpoint"
+        ],
+        "correctIndex": 0,
+        "explanation": "RDS Multi-AZ maintains a single DNS endpoint. During failover, AWS remaps that endpoint to the new primary, so applications continue using the same connection string without changes. Standby instances do not present separate writable endpoints.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "MultiAZ",
+            "Endpoints"
+        ]
+    },
+    {
+        "id": "db-q32",
+        "type": "multiple-choice",
+        "question": "Which Aurora endpoint automatically load-balances read traffic across all available Aurora Replicas in the cluster?",
+        "options": [
+            "Reader endpoint",
+            "Cluster endpoint",
+            "Writer endpoint",
+            "Instance endpoint of a chosen replica"
+        ],
+        "correctIndex": 0,
+        "explanation": "The reader endpoint abstracts the list of Aurora Replicas and spreads connections among them, providing a single host name for scalable reads.",
+        "tags": [
+            "High-Performing Architectures",
+            "Aurora",
+            "Read Replicas",
+            "Endpoints"
+        ]
+    },
+    {
+        "id": "db-q33",
+        "type": "multiple-choice",
+        "question": "An application is using Amazon RDS MySQL with two read replicas. Which endpoint should the developer place in the application configuration to write data?",
+        "options": [
+            "The primary DB instance endpoint",
+            "Any read replica endpoint",
+            "The cluster writer endpoint",
+            "The reader endpoint"
+        ],
+        "correctIndex": 0,
+        "explanation": "In standard RDS (non-Aurora), each DB instance—including the primary—has its own endpoint. Only the primary endpoint accepts writes; replicas are read-only and have separate endpoints. RDS does not provide cluster-level writer or reader endpoints outside Aurora.",
+        "tags": [
+            "High-Performing Architectures",
+            "RDS",
+            "Read Replicas",
+            "Connection Strings"
+        ]
+    },
+    {
+        "id": "db-q34",
+        "type": "multiple-choice",
+        "question": "A solutions architect is designing a blue-green deployment for an Aurora MySQL cluster. Which pair of endpoints allows switching traffic with MINIMAL application change?",
+        "options": [
+            "Update the application to point from the old cluster's reader endpoint to the new cluster's cluster endpoint",
+            "Move the application from the old writer endpoint to the new writer endpoint via DNS CNAME swap",
+            "Change the application from an instance endpoint to the reader endpoint in the same cluster",
+            "Swap the primary RDS instance endpoint with one of its read replica endpoints"
+        ],
+        "correctIndex": 1,
+        "explanation": "Each Aurora cluster exposes one writer endpoint. Blue-green can be achieved by creating a new cluster (green), then swapping the DNS CNAME so the writer endpoint in Route 53 now targets the green cluster, requiring no code change—just an update to DNS.",
+        "tags": [
+            "Resilient Architectures",
+            "Aurora",
+            "Endpoints",
+            "Blue-Green Deployment"
+        ]
+    },
+    {
+        "id": "db-q35",
+        "type": "open-ended",
+        "question": "Compare the endpoint architecture of standard Amazon RDS versus Amazon Aurora. Highlight how connection strings differ for write and read workloads and how this affects failover handling.",
+        "answer": "Standard RDS exposes one endpoint per DB instance. The primary instance endpoint handles reads and writes, while each read replica has its own read-only endpoint. During a Multi-AZ failover, AWS remaps the single primary endpoint to the new primary, so applications keep the same connection string. Aurora introduces additional abstraction: a cluster (writer) endpoint that always targets the current writer, a reader endpoint that load-balances across all replicas, and individual instance endpoints for fine-grained connections. Because the writer and reader endpoints are stable DNS hostnames, applications don’t need to track instance IDs—failover within the cluster is transparent, and scaling reads simply adds replicas behind the same reader endpoint.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "Aurora",
+            "Endpoints",
+            "Connection Strings"
+        ]
+    }
+]
