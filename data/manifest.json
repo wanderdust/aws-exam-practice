@@ -3,6 +3,7 @@
     "ec2-questions.json",
     "iam-questions.json",
     "elb-asg-questions.json",
-    "database-questions.json"
+    "database-questions.json",
+    "route53-questions.json"
   ]
 }
