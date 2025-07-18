@@ -3,6 +3,8 @@
 ## Overview
 Generate a set of practice questions for the AWS Certified Solutions Architect - Associate exam (SAA-C03) following this JSON structure. The questions should closely resemble the style, difficulty, and content of the official exam as described on the [AWS certification page](https://aws.amazon.com/certification/certified-solutions-architect-associate/).
 
+If provided a set of topics, generate a set of questions for that particular topic.
+
 ## Question Types
 Generate a mix of the following question types:
 

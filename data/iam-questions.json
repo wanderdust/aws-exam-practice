@@ -1,651 +1,651 @@
 [
-  {
-    "id": "iam-q01",
-    "type": "multiple-choice",
-    "question": "Which action is an AWS best practice for the root user credentials?",
-    "options": [
-      "Enable MFA and use the root user only for tasks that require it",
-      "Attach the AdministratorAccess policy to the root user",
-      "Delete the root access keys and password entirely",
-      "Share the root credentials securely within the operations team"
-    ],
-    "correctIndex": 0,
-    "explanation": "AWS recommends enabling MFA on the root user and using it only for a short list of account‑level tasks, never daily administration. Removing credentials completely would lock you out of those tasks, and sharing or granting additional permissions to root defeats least privilege.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q02",
-    "type": "multiple-choice",
-    "question": "Within an IAM policy statement, what does the Principal element specify?",
-    "options": [
-      "The account, user, role, or service to which the policy applies",
-      "The AWS service that logs the API call",
-      "The resource Amazon Resource Name (ARN) the action affects",
-      "The default encryption key for the request"
-    ],
-    "correctIndex": 0,
-    "explanation": "Principal identifies who is making the request when the policy is evaluated. It is mandatory in resource‑based policies but not used in identity‑based policies. The other options refer to unrelated policy elements.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q03",
-    "type": "multiple-choice",
-    "question": "Which combination of factors constitutes multi‑factor authentication (MFA) in AWS?",
-    "options": [
-      "Something you know plus something you have",
-      "Two different passwords",
-      "Username and password only",
-      "Password plus security group membership"
-    ],
-    "correctIndex": 0,
-    "explanation": "MFA pairs a knowledge factor (password) with a possession factor (virtual authenticator code, hardware key fob, or U2F token). The other answers do not satisfy the two different factor categories.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q04",
-    "type": "multiple-choice",
-    "question": "An IAM user has an inactive access key that has not been used for 90 days. What should the security team do according to least privilege?",
-    "options": [
-      "Deactivate or delete the unused key",
-      "Rotate the key immediately",
-      "Attach a Deny policy to the key",
-      "Move the user to a different group"
-    ],
-    "correctIndex": 0,
-    "explanation": "Inactive or unused credentials should be deactivated or removed to eliminate unnecessary attack surface. Rotation is helpful only for actively used keys. Policies or group changes leave the unused key enabled.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q05",
-    "type": "multiple-choice",
-    "question": "Which IAM report helps you identify unused services and over‑privileged principals?",
-    "options": [
-      "IAM Access Advisor",
-      "AWS Trusted Advisor",
-      "IAM Credential Report",
-      "AWS Config Compliance Report"
-    ],
-    "correctIndex": 0,
-    "explanation": "Access Advisor shows when each service was last accessed by a user, group, or role, enabling rights‑sizing. Credential Report focuses on password and key hygiene, not service usage.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q06",
-    "type": "multiple-choice",
-    "question": "Which policy type allows you to restrict user permissions across all AWS accounts in an AWS Organizations OU?",
-    "options": [
-      "Service Control Policy",
-      "Inline Policy",
-      "SAML Session Policy",
-      "Resource‑based Policy"
-    ],
-    "correctIndex": 0,
-    "explanation": "Service Control Policies (SCPs) are the only way to centrally control maximum available permissions across multiple accounts in an organization. The other policy types only affect a single account.",
-    "tags": [
-      "Organizations",
-      "Secure Architectures",
-      "Management Services"
-    ]
-  },
-  {
-    "id": "iam-q07",
-    "type": "multiple-choice",
-    "question": "Which scenario requires an IAM role instead of an IAM user?",
-    "options": [
-      "An EC2 instance needs temporary read access to an S3 bucket",
-      "A developer needs to manage DynamoDB tables using the CLI",
-      "A business analyst needs to generate reports from QuickSight",
-      "A team leader needs access to multiple related services"
-    ],
-    "correctIndex": 0,
-    "explanation": "EC2 instances should use IAM roles, not IAM users, to access other AWS services securely without embedding credentials. Human users (like developers, analysts, or team leads) should have IAM users with appropriate permission policies.",
-    "tags": [
-      "EC2",
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q08",
-    "type": "multiple-choice",
-    "question": "Where are credentials for an assumed IAM role cached on an EC2 instance running the AWS SDK?",
-    "options": [
-      "Instance metadata service at http://169.254.169.254",
-      "In the ~/.aws/credentials file",
-      "In environment variables set by EC2 service",
-      "In the attached IAM instance profile"
-    ],
-    "correctIndex": 0,
-    "explanation": "When an EC2 instance assumes a role through its instance profile, the credentials are made available in the instance metadata service (IMDS), which AWS SDKs automatically check. This allows credentials to be rotated automatically without application changes.",
-    "tags": [
-      "EC2",
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q09",
-    "type": "multiple-choice",
-    "question": "Which IAM policy condition element would you use to restrict API calls to only your company's public IP range?",
-    "options": [
-      "aws:SourceIp",
-      "aws:RequestedRegion",
-      "aws:VpcSourceIp",
-      "aws:UserAgent"
-    ],
-    "correctIndex": 0,
-    "explanation": "The aws:SourceIp condition key lets you limit API calls to specific IP ranges, making it ideal for restricting access to your company's known IP addresses. The other options don't achieve this goal — aws:RequestedRegion filters by region, aws:VpcSourceIp only works for VPC traffic, and aws:UserAgent filters by client software.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q10",
-    "type": "multiple-choice",
-    "question": "Which statement about AWS managed policies is correct?",
-    "options": [
-      "They are maintained by AWS and updated automatically",
-      "They can be directly edited by customers",
-      "They are always attached to roles, not users",
-      "They must be created for each AWS account separately"
-    ],
-    "correctIndex": 0,
-    "explanation": "AWS managed policies are pre‑defined by AWS and updated automatically when AWS adds new services or API actions, ensuring your permissions remain current. They can't be edited directly by customers — that's a feature of customer managed policies. They can be attached to users, groups, and roles, and they are available to all AWS accounts.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q11",
-    "type": "multiple-choice",
-    "question": "A central security team needs to analyze password expiration and key rotation status for every IAM user. Which built‑in feature provides that data instantly?",
-    "options": [
-      "IAM Credential Report",
-      "CloudTrail",
-      "IAM Access Analyzer",
-      "AWS Config"
-    ],
-    "correctIndex": 0,
-    "explanation": "The IAM Credential Report generates a comprehensive CSV file with all IAM users and their credential status, including password age, MFA status, and when access keys were last used or rotated. CloudTrail tracks API calls but doesn't summarize credential status. Access Analyzer focuses on resource sharing, not credentials. Config can monitor compliance but doesn't provide an instant credential snapshot.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q12",
-    "type": "multiple-choice",
-    "question": "Which approach lets a federated user from an external IdP obtain temporary AWS credentials with least operational overhead?",
-    "options": [
-      "Configure IAM SAML provider and configure role trust policy",
-      "Create separate IAM users for each federated user",
-      "Require federated users to call AWS STS AssumeRole directly",
-      "Issue long-term access keys to federated users"
-    ],
-    "correctIndex": 0,
-    "explanation": "Setting up a SAML provider in IAM and configuring roles with appropriate trust policies is the most efficient approach for federation. This lets users authenticate with their existing identity provider and seamlessly receive AWS credentials. Creating separate IAM users defeats the purpose of federation. Requiring manual STS calls creates unnecessary friction, and long‑term keys violate security best practices for federated identities.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q13",
-    "type": "multiple-choice",
-    "question": "Which AWS Organizations feature allows the management account to prevent member accounts from changing their contact information?",
-    "options": [
-      "Service Control Policies",
-      "Tag Policies",
-      "Backup Policies",
-      "Organizations API Limits"
-    ],
-    "correctIndex": 0,
-    "explanation": "Service Control Policies (SCPs) can be used to restrict which API actions member accounts can perform, including blocking updates to account contact information. This centralizes control of important account metadata in the management account. The other policy types don't control API actions.",
-    "tags": [
-      "Organizations",
-      "Secure Architectures",
-      "Management Services"
-    ]
-  },
-  {
-    "id": "iam-q14",
-    "type": "multiple-choice",
-    "question": "Which IAM construct lets you limit the maximum permissions that a user or role's identity‑based policies can grant, acting as a safety net?",
-    "options": [
-      "Permissions Boundary",
-      "Service Control Policy",
-      "Session Policy",
-      "Resource‑based Policy"
-    ],
-    "correctIndex": 0,
-    "explanation": "Permissions boundaries define the maximum permissions an IAM entity can have, regardless of what their identity‑based policies might grant. SCPs apply to accounts, not specific IAM entities. Session policies apply only during temporary sessions. Resource‑based policies control access to resources, not permissions of IAM entities.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q15",
-    "type": "multiple-choice",
-    "question": "A developer needs to switch between two AWS accounts frequently using the AWS CLI without storing long‑term keys. What is the most secure method?",
-    "options": [
-      "Use AWS IAM Identity Center (SSO) with named profiles",
-      "Create IAM users and store access keys in profiles",
-      "Use the root account credentials with MFA",
-      "Query EC2 instance metadata for credentials"
-    ],
-    "correctIndex": 0,
-    "explanation": "AWS IAM Identity Center (formerly SSO) provides short‑lived credentials retrieved via `aws sso login` without storing long‑term secrets. Static keys or root credentials undermine security, and instance metadata is only for EC2.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q16",
-    "type": "open-ended",
-    "question": "Describe the difference between AWS managed policies and customer managed policies, and when you would choose one over the other.",
-    "answer": "AWS managed policies are pre‑packaged permission sets curated and updated by AWS, ideal for quick starts and broad, common roles like ReadOnlyAccess. Customer managed policies are created and maintained by you, giving fine‑grained, version‑controlled permissions tailored to your organization. Use AWS managed policies to accelerate prototypes or when you trust AWS to maintain updates, and switch to customer managed policies when you need precise privileges, policy versioning, or to comply with internal audit requirements.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q17",
-    "type": "open-ended",
-    "question": "Outline a strategy to enforce MFA for all console logins in an AWS account.",
-    "answer": "1 – Create an IAM group with no permissions named `MFA-Required`. 2 – Attach an IAM policy to that group that denies all actions if `aws:MultiFactorAuthPresent` is false. 3 – Add every user (or use an SCP for Organizations) to that group. 4 – Provide instructions and support for users to enroll virtual or hardware MFA. 5 – Monitor CloudTrail for `ConsoleLogin` events lacking MFA and use AWS Config managed rule `iam-user-mfa-enabled` for continuous compliance.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q18",
-    "type": "open-ended",
-    "question": "Explain how an AWS Lambda function obtains temporary AWS credentials to interact with other services.",
-    "answer": "When you create or update a Lambda function, you specify an execution role. At runtime, the Lambda service assumes that role via STS and injects short‑lived access key ID, secret access key, and session token into the execution environment as environment variables and through the AWS SDK credential chain. The role's policies control what the function can do, and credentials automatically rotate between invocations, eliminating the need to embed secrets in code.",
-    "tags": [
-      "Lambda",
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q19",
-    "type": "open-ended",
-    "question": "How can IAM Access Analyzer help you tighten overly broad S3 bucket permissions?",
-    "answer": "Access Analyzer continuously evaluates resource‑based policies and notifies you when a bucket policy allows public or cross‑account access. You can view the finding, review which statements grant excessive access, and either deny or scope buckets to specific principals. Analyzer also provides a 'preview' mode so you can simulate policy changes before deployment, ensuring the revised policy still meets business needs while closing unintended exposure.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q20",
-    "type": "open-ended",
-    "question": "Describe a repeatable process for auditing and removing unused IAM credentials.",
-    "answer": "Generate an IAM credential report weekly and import it into a dashboard or spreadsheet. Filter for passwords or access keys older than the corporate policy, e.g., 90 days unused. Verify via CloudTrail that those credentials have no recent activity. Notify stakeholders, disable keys, and schedule deletion after a grace period. Automate the cycle with AWS Config rules `iam-user-unused-credentials` and EventBridge rules that trigger Lambda remediation to deactivate keys automatically.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q21",
-    "type": "multiple-choice",
-    "question": "A company is implementing a solution to temporarily share internal files with partners. Which AWS service provides secure, time-limited access to S3 objects without requiring external users to have AWS credentials?",
-    "options": [
-      "S3 presigned URLs",
-      "S3 bucket policies with IP restrictions",
-      "AWS Identity Federation with Active Directory",
-      "AWS Security Token Service with AssumeRole"
-    ],
-    "correctIndex": 0,
-    "explanation": "S3 presigned URLs provide time-limited access to S3 objects without requiring the user to have AWS credentials, making them ideal for temporary file sharing with external partners. S3 bucket policies with IP restrictions would require ongoing IP management and still need some form of authentication. AWS Identity Federation is more complex and intended for long-term access. STS AssumeRole requires external users to have AWS credentials to assume the role.",
-    "tags": [
-      "S3",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q22",
-    "type": "multiple-choice",
-    "question": "A company uses AWS Organizations to manage multiple accounts. They need to ensure all accounts comply with specific security requirements. Which AWS Organizations feature should they implement?",
-    "options": [
-      "Service Control Policies (SCPs)",
-      "Tag Policies",
-      "Backup Policies",
-      "Resource Access Manager"
-    ],
-    "correctIndex": 0,
-    "explanation": "Service Control Policies (SCPs) in AWS Organizations act as guardrails to restrict permissions across all accounts in the organization, regardless of local IAM policies. This makes them the appropriate tool for enforcing security compliance across multiple accounts. Tag Policies help standardize tags but don't restrict permissions. Backup Policies centralize backup strategies but don't enforce security requirements. Resource Access Manager is for sharing resources across accounts but doesn't enforce compliance policies.",
-    "tags": [
-      "Organizations",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q23",
-    "type": "multiple-choice",
-    "question": "A security audit reveals that EC2 instances in a company's account have been launched with overly permissive IAM roles. Which AWS service can automatically detect and alert on this type of issue?",
-    "options": [
-      "IAM Access Analyzer",
-      "AWS Config",
-      "AWS Trusted Advisor",
-      "Amazon Detective"
-    ],
-    "correctIndex": 0,
-    "explanation": "IAM Access Analyzer analyzes resource policies and IAM permissions to identify resources that grant public or cross-account access, including overly permissive IAM roles for EC2 instances. AWS Config can monitor configuration changes but requires custom rules to detect this specific issue. Trusted Advisor provides best practice checks but has limited depth for IAM permissions analysis. Amazon Detective is for investigating security issues after they've been detected, not for proactive detection.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q24",
-    "type": "multiple-choice",
-    "question": "A company needs to enforce multi-factor authentication (MFA) for all IAM users in their AWS account. Which IAM policy implementation will accomplish this?",
-    "options": [
-      "A policy with a condition requiring aws:MultiFactorAuthPresent:true for all actions except iam:EnableMFADevice",
-      "A policy with a Deny statement for all actions if aws:MultiFactorAuthAge is greater than 43200 seconds",
-      "A policy that allows only iam:ChangePassword and denies all other actions",
-      "A policy that restricts actions to specific IP ranges using aws:SourceIp condition"
-    ],
-    "correctIndex": 0,
-    "explanation": "A policy with a condition requiring aws:MultiFactorAuthPresent:true for all actions except those needed to enable MFA (like iam:EnableMFADevice) ensures users must set up and use MFA before they can perform any other actions. The aws:MultiFactorAuthAge condition checks how long since MFA was provided, not whether it's enabled. A policy restricting to iam:ChangePassword doesn't enforce MFA usage. IP restrictions don't ensure MFA is used, as legitimate users from approved IPs would still not be required to use MFA.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q25",
-    "type": "multiple-choice",
-    "question": "A company is using temporary security credentials for applications running on EC2 instances. These credentials need to be rotated every hour automatically. Which approach should they implement?",
-    "options": [
-      "Use IAM roles with instance profiles",
-      "Store access keys in Systems Manager Parameter Store and update hourly",
-      "Create a Lambda function to generate new IAM users with access keys hourly",
-      "Use AWS Secrets Manager with automatic rotation"
-    ],
-    "correctIndex": 0,
-    "explanation": "IAM roles with instance profiles provide temporary credentials to applications running on EC2 instances with automatic rotation handled by the AWS STS service. This is the AWS best practice for EC2 credentials. Storing access keys in Parameter Store would still require manual or scripted updates. Creating new IAM users hourly would quickly hit service limits and create management overhead. Secrets Manager can automatically rotate database credentials and other secrets, but for EC2 applications, IAM roles are the recommended approach.",
-    "tags": [
-      "IAM",
-      "EC2",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q26",
-    "type": "multiple-choice",
-    "question": "An organization manages multiple AWS accounts and wants to standardize log collection for auditing. Which combination of AWS services provides centralized security logging with the least operational overhead?",
-    "options": [
-      "AWS Organizations with CloudTrail organization trails and a central logging account",
-      "Individual CloudTrail trails in each account sending to separate S3 buckets",
-      "Aggregating CloudWatch Logs from each account using Lambda functions",
-      "Setting up cross-account SNS topics for all security alerts"
-    ],
-    "correctIndex": 0,
-    "explanation": "AWS Organizations with CloudTrail organization trails enables centralized management of all API activities across multiple accounts with a single trail that logs to a central logging account. This provides comprehensive audit logs with minimal operational overhead. Individual CloudTrail trails would require managing separate configurations for each account. Using Lambda functions to aggregate CloudWatch Logs adds unnecessary complexity and potential points of failure. SNS topics would only help with alerts, not with centralized log collection.",
-    "tags": [
-      "Organizations",
-      "CloudTrail",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q27",
-    "type": "multiple-choice",
-    "question": "A company wants to restrict developer access to AWS services while still allowing them to maintain application code. Which AWS service combination should they use?",
-    "options": [
-      "AWS CodePipeline with service roles and IAM permissions boundaries",
-      "AWS CloudShell with restricted IAM permissions",
-      "Direct IAM user access with detailed CloudTrail logs",
-      "Developer access through S3 bucket policies only"
-    ],
-    "correctIndex": 0,
-    "explanation": "AWS CodePipeline with service roles and IAM permissions boundaries provides the most secure approach. CodePipeline handles the deployment process using service roles with specific permissions, while IAM permissions boundaries limit the maximum permissions a developer can have while still allowing them to create and manage resources. CloudShell still gives console access and could allow actions outside intended permissions. Direct IAM user access with detailed logs is reactive rather than preventive. S3 bucket policies only control S3 access, not application deployment or other services.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q28",
-    "type": "multiple-choice",
-    "question": "A company has multiple development teams requiring isolated AWS environments, but needs centralized governance and billing. Which AWS account structure should they implement?",
-    "options": [
-      "AWS Organizations with separate OUs for each team and SCPs for governance",
-      "Single AWS account with IAM groups and resource tags for isolation",
-      "Separate AWS accounts with consolidated billing but no Organizations",
-      "Multiple VPCs within a single account with IAM policies for separation"
-    ],
-    "correctIndex": 0,
-    "explanation": "AWS Organizations with separate Organizational Units (OUs) for each team provides true isolation between environments with separate accounts, while enabling centralized governance through Service Control Policies (SCPs) and centralized billing through the master account. A single AWS account with IAM groups doesn't provide true isolation, as resources are still within the same account. Separate accounts with consolidated billing lack the governance capabilities of Organizations. Multiple VPCs in a single account don't provide adequate isolation for different development teams and resources outside VPCs wouldn't be isolated.",
-    "tags": [
-      "Organizations",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q29",
-    "type": "multiple-choice",
-    "question": "A security team needs to audit all actions performed by specific roles across multiple AWS accounts. Which AWS service should they use?",
-    "options": [
-      "CloudTrail with a lookup-role-events API filter",
-      "IAM Access Analyzer with cross-account analysis",
-      "AWS Config with custom aggregation rules",
-      "Amazon EventBridge with CloudTrail pattern matching"
-    ],
-    "correctIndex": 0,
-    "explanation": "CloudTrail with the lookup-role-events API call allows security teams to filter and audit specific actions taken by roles across multiple accounts when using organization trails. IAM Access Analyzer focuses on resource-based policies and identifying who can access resources, not on auditing past actions. AWS Config tracks resource configuration changes but doesn't provide detailed API call history by role. EventBridge can trigger on CloudTrail events but is more for real-time notification than historical auditing.",
-    "tags": [
-      "IAM",
-      "CloudTrail",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q30",
-    "type": "open-ended",
-    "question": "Explain the concept of IAM permission boundaries and how they differ from SCPs in AWS Organizations. Provide examples of when each should be used.",
-    "answer": "IAM permission boundaries and Service Control Policies (SCPs) in AWS Organizations are both tools for limiting permissions, but they work at different levels and serve different purposes.\n\n**IAM Permission Boundaries:**\n\n- **Definition**: A permission boundary is an IAM feature that sets the maximum permissions that an identity-based policy can grant to an IAM entity (user or role).\n- **Scope**: Applied at the individual IAM user or role level within a single AWS account.\n- **Function**: Acts as a guardrail that limits what permissions can be granted, even by administrators.\n- **Evaluation**: Permissions are granted only if allowed by both the permission boundary AND identity-based policies.\n- **Management**: Managed within the IAM service in a single account.\n\n**Example use cases:**\n1. Allowing developers to create and manage their own IAM roles without exceeding certain permissions\n2. Creating temporary elevated access with defined limits for break-glass scenarios\n3. Delegating responsibility for IAM management while maintaining security guardrails\n4. Preventing privilege escalation even when users can modify their own permissions\n\n**Service Control Policies (SCPs):**\n\n- **Definition**: SCPs are a feature of AWS Organizations that specify the maximum permissions for accounts within an organization.\n- **Scope**: Applied hierarchically at the organization, organizational unit (OU), or account level.\n- **Function**: Limits permissions across entire accounts, affecting all users and roles in those accounts.\n- **Evaluation**: Permissions are granted only if allowed by the SCP AND account policies (IAM).\n- **Management**: Managed through AWS Organizations service.\n\n**Example use cases:**\n1. Preventing any account in an organization from creating IAM users with console access (enforcing federation)\n2. Restricting all development accounts from using expensive services like Redshift\n3. Enforcing encryption and other security controls across all accounts\n4. Region restriction to comply with data sovereignty requirements\n5. Preventing deletion or modification of CloudTrail logs across the organization\n\n**Key Differences:**\n\n1. **Hierarchy**: SCPs cascade from organization root to OUs to accounts; permission boundaries apply directly to specific IAM entities\n2. **Target**: SCPs affect all identities in an account; permission boundaries affect only specific users or roles\n3. **Control**: SCPs are controlled by central organization administrators; permission boundaries can be delegated to account administrators\n4. **Default Effect**: SCPs default to allowing all actions unless explicitly denied; permission boundaries grant no permissions on their own\n\n**Combined Use:**\nUsing both tools together provides defense in depth. SCPs establish broad organizational guardrails, while permission boundaries provide fine-grained control within accounts. For example, an SCP might restrict an entire OU from using certain regions, while permission boundaries within those accounts might further limit which services specific developers can access in the allowed regions.",
-    "tags": [
-      "IAM",
-      "Organizations",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q31",
-    "type": "multiple-choice",
-    "question": "A company needs to implement a solution where internal applications can securely access DynamoDB tables without managing AWS credentials. Which approach is most secure?",
-    "options": [
-      "IAM roles for EC2 instances running the applications",
-      "IAM users with access keys stored in environment variables",
-      "DynamoDB VPC Endpoint with resource policies",
-      "Shared IAM role with credentials stored in AWS Secrets Manager"
-    ],
-    "correctIndex": 0,
-    "explanation": "IAM roles for EC2 instances provide temporary credentials that are automatically rotated and don't require storing any secrets in application code or configuration. EC2 instances can assume these roles to get secure access to DynamoDB tables without manually managing credentials. Storing access keys in environment variables risks exposure and requires manual rotation. DynamoDB VPC Endpoints control network access but don't handle authentication. Storing credentials in Secrets Manager still requires code to retrieve and manage those credentials.",
-    "tags": [
-      "IAM",
-      "DynamoDB",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q32",
-    "type": "multiple-choice",
-    "question": "A company needs to provide AWS console access to 2,000 employees who already have corporate Active Directory accounts. Which AWS service should they use?",
-    "options": [
-      "AWS IAM Identity Center (formerly AWS SSO)",
-      "Cross-account IAM roles with SAML federation",
-      "IAM users with federation through the AWS SDK",
-      "Cognito User Pools with OIDC integration"
-    ],
-    "correctIndex": 0,
-    "explanation": "AWS IAM Identity Center (formerly AWS SSO) is designed specifically for this scenario, providing seamless integration with Active Directory for AWS Console access. It provides centralized authentication and authorization for multiple AWS accounts and supports automatic user provisioning from AD. Cross-account IAM roles with SAML federation would work but requires more complex configuration. IAM users with federation through the SDK wouldn't provide console access. Cognito User Pools are designed for customer-facing applications, not employee access to the AWS console.",
-    "tags": [
-      "IAM Identity Center",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q33",
-    "type": "multiple-choice",
-    "question": "A company has sensitive data in S3 buckets and wants to ensure encryption of all objects with customer-managed keys. Which feature provides the strongest controls?",
-    "options": [
-      "S3 Bucket Keys with AWS KMS Customer Master Keys and policy enforcement",
-      "S3 default encryption with AES-256 (SSE-S3)",
-      "Client-side encryption with keys stored in Parameter Store",
-      "CloudHSM with custom encryption libraries"
-    ],
-    "correctIndex": 0,
-    "explanation": "S3 Bucket Keys with AWS KMS Customer Master Keys (CMKs) and policy enforcement provides the strongest server-side encryption controls. This combination reduces KMS API calls (improving performance), uses customer-controlled keys that can be rotated and audited, and can be enforced via bucket policies that deny PUT requests without proper encryption headers. SSE-S3 uses keys managed by AWS, providing less control. Client-side encryption adds complexity and risk to the application layer. CloudHSM with custom libraries requires significant development effort and introduces more potential for implementation flaws.",
-    "tags": [
-      "S3",
-      "KMS",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q34",
-    "type": "multiple-choice",
-    "question": "A security team needs to limit the IP ranges that can make API calls to manage specific AWS resources. Which service and feature should they use?",
-    "options": [
-      "IAM policy conditions with aws:SourceIp",
-      "Network ACLs in all VPCs",
-      "AWS WAF with IP match conditions",
-      "Security Groups attached to AWS services"
-    ],
-    "correctIndex": 0,
-    "explanation": "IAM policy conditions with aws:SourceIp allow organizations to restrict API calls to specific IP ranges at the authorization layer. This applies globally to AWS API calls regardless of entry point. Network ACLs only filter traffic within VPCs, not AWS API calls which typically go through public endpoints. AWS WAF protects applications hosted on specific AWS services, not AWS API access globally. Security Groups can't be attached directly to AWS services to restrict API calls.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q35",
-    "type": "multiple-choice",
-    "question": "A company needs to allow multiple teams to create and manage their own IAM users and groups while enforcing least privilege. Which combination of IAM features should they implement?",
-    "options": [
-      "IAM permissions boundaries with delegated administrator",
-      "Service control policies with IAM Access Analyzer",
-      "IAM policy conditions with aws:PrincipalTag",
-      "Resource-based policies with cross-account access"
-    ],
-    "correctIndex": 0,
-    "explanation": "IAM permissions boundaries with delegated administrator is the correct approach as it allows teams to manage their IAM resources while ensuring they can't exceed the maximum permissions defined by the boundary. This maintains least privilege while enabling delegation. Service control policies apply at the account level, not for delegation within an account. IAM policy conditions with PrincipalTag helps with attribute-based access control but doesn't facilitate delegation of IAM management. Resource-based policies don't apply to most IAM resources and don't address the need to delegate IAM management.",
-    "tags": [
-      "IAM",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q36",
-    "type": "multiple-choice",
-    "question": "An enterprise has a hybrid cloud environment and wants to extend its on-premises identity management to AWS without synchronizing identities. Which solution should they implement?",
-    "options": [
-      "SAML 2.0 federation with IAM roles",
-      "AWS IAM Identity Center with SCIM provisioning",
-      "AWS Cognito User Pools with OIDC federation",
-      "AWS Managed Microsoft AD with trust relationships"
-    ],
-    "correctIndex": 0,
-    "explanation": "SAML 2.0 federation with IAM roles allows enterprises to extend their on-premises identity management to AWS without synchronizing identities. Users authenticate against the on-premises identity provider and receive temporary credentials via IAM roles. AWS IAM Identity Center with SCIM still requires identity synchronization. AWS Cognito User Pools are designed for customer-facing applications, not enterprise workforce. AWS Managed Microsoft AD requires establishing directory trusts and maintaining another directory service.",
-    "tags": [
-      "IAM",
-      "Security Services",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q37",
-    "type": "multiple-choice",
-    "question": "A company wants to ensure Lambda functions can only be created if they have specific tags applied for cost allocation. Which AWS service or feature should they use?",
-    "options": [
-      "AWS Organizations Tag Policies",
-      "IAM policy conditions on the CreateFunction action",
-      "AWS Config rules with Lambda remediation",
-      "CloudFormation template validation"
-    ],
-    "correctIndex": 1,
-    "explanation": "IAM policy conditions on the CreateFunction action can enforce tag requirements by allowing the action only when specific tags are included in the request. This prevents non-compliant resources from being created in the first place. AWS Organizations Tag Policies help standardize tags across accounts but don't prevent resource creation. AWS Config rules could detect non-compliant resources but only after they're created. CloudFormation template validation doesn't enforce tagging requirements across all resource creation methods.",
-    "tags": [
-      "IAM",
-      "Lambda",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q38",
-    "type": "open-ended",
-    "question": "Explain how to implement the principle of least privilege in AWS IAM while still allowing for innovation and developer productivity.",
-    "answer": "Implementing the principle of least privilege in AWS IAM while maintaining developer productivity requires a balanced approach:\n\n1. **Start with Least Privilege Baselines**:\n   - Begin with AWS managed policies designed for job functions (e.g., `PowerUserAccess` minus administrative permissions)\n   - Create custom policies that allow only specific services relevant to the team's work\n   - Use IAM Access Analyzer to identify and remove unused permissions\n\n2. **Implement Permission Guardrails**:\n   - Use IAM permissions boundaries to set maximum permissions that developers can grant themselves\n   - Apply Service Control Policies (SCPs) at the organization level to prevent certain high-risk actions\n   - Enforce preventative guardrails through IAM conditions (e.g., requiring MFA, restricting regions)\n\n3. **Enable Self-Service with Boundaries**:\n   - Allow developers to create and manage their own roles/policies within a permissions boundary\n   - Implement IAM policy conditions using `aws:RequestTag` and `aws:TagKeys` to enforce resource tagging\n   - Use attribute-based access control (ABAC) to scale permissions based on tags\n\n4. **Create Purpose-Built Roles**:\n   - Design project-specific roles with just-enough permissions for common tasks\n   - Implement temporary elevated access through AWS IAM Identity Center permission sets\n   - Configure emergency access roles with appropriate break-glass procedures\n\n5. **Leverage Infrastructure as Code**:\n   - Define and version IAM permissions in CloudFormation or Terraform\n   - Conduct peer reviews of permission changes\n   - Implement policy validation checks in CI/CD pipelines\n\n6. **Use AWS Services That Support Fine-Grained Permissions**:\n   - Implement resource-based policies for S3, Lambda, etc.\n   - Use session policies to further restrict temporary credentials\n   - Configure service-specific access controls (e.g., DynamoDB fine-grained access control)\n\n7. **Implement Developer-Friendly Access Patterns**:\n   - Create deployment pipelines with escalated privileges instead of giving them directly to developers\n   - Use AWS CloudShell for console-like access with pre-configured permissions\n   - Configure Session Manager for shell access without broad EC2 permissions\n\n8. **Establish Continuous Monitoring and Improvement**:\n   - Enable CloudTrail for comprehensive API logging\n   - Use CloudWatch Alarms for suspicious activity\n   - Implement regular access reviews using IAM Access Analyzer findings\n   - Use AWS Config to detect policy drift\n\n9. **Develop Clear Escalation Paths**:\n   - Create streamlined processes for requesting additional permissions\n   - Implement automated approval workflows for temporary access\n   - Document common use cases and their required permissions\n\n10. **Educate and Build Security Culture**:\n    - Train developers on IAM best practices and the security reasoning behind restrictions\n    - Share real examples of security incidents caused by excessive permissions\n    - Recognize and reward teams that maintain least privilege\n\nBy combining these strategies, organizations can maintain strong security boundaries while allowing developers the freedom they need to innovate. The key is establishing clear guardrails and processes that enable self-service within secure parameters, rather than creating bottlenecks that incentivize workarounds.",
-    "tags": [
-      "IAM",
-      "Secure Architectures",
-      "Security Services"
-    ]
-  },
-  {
-    "id": "iam-q39",
-    "type": "open-ended",
-    "question": "Compare and contrast the various AWS credential types (access keys, IAM roles, session tokens) and explain the security implications of each.",
-    "answer": "**AWS Credential Types and Their Security Implications**\n\n**1. IAM User Access Keys**\n- **Composition**: Access Key ID (public) and Secret Access Key (private)\n- **Permanence**: Long-lived until manually rotated or disabled\n- **Use Cases**: \n  - Programmatic access to AWS resources\n  - Scripts, CLI, and applications outside AWS infrastructure\n  - Service account access where role assumption isn't possible\n- **Security Implications**:\n  - High risk if compromised - provides direct API access\n  - No automatic expiration creates potential for undetected compromise\n  - Often stored in configuration files, increasing exposure risk\n  - Key rotation requires updating all references, often leading to infrequent rotation\n  - No logging of individual key usage (only the IAM user)\n  - No additional context or conditions beyond IAM policies\n\n**2. IAM Roles with Temporary Security Credentials**\n- **Composition**: Access Key ID, Secret Access Key, and Session Token\n- **Permanence**: Short-lived (15 minutes to 36 hours, typically 1-12 hours)\n- **Use Cases**: \n  - EC2 instances and other AWS services\n  - Cross-account access\n  - AWS service roles (e.g., Lambda execution)\n  - Federated user access\n- **Security Implications**:\n  - Lower risk due to automatic expiration\n  - No credential storage required in application code\n  - Automated credential rotation handled by AWS\n  - Role assumption recorded in CloudTrail for auditing\n  - Can include context-aware conditions in trust policies\n  - Session policies can further restrict permissions\n  - No credential management overhead\n\n**3. AWS STS Session Tokens**\n- **Composition**: Access Key ID, Secret Access Key, and Session Token\n- **Permanence**: Temporary (15 minutes to 36 hours)\n- **Use Cases**: \n  - Federation with external identity providers\n  - MFA-protected API access\n  - Cross-account role assumption\n  - Temporary access with GetSessionToken\n- **Security Implications**:\n  - Enhanced security through time limitation\n  - Can require additional factors (MFA) for issuance\n  - Can include contextual constraints (source IP, expiration time)\n  - Role or user activity tracked in CloudTrail\n  - Can restrict permissions via session policies\n  - Credentials must be refreshed by application before expiration\n\n**4. AWS SSO / IAM Identity Center Credentials**\n- **Composition**: Access Key ID, Secret Access Key, and Session Token\n- **Permanence**: Very short-lived (typically hours)\n- **Use Cases**: \n  - CLI access for human operators\n  - Federated access to multiple AWS accounts\n  - Programmatic access with CLI credential process\n- **Security Implications**:\n  - Integration with enterprise identity providers\n  - Centralized permission management\n  - Automatic credential refresh\n  - No stored credentials in user profiles\n  - Permissions tied to job function through permission sets\n  - Support for conditional access (device trust, MFA)\n\n**Security Best Practices Across Credential Types**:\n\n1. **Follow the Credential Priority Hierarchy**:\n   - IAM Roles > STS Session Tokens > IAM Identity Center > Access Keys\n   - Always prefer temporary over long-term credentials\n\n2. **Implement Strict Access Controls**:\n   - Apply least privilege principle regardless of credential type\n   - Use conditions to restrict access by IP, time, MFA status\n   - Apply resource-based policies as an additional control layer\n\n3. **Comprehensive Monitoring and Auditing**:\n   - Enable CloudTrail for all accounts\n   - Configure alerts for suspicious credential usage\n   - Use IAM Access Analyzer to find unintended access\n\n4. **Automated Credential Management**:\n   - Enforce access key rotation when long-term keys must be used\n   - Use Secrets Manager for third-party credential storage\n   - Implement automated key expiration for inactive credentials\n\nThe security implications of credential choice are significant - using IAM roles and temporary credentials significantly reduces security risk compared to long-term access keys by limiting the blast radius of potential compromises and providing better auditability.",
-    "tags": [
-      "IAM",
-      "Security Services",
-      "Secure Architectures"
-    ]
-  },
-  {
-    "id": "iam-q40",
-    "type": "open-ended",
-    "question": "Describe how to design a secure cross-account access strategy for a multi-account AWS environment.",
-    "answer": "# Designing a Secure Cross-Account Access Strategy for Multi-Account AWS Environments\n\n## Foundation: AWS Organizations Structure\n\n1. **Create a logical account structure**:\n   - Management account: Reserved for billing, organizational governance, and audit purposes\n   - Security account: Centralized security services and monitoring\n   - Shared Services account: Common infrastructure components\n   - Workload accounts: Grouped by environment (dev, test, prod) or business unit\n\n2. **Implement Service Control Policies (SCPs)**:\n   - Apply preventative guardrails at the organization and OU levels\n   - Restrict sensitive actions like leaving the organization or disabling security services\n   - Enforce encryption and resource protection requirements\n\n## Core Cross-Account Access Model\n\n1. **Create a role-based access hierarchy**:\n   - Define standard role names across accounts (e.g., NetworkAdmin, DatabaseAdmin, ReadOnly)\n   - Establish consistent naming conventions and permission boundaries\n\n2. **Implement the trust relationship pattern**:\n   - Create roles in target accounts with appropriate permissions\n   - Configure trust policies to allow assumption only from specific principal ARNs\n   - Use external ID conditions for third-party access for added security\n\n3. **Set up central identity management**:\n   - Use AWS IAM Identity Center (SSO) as the primary access method\n   - Create Permission Sets aligned with job functions\n   - Associate Permission Sets with OUs or individual accounts\n   - Integrate with corporate identity provider (IdP) using SAML or OIDC\n\n## Enhanced Security Controls\n\n1. **Apply least privilege with conditions**:\n   - Include conditions in trust policies for:\n     - Source IP restrictions (`aws:SourceIp`)\n     - MFA enforcement (`aws:MultiFactorAuthPresent`)\n     - Time-of-day restrictions (`aws:CurrentTime`)\n     - Session duration limits (`aws:TokenIssueTime`)\n   \n2. **Implement cross-account role assumption chains**:\n   - Require users to assume a role in the security account first\n   - From that role, allow assumption into workload accounts\n   - This creates a consistent entry point and audit trail\n\n3. **Use session tags and ABAC**:\n   - Pass session tags when assuming roles across accounts\n   - Implement attribute-based access control using `aws:PrincipalTag` conditions\n   - Propagate identity attributes for consistent permissions\n\n## Resource Sharing\n\n1. **AWS Resource Access Manager (RAM)**:\n   - Share common resources like Transit Gateways, subnets, and License Manager configurations\n   - Use resource sharing for VPC endpoint services and Direct Connect gateways\n\n2. **Resource-based policies**:\n   - Configure cross-account access for S3 buckets, KMS keys, SNS topics, and other services\n   - Include specific principal ARNs rather than whole account IDs when possible\n   - Use conditions to limit scope based on request parameters\n\n3. **VPC endpoint policies**:\n   - Control which principals from which accounts can access endpoints\n   - Restrict actions that can be performed via the endpoint\n\n## Monitoring and Governance\n\n1. **Centralized logging and monitoring**:\n   - Set up CloudTrail organization trails to log to the security account\n   - Use CloudWatch Logs for centralized log aggregation\n   - Create cross-account roles specifically for security tooling\n\n2. **Implement detective controls**:\n   - Deploy GuardDuty across the organization with delegated administration\n   - Use IAM Access Analyzer to identify unintended resource access\n   - Set up Security Hub with compliance standards\n\n3. **Automate access reviews**:\n   - Generate regular reports of cross-account access patterns\n   - Implement automated revocation of unused roles\n   - Use Systems Manager to inventory cross-account configurations\n\n## Access Patterns and Workflows\n\n1. **Break-glass procedures**:\n   - Create emergency access roles with strict controls\n   - Implement just-in-time access approval workflows\n   - Log and alert on emergency role usage\n\n2. **CI/CD pipeline access**:\n   - Use dedicated cross-account roles for deployment pipelines\n   - Separate build, test, and deployment permissions\n   - Implement approval gates for production changes\n\n3. **Service-to-service access**:\n   - Create service-specific roles with cross-account trust\n   - Use resource-based policies when available\n   - Implement private API endpoints with VPC endpoint policies\n\nThis comprehensive approach ensures secure, manageable cross-account access that balances security with operational needs in a multi-account AWS environment.",
-    "tags": [
-      "IAM",
-      "Organizations",
-      "Secure Architectures"
-    ]
-  }
+    {
+        "id": "iam-q01",
+        "type": "multiple-choice",
+        "question": "Which action is an AWS best practice for the root user credentials?",
+        "options": [
+            "Share the root credentials securely within the operations team",
+            "Enable MFA and use the root user only for tasks that require it",
+            "Attach the AdministratorAccess policy to the root user",
+            "Delete the root access keys and password entirely"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS recommends enabling MFA on the root user and using it only for a short list of account\u2011level tasks, never daily administration. Removing credentials completely would lock you out of those tasks, and sharing or granting additional permissions to root defeats least privilege.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q02",
+        "type": "multiple-choice",
+        "question": "Within an IAM policy statement, what does the Principal element specify?",
+        "options": [
+            "The account, user, role, or service to which the policy applies",
+            "The AWS service that logs the API call",
+            "The default encryption key for the request",
+            "The resource Amazon Resource Name (ARN) the action affects"
+        ],
+        "correctIndex": 0,
+        "explanation": "Principal identifies who is making the request when the policy is evaluated. It is mandatory in resource\u2011based policies but not used in identity\u2011based policies. The other options refer to unrelated policy elements.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q03",
+        "type": "multiple-choice",
+        "question": "Which combination of factors constitutes multi\u2011factor authentication (MFA) in AWS?",
+        "options": [
+            "Password plus security group membership",
+            "Two different passwords",
+            "Something you know plus something you have",
+            "Username and password only"
+        ],
+        "correctIndex": 2,
+        "explanation": "MFA pairs a knowledge factor (password) with a possession factor (virtual authenticator code, hardware key fob, or U2F token). The other answers do not satisfy the two different factor categories.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q04",
+        "type": "multiple-choice",
+        "question": "An IAM user has an inactive access key that has not been used for 90 days. What should the security team do according to least privilege?",
+        "options": [
+            "Rotate the key immediately",
+            "Deactivate or delete the unused key",
+            "Move the user to a different group",
+            "Attach a Deny policy to the key"
+        ],
+        "correctIndex": 1,
+        "explanation": "Inactive or unused credentials should be deactivated or removed to eliminate unnecessary attack surface. Rotation is helpful only for actively used keys. Policies or group changes leave the unused key enabled.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q05",
+        "type": "multiple-choice",
+        "question": "Which IAM report helps you identify unused services and over\u2011privileged principals?",
+        "options": [
+            "IAM Access Advisor",
+            "AWS Config Compliance Report",
+            "IAM Credential Report",
+            "AWS Trusted Advisor"
+        ],
+        "correctIndex": 0,
+        "explanation": "Access Advisor shows when each service was last accessed by a user, group, or role, enabling rights\u2011sizing. Credential Report focuses on password and key hygiene, not service usage.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q06",
+        "type": "multiple-choice",
+        "question": "Which policy type allows you to restrict user permissions across all AWS accounts in an AWS Organizations OU?",
+        "options": [
+            "Resource\u2011based Policy",
+            "Service Control Policy",
+            "SAML Session Policy",
+            "Inline Policy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Service Control Policies (SCPs) are the only way to centrally control maximum available permissions across multiple accounts in an organization. The other policy types only affect a single account.",
+        "tags": [
+            "Organizations",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "iam-q07",
+        "type": "multiple-choice",
+        "question": "Which scenario requires an IAM role instead of an IAM user?",
+        "options": [
+            "A team leader needs access to multiple related services",
+            "A developer needs to manage DynamoDB tables using the CLI",
+            "A business analyst needs to generate reports from QuickSight",
+            "An EC2 instance needs temporary read access to an S3 bucket"
+        ],
+        "correctIndex": 3,
+        "explanation": "EC2 instances should use IAM roles, not IAM users, to access other AWS services securely without embedding credentials. Human users (like developers, analysts, or team leads) should have IAM users with appropriate permission policies.",
+        "tags": [
+            "EC2",
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q08",
+        "type": "multiple-choice",
+        "question": "Where are credentials for an assumed IAM role cached on an EC2 instance running the AWS SDK?",
+        "options": [
+            "In environment variables set by EC2 service",
+            "In the ~/.aws/credentials file",
+            "Instance metadata service at http://169.254.169.254",
+            "In the attached IAM instance profile"
+        ],
+        "correctIndex": 2,
+        "explanation": "When an EC2 instance assumes a role through its instance profile, the credentials are made available in the instance metadata service (IMDS), which AWS SDKs automatically check. This allows credentials to be rotated automatically without application changes.",
+        "tags": [
+            "EC2",
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q09",
+        "type": "multiple-choice",
+        "question": "Which IAM policy condition element would you use to restrict API calls to only your company's public IP range?",
+        "options": [
+            "aws:RequestedRegion",
+            "aws:UserAgent",
+            "aws:SourceIp",
+            "aws:VpcSourceIp"
+        ],
+        "correctIndex": 2,
+        "explanation": "The aws:SourceIp condition key lets you limit API calls to specific IP ranges, making it ideal for restricting access to your company's known IP addresses. The other options don't achieve this goal \u2014 aws:RequestedRegion filters by region, aws:VpcSourceIp only works for VPC traffic, and aws:UserAgent filters by client software.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q10",
+        "type": "multiple-choice",
+        "question": "Which statement about AWS managed policies is correct?",
+        "options": [
+            "They must be created for each AWS account separately",
+            "They are always attached to roles, not users",
+            "They can be directly edited by customers",
+            "They are maintained by AWS and updated automatically"
+        ],
+        "correctIndex": 3,
+        "explanation": "AWS managed policies are pre\u2011defined by AWS and updated automatically when AWS adds new services or API actions, ensuring your permissions remain current. They can't be edited directly by customers \u2014 that's a feature of customer managed policies. They can be attached to users, groups, and roles, and they are available to all AWS accounts.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q11",
+        "type": "multiple-choice",
+        "question": "A central security team needs to analyze password expiration and key rotation status for every IAM user. Which built\u2011in feature provides that data instantly?",
+        "options": [
+            "IAM Access Analyzer",
+            "AWS Config",
+            "IAM Credential Report",
+            "CloudTrail"
+        ],
+        "correctIndex": 2,
+        "explanation": "The IAM Credential Report generates a comprehensive CSV file with all IAM users and their credential status, including password age, MFA status, and when access keys were last used or rotated. CloudTrail tracks API calls but doesn't summarize credential status. Access Analyzer focuses on resource sharing, not credentials. Config can monitor compliance but doesn't provide an instant credential snapshot.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q12",
+        "type": "multiple-choice",
+        "question": "Which approach lets a federated user from an external IdP obtain temporary AWS credentials with least operational overhead?",
+        "options": [
+            "Issue long-term access keys to federated users",
+            "Create separate IAM users for each federated user",
+            "Configure IAM SAML provider and configure role trust policy",
+            "Require federated users to call AWS STS AssumeRole directly"
+        ],
+        "correctIndex": 2,
+        "explanation": "Setting up a SAML provider in IAM and configuring roles with appropriate trust policies is the most efficient approach for federation. This lets users authenticate with their existing identity provider and seamlessly receive AWS credentials. Creating separate IAM users defeats the purpose of federation. Requiring manual STS calls creates unnecessary friction, and long\u2011term keys violate security best practices for federated identities.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q13",
+        "type": "multiple-choice",
+        "question": "Which AWS Organizations feature allows the management account to prevent member accounts from changing their contact information?",
+        "options": [
+            "Service Control Policies",
+            "Organizations API Limits",
+            "Backup Policies",
+            "Tag Policies"
+        ],
+        "correctIndex": 0,
+        "explanation": "Service Control Policies (SCPs) can be used to restrict which API actions member accounts can perform, including blocking updates to account contact information. This centralizes control of important account metadata in the management account. The other policy types don't control API actions.",
+        "tags": [
+            "Organizations",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "iam-q14",
+        "type": "multiple-choice",
+        "question": "Which IAM construct lets you limit the maximum permissions that a user or role's identity\u2011based policies can grant, acting as a safety net?",
+        "options": [
+            "Service Control Policy",
+            "Permissions Boundary",
+            "Session Policy",
+            "Resource\u2011based Policy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Permissions boundaries define the maximum permissions an IAM entity can have, regardless of what their identity\u2011based policies might grant. SCPs apply to accounts, not specific IAM entities. Session policies apply only during temporary sessions. Resource\u2011based policies control access to resources, not permissions of IAM entities.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q15",
+        "type": "multiple-choice",
+        "question": "A developer needs to switch between two AWS accounts frequently using the AWS CLI without storing long\u2011term keys. What is the most secure method?",
+        "options": [
+            "Use AWS IAM Identity Center (SSO) with named profiles",
+            "Create IAM users and store access keys in profiles",
+            "Query EC2 instance metadata for credentials",
+            "Use the root account credentials with MFA"
+        ],
+        "correctIndex": 0,
+        "explanation": "AWS IAM Identity Center (formerly SSO) provides short\u2011lived credentials retrieved via `aws sso login` without storing long\u2011term secrets. Static keys or root credentials undermine security, and instance metadata is only for EC2.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q16",
+        "type": "open-ended",
+        "question": "Describe the difference between AWS managed policies and customer managed policies, and when you would choose one over the other.",
+        "answer": "AWS managed policies are pre\u2011packaged permission sets curated and updated by AWS, ideal for quick starts and broad, common roles like ReadOnlyAccess. Customer managed policies are created and maintained by you, giving fine\u2011grained, version\u2011controlled permissions tailored to your organization. Use AWS managed policies to accelerate prototypes or when you trust AWS to maintain updates, and switch to customer managed policies when you need precise privileges, policy versioning, or to comply with internal audit requirements.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q17",
+        "type": "open-ended",
+        "question": "Outline a strategy to enforce MFA for all console logins in an AWS account.",
+        "answer": "1 \u2013 Create an IAM group with no permissions named `MFA-Required`. 2 \u2013 Attach an IAM policy to that group that denies all actions if `aws:MultiFactorAuthPresent` is false. 3 \u2013 Add every user (or use an SCP for Organizations) to that group. 4 \u2013 Provide instructions and support for users to enroll virtual or hardware MFA. 5 \u2013 Monitor CloudTrail for `ConsoleLogin` events lacking MFA and use AWS Config managed rule `iam-user-mfa-enabled` for continuous compliance.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q18",
+        "type": "open-ended",
+        "question": "Explain how an AWS Lambda function obtains temporary AWS credentials to interact with other services.",
+        "answer": "When you create or update a Lambda function, you specify an execution role. At runtime, the Lambda service assumes that role via STS and injects short\u2011lived access key ID, secret access key, and session token into the execution environment as environment variables and through the AWS SDK credential chain. The role's policies control what the function can do, and credentials automatically rotate between invocations, eliminating the need to embed secrets in code.",
+        "tags": [
+            "Lambda",
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q19",
+        "type": "open-ended",
+        "question": "How can IAM Access Analyzer help you tighten overly broad S3 bucket permissions?",
+        "answer": "Access Analyzer continuously evaluates resource\u2011based policies and notifies you when a bucket policy allows public or cross\u2011account access. You can view the finding, review which statements grant excessive access, and either deny or scope buckets to specific principals. Analyzer also provides a 'preview' mode so you can simulate policy changes before deployment, ensuring the revised policy still meets business needs while closing unintended exposure.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q20",
+        "type": "open-ended",
+        "question": "Describe a repeatable process for auditing and removing unused IAM credentials.",
+        "answer": "Generate an IAM credential report weekly and import it into a dashboard or spreadsheet. Filter for passwords or access keys older than the corporate policy, e.g., 90 days unused. Verify via CloudTrail that those credentials have no recent activity. Notify stakeholders, disable keys, and schedule deletion after a grace period. Automate the cycle with AWS Config rules `iam-user-unused-credentials` and EventBridge rules that trigger Lambda remediation to deactivate keys automatically.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q21",
+        "type": "multiple-choice",
+        "question": "A company is implementing a solution to temporarily share internal files with partners. Which AWS service provides secure, time-limited access to S3 objects without requiring external users to have AWS credentials?",
+        "options": [
+            "S3 bucket policies with IP restrictions",
+            "AWS Identity Federation with Active Directory",
+            "S3 presigned URLs",
+            "AWS Security Token Service with AssumeRole"
+        ],
+        "correctIndex": 2,
+        "explanation": "S3 presigned URLs provide time-limited access to S3 objects without requiring the user to have AWS credentials, making them ideal for temporary file sharing with external partners. S3 bucket policies with IP restrictions would require ongoing IP management and still need some form of authentication. AWS Identity Federation is more complex and intended for long-term access. STS AssumeRole requires external users to have AWS credentials to assume the role.",
+        "tags": [
+            "S3",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q22",
+        "type": "multiple-choice",
+        "question": "A company uses AWS Organizations to manage multiple accounts. They need to ensure all accounts comply with specific security requirements. Which AWS Organizations feature should they implement?",
+        "options": [
+            "Service Control Policies (SCPs)",
+            "Backup Policies",
+            "Resource Access Manager",
+            "Tag Policies"
+        ],
+        "correctIndex": 0,
+        "explanation": "Service Control Policies (SCPs) in AWS Organizations act as guardrails to restrict permissions across all accounts in the organization, regardless of local IAM policies. This makes them the appropriate tool for enforcing security compliance across multiple accounts. Tag Policies help standardize tags but don't restrict permissions. Backup Policies centralize backup strategies but don't enforce security requirements. Resource Access Manager is for sharing resources across accounts but doesn't enforce compliance policies.",
+        "tags": [
+            "Organizations",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q23",
+        "type": "multiple-choice",
+        "question": "A security audit reveals that EC2 instances in a company's account have been launched with overly permissive IAM roles. Which AWS service can automatically detect and alert on this type of issue?",
+        "options": [
+            "AWS Trusted Advisor",
+            "IAM Access Analyzer",
+            "AWS Config",
+            "Amazon Detective"
+        ],
+        "correctIndex": 1,
+        "explanation": "IAM Access Analyzer analyzes resource policies and IAM permissions to identify resources that grant public or cross-account access, including overly permissive IAM roles for EC2 instances. AWS Config can monitor configuration changes but requires custom rules to detect this specific issue. Trusted Advisor provides best practice checks but has limited depth for IAM permissions analysis. Amazon Detective is for investigating security issues after they've been detected, not for proactive detection.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q24",
+        "type": "multiple-choice",
+        "question": "A company needs to enforce multi-factor authentication (MFA) for all IAM users in their AWS account. Which IAM policy implementation will accomplish this?",
+        "options": [
+            "A policy with a condition requiring aws:MultiFactorAuthPresent:true for all actions except iam:EnableMFADevice",
+            "A policy that allows only iam:ChangePassword and denies all other actions",
+            "A policy that restricts actions to specific IP ranges using aws:SourceIp condition",
+            "A policy with a Deny statement for all actions if aws:MultiFactorAuthAge is greater than 43200 seconds"
+        ],
+        "correctIndex": 0,
+        "explanation": "A policy with a condition requiring aws:MultiFactorAuthPresent:true for all actions except those needed to enable MFA (like iam:EnableMFADevice) ensures users must set up and use MFA before they can perform any other actions. The aws:MultiFactorAuthAge condition checks how long since MFA was provided, not whether it's enabled. A policy restricting to iam:ChangePassword doesn't enforce MFA usage. IP restrictions don't ensure MFA is used, as legitimate users from approved IPs would still not be required to use MFA.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q25",
+        "type": "multiple-choice",
+        "question": "A company is using temporary security credentials for applications running on EC2 instances. These credentials need to be rotated every hour automatically. Which approach should they implement?",
+        "options": [
+            "Use AWS Secrets Manager with automatic rotation",
+            "Create a Lambda function to generate new IAM users with access keys hourly",
+            "Store access keys in Systems Manager Parameter Store and update hourly",
+            "Use IAM roles with instance profiles"
+        ],
+        "correctIndex": 3,
+        "explanation": "IAM roles with instance profiles provide temporary credentials to applications running on EC2 instances with automatic rotation handled by the AWS STS service. This is the AWS best practice for EC2 credentials. Storing access keys in Parameter Store would still require manual or scripted updates. Creating new IAM users hourly would quickly hit service limits and create management overhead. Secrets Manager can automatically rotate database credentials and other secrets, but for EC2 applications, IAM roles are the recommended approach.",
+        "tags": [
+            "IAM",
+            "EC2",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q26",
+        "type": "multiple-choice",
+        "question": "An organization manages multiple AWS accounts and wants to standardize log collection for auditing. Which combination of AWS services provides centralized security logging with the least operational overhead?",
+        "options": [
+            "Individual CloudTrail trails in each account sending to separate S3 buckets",
+            "AWS Organizations with CloudTrail organization trails and a central logging account",
+            "Setting up cross-account SNS topics for all security alerts",
+            "Aggregating CloudWatch Logs from each account using Lambda functions"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS Organizations with CloudTrail organization trails enables centralized management of all API activities across multiple accounts with a single trail that logs to a central logging account. This provides comprehensive audit logs with minimal operational overhead. Individual CloudTrail trails would require managing separate configurations for each account. Using Lambda functions to aggregate CloudWatch Logs adds unnecessary complexity and potential points of failure. SNS topics would only help with alerts, not with centralized log collection.",
+        "tags": [
+            "Organizations",
+            "CloudTrail",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q27",
+        "type": "multiple-choice",
+        "question": "A company wants to restrict developer access to AWS services while still allowing them to maintain application code. Which AWS service combination should they use?",
+        "options": [
+            "Direct IAM user access with detailed CloudTrail logs",
+            "AWS CodePipeline with service roles and IAM permissions boundaries",
+            "AWS CloudShell with restricted IAM permissions",
+            "Developer access through S3 bucket policies only"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS CodePipeline with service roles and IAM permissions boundaries provides the most secure approach. CodePipeline handles the deployment process using service roles with specific permissions, while IAM permissions boundaries limit the maximum permissions a developer can have while still allowing them to create and manage resources. CloudShell still gives console access and could allow actions outside intended permissions. Direct IAM user access with detailed logs is reactive rather than preventive. S3 bucket policies only control S3 access, not application deployment or other services.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q28",
+        "type": "multiple-choice",
+        "question": "A company has multiple development teams requiring isolated AWS environments, but needs centralized governance and billing. Which AWS account structure should they implement?",
+        "options": [
+            "Single AWS account with IAM groups and resource tags for isolation",
+            "AWS Organizations with separate OUs for each team and SCPs for governance",
+            "Multiple VPCs within a single account with IAM policies for separation",
+            "Separate AWS accounts with consolidated billing but no Organizations"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS Organizations with separate Organizational Units (OUs) for each team provides true isolation between environments with separate accounts, while enabling centralized governance through Service Control Policies (SCPs) and centralized billing through the master account. A single AWS account with IAM groups doesn't provide true isolation, as resources are still within the same account. Separate accounts with consolidated billing lack the governance capabilities of Organizations. Multiple VPCs in a single account don't provide adequate isolation for different development teams and resources outside VPCs wouldn't be isolated.",
+        "tags": [
+            "Organizations",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q29",
+        "type": "multiple-choice",
+        "question": "A security team needs to audit all actions performed by specific roles across multiple AWS accounts. Which AWS service should they use?",
+        "options": [
+            "Amazon EventBridge with CloudTrail pattern matching",
+            "AWS Config with custom aggregation rules",
+            "IAM Access Analyzer with cross-account analysis",
+            "CloudTrail with a lookup-role-events API filter"
+        ],
+        "correctIndex": 3,
+        "explanation": "CloudTrail with the lookup-role-events API call allows security teams to filter and audit specific actions taken by roles across multiple accounts when using organization trails. IAM Access Analyzer focuses on resource-based policies and identifying who can access resources, not on auditing past actions. AWS Config tracks resource configuration changes but doesn't provide detailed API call history by role. EventBridge can trigger on CloudTrail events but is more for real-time notification than historical auditing.",
+        "tags": [
+            "IAM",
+            "CloudTrail",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q30",
+        "type": "open-ended",
+        "question": "Explain the concept of IAM permission boundaries and how they differ from SCPs in AWS Organizations. Provide examples of when each should be used.",
+        "answer": "IAM permission boundaries and Service Control Policies (SCPs) in AWS Organizations are both tools for limiting permissions, but they work at different levels and serve different purposes.\n\n**IAM Permission Boundaries:**\n\n- **Definition**: A permission boundary is an IAM feature that sets the maximum permissions that an identity-based policy can grant to an IAM entity (user or role).\n- **Scope**: Applied at the individual IAM user or role level within a single AWS account.\n- **Function**: Acts as a guardrail that limits what permissions can be granted, even by administrators.\n- **Evaluation**: Permissions are granted only if allowed by both the permission boundary AND identity-based policies.\n- **Management**: Managed within the IAM service in a single account.\n\n**Example use cases:**\n1. Allowing developers to create and manage their own IAM roles without exceeding certain permissions\n2. Creating temporary elevated access with defined limits for break-glass scenarios\n3. Delegating responsibility for IAM management while maintaining security guardrails\n4. Preventing privilege escalation even when users can modify their own permissions\n\n**Service Control Policies (SCPs):**\n\n- **Definition**: SCPs are a feature of AWS Organizations that specify the maximum permissions for accounts within an organization.\n- **Scope**: Applied hierarchically at the organization, organizational unit (OU), or account level.\n- **Function**: Limits permissions across entire accounts, affecting all users and roles in those accounts.\n- **Evaluation**: Permissions are granted only if allowed by the SCP AND account policies (IAM).\n- **Management**: Managed through AWS Organizations service.\n\n**Example use cases:**\n1. Preventing any account in an organization from creating IAM users with console access (enforcing federation)\n2. Restricting all development accounts from using expensive services like Redshift\n3. Enforcing encryption and other security controls across all accounts\n4. Region restriction to comply with data sovereignty requirements\n5. Preventing deletion or modification of CloudTrail logs across the organization\n\n**Key Differences:**\n\n1. **Hierarchy**: SCPs cascade from organization root to OUs to accounts; permission boundaries apply directly to specific IAM entities\n2. **Target**: SCPs affect all identities in an account; permission boundaries affect only specific users or roles\n3. **Control**: SCPs are controlled by central organization administrators; permission boundaries can be delegated to account administrators\n4. **Default Effect**: SCPs default to allowing all actions unless explicitly denied; permission boundaries grant no permissions on their own\n\n**Combined Use:**\nUsing both tools together provides defense in depth. SCPs establish broad organizational guardrails, while permission boundaries provide fine-grained control within accounts. For example, an SCP might restrict an entire OU from using certain regions, while permission boundaries within those accounts might further limit which services specific developers can access in the allowed regions.",
+        "tags": [
+            "IAM",
+            "Organizations",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q31",
+        "type": "multiple-choice",
+        "question": "A company needs to implement a solution where internal applications can securely access DynamoDB tables without managing AWS credentials. Which approach is most secure?",
+        "options": [
+            "Shared IAM role with credentials stored in AWS Secrets Manager",
+            "IAM roles for EC2 instances running the applications",
+            "DynamoDB VPC Endpoint with resource policies",
+            "IAM users with access keys stored in environment variables"
+        ],
+        "correctIndex": 1,
+        "explanation": "IAM roles for EC2 instances provide temporary credentials that are automatically rotated and don't require storing any secrets in application code or configuration. EC2 instances can assume these roles to get secure access to DynamoDB tables without manually managing credentials. Storing access keys in environment variables risks exposure and requires manual rotation. DynamoDB VPC Endpoints control network access but don't handle authentication. Storing credentials in Secrets Manager still requires code to retrieve and manage those credentials.",
+        "tags": [
+            "IAM",
+            "DynamoDB",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q32",
+        "type": "multiple-choice",
+        "question": "A company needs to provide AWS console access to 2,000 employees who already have corporate Active Directory accounts. Which AWS service should they use?",
+        "options": [
+            "AWS IAM Identity Center (formerly AWS SSO)",
+            "Cognito User Pools with OIDC integration",
+            "Cross-account IAM roles with SAML federation",
+            "IAM users with federation through the AWS SDK"
+        ],
+        "correctIndex": 0,
+        "explanation": "AWS IAM Identity Center (formerly AWS SSO) is designed specifically for this scenario, providing seamless integration with Active Directory for AWS Console access. It provides centralized authentication and authorization for multiple AWS accounts and supports automatic user provisioning from AD. Cross-account IAM roles with SAML federation would work but requires more complex configuration. IAM users with federation through the SDK wouldn't provide console access. Cognito User Pools are designed for customer-facing applications, not employee access to the AWS console.",
+        "tags": [
+            "IAM Identity Center",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q33",
+        "type": "multiple-choice",
+        "question": "A company has sensitive data in S3 buckets and wants to ensure encryption of all objects with customer-managed keys. Which feature provides the strongest controls?",
+        "options": [
+            "S3 default encryption with AES-256 (SSE-S3)",
+            "S3 Bucket Keys with AWS KMS Customer Master Keys and policy enforcement",
+            "Client-side encryption with keys stored in Parameter Store",
+            "CloudHSM with custom encryption libraries"
+        ],
+        "correctIndex": 1,
+        "explanation": "S3 Bucket Keys with AWS KMS Customer Master Keys (CMKs) and policy enforcement provides the strongest server-side encryption controls. This combination reduces KMS API calls (improving performance), uses customer-controlled keys that can be rotated and audited, and can be enforced via bucket policies that deny PUT requests without proper encryption headers. SSE-S3 uses keys managed by AWS, providing less control. Client-side encryption adds complexity and risk to the application layer. CloudHSM with custom libraries requires significant development effort and introduces more potential for implementation flaws.",
+        "tags": [
+            "S3",
+            "KMS",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q34",
+        "type": "multiple-choice",
+        "question": "A security team needs to limit the IP ranges that can make API calls to manage specific AWS resources. Which service and feature should they use?",
+        "options": [
+            "Network ACLs in all VPCs",
+            "AWS WAF with IP match conditions",
+            "IAM policy conditions with aws:SourceIp",
+            "Security Groups attached to AWS services"
+        ],
+        "correctIndex": 2,
+        "explanation": "IAM policy conditions with aws:SourceIp allow organizations to restrict API calls to specific IP ranges at the authorization layer. This applies globally to AWS API calls regardless of entry point. Network ACLs only filter traffic within VPCs, not AWS API calls which typically go through public endpoints. AWS WAF protects applications hosted on specific AWS services, not AWS API access globally. Security Groups can't be attached directly to AWS services to restrict API calls.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q35",
+        "type": "multiple-choice",
+        "question": "A company needs to allow multiple teams to create and manage their own IAM users and groups while enforcing least privilege. Which combination of IAM features should they implement?",
+        "options": [
+            "Resource-based policies with cross-account access",
+            "IAM policy conditions with aws:PrincipalTag",
+            "Service control policies with IAM Access Analyzer",
+            "IAM permissions boundaries with delegated administrator"
+        ],
+        "correctIndex": 3,
+        "explanation": "IAM permissions boundaries with delegated administrator is the correct approach as it allows teams to manage their IAM resources while ensuring they can't exceed the maximum permissions defined by the boundary. This maintains least privilege while enabling delegation. Service control policies apply at the account level, not for delegation within an account. IAM policy conditions with PrincipalTag helps with attribute-based access control but doesn't facilitate delegation of IAM management. Resource-based policies don't apply to most IAM resources and don't address the need to delegate IAM management.",
+        "tags": [
+            "IAM",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q36",
+        "type": "multiple-choice",
+        "question": "An enterprise has a hybrid cloud environment and wants to extend its on-premises identity management to AWS without synchronizing identities. Which solution should they implement?",
+        "options": [
+            "SAML 2.0 federation with IAM roles",
+            "AWS Cognito User Pools with OIDC federation",
+            "AWS IAM Identity Center with SCIM provisioning",
+            "AWS Managed Microsoft AD with trust relationships"
+        ],
+        "correctIndex": 0,
+        "explanation": "SAML 2.0 federation with IAM roles allows enterprises to extend their on-premises identity management to AWS without synchronizing identities. Users authenticate against the on-premises identity provider and receive temporary credentials via IAM roles. AWS IAM Identity Center with SCIM still requires identity synchronization. AWS Cognito User Pools are designed for customer-facing applications, not enterprise workforce. AWS Managed Microsoft AD requires establishing directory trusts and maintaining another directory service.",
+        "tags": [
+            "IAM",
+            "Security Services",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q37",
+        "type": "multiple-choice",
+        "question": "A company wants to ensure Lambda functions can only be created if they have specific tags applied for cost allocation. Which AWS service or feature should they use?",
+        "options": [
+            "IAM policy conditions on the CreateFunction action",
+            "AWS Organizations Tag Policies",
+            "AWS Config rules with Lambda remediation",
+            "CloudFormation template validation"
+        ],
+        "correctIndex": 0,
+        "explanation": "IAM policy conditions on the CreateFunction action can enforce tag requirements by allowing the action only when specific tags are included in the request. This prevents non-compliant resources from being created in the first place. AWS Organizations Tag Policies help standardize tags across accounts but don't prevent resource creation. AWS Config rules could detect non-compliant resources but only after they're created. CloudFormation template validation doesn't enforce tagging requirements across all resource creation methods.",
+        "tags": [
+            "IAM",
+            "Lambda",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q38",
+        "type": "open-ended",
+        "question": "Explain how to implement the principle of least privilege in AWS IAM while still allowing for innovation and developer productivity.",
+        "answer": "Implementing the principle of least privilege in AWS IAM while maintaining developer productivity requires a balanced approach:\n\n1. **Start with Least Privilege Baselines**:\n   - Begin with AWS managed policies designed for job functions (e.g., `PowerUserAccess` minus administrative permissions)\n   - Create custom policies that allow only specific services relevant to the team's work\n   - Use IAM Access Analyzer to identify and remove unused permissions\n\n2. **Implement Permission Guardrails**:\n   - Use IAM permissions boundaries to set maximum permissions that developers can grant themselves\n   - Apply Service Control Policies (SCPs) at the organization level to prevent certain high-risk actions\n   - Enforce preventative guardrails through IAM conditions (e.g., requiring MFA, restricting regions)\n\n3. **Enable Self-Service with Boundaries**:\n   - Allow developers to create and manage their own roles/policies within a permissions boundary\n   - Implement IAM policy conditions using `aws:RequestTag` and `aws:TagKeys` to enforce resource tagging\n   - Use attribute-based access control (ABAC) to scale permissions based on tags\n\n4. **Create Purpose-Built Roles**:\n   - Design project-specific roles with just-enough permissions for common tasks\n   - Implement temporary elevated access through AWS IAM Identity Center permission sets\n   - Configure emergency access roles with appropriate break-glass procedures\n\n5. **Leverage Infrastructure as Code**:\n   - Define and version IAM permissions in CloudFormation or Terraform\n   - Conduct peer reviews of permission changes\n   - Implement policy validation checks in CI/CD pipelines\n\n6. **Use AWS Services That Support Fine-Grained Permissions**:\n   - Implement resource-based policies for S3, Lambda, etc.\n   - Use session policies to further restrict temporary credentials\n   - Configure service-specific access controls (e.g., DynamoDB fine-grained access control)\n\n7. **Implement Developer-Friendly Access Patterns**:\n   - Create deployment pipelines with escalated privileges instead of giving them directly to developers\n   - Use AWS CloudShell for console-like access with pre-configured permissions\n   - Configure Session Manager for shell access without broad EC2 permissions\n\n8. **Establish Continuous Monitoring and Improvement**:\n   - Enable CloudTrail for comprehensive API logging\n   - Use CloudWatch Alarms for suspicious activity\n   - Implement regular access reviews using IAM Access Analyzer findings\n   - Use AWS Config to detect policy drift\n\n9. **Develop Clear Escalation Paths**:\n   - Create streamlined processes for requesting additional permissions\n   - Implement automated approval workflows for temporary access\n   - Document common use cases and their required permissions\n\n10. **Educate and Build Security Culture**:\n    - Train developers on IAM best practices and the security reasoning behind restrictions\n    - Share real examples of security incidents caused by excessive permissions\n    - Recognize and reward teams that maintain least privilege\n\nBy combining these strategies, organizations can maintain strong security boundaries while allowing developers the freedom they need to innovate. The key is establishing clear guardrails and processes that enable self-service within secure parameters, rather than creating bottlenecks that incentivize workarounds.",
+        "tags": [
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "iam-q39",
+        "type": "open-ended",
+        "question": "Compare and contrast the various AWS credential types (access keys, IAM roles, session tokens) and explain the security implications of each.",
+        "answer": "**AWS Credential Types and Their Security Implications**\n\n**1. IAM User Access Keys**\n- **Composition**: Access Key ID (public) and Secret Access Key (private)\n- **Permanence**: Long-lived until manually rotated or disabled\n- **Use Cases**: \n  - Programmatic access to AWS resources\n  - Scripts, CLI, and applications outside AWS infrastructure\n  - Service account access where role assumption isn't possible\n- **Security Implications**:\n  - High risk if compromised - provides direct API access\n  - No automatic expiration creates potential for undetected compromise\n  - Often stored in configuration files, increasing exposure risk\n  - Key rotation requires updating all references, often leading to infrequent rotation\n  - No logging of individual key usage (only the IAM user)\n  - No additional context or conditions beyond IAM policies\n\n**2. IAM Roles with Temporary Security Credentials**\n- **Composition**: Access Key ID, Secret Access Key, and Session Token\n- **Permanence**: Short-lived (15 minutes to 36 hours, typically 1-12 hours)\n- **Use Cases**: \n  - EC2 instances and other AWS services\n  - Cross-account access\n  - AWS service roles (e.g., Lambda execution)\n  - Federated user access\n- **Security Implications**:\n  - Lower risk due to automatic expiration\n  - No credential storage required in application code\n  - Automated credential rotation handled by AWS\n  - Role assumption recorded in CloudTrail for auditing\n  - Can include context-aware conditions in trust policies\n  - Session policies can further restrict permissions\n  - No credential management overhead\n\n**3. AWS STS Session Tokens**\n- **Composition**: Access Key ID, Secret Access Key, and Session Token\n- **Permanence**: Temporary (15 minutes to 36 hours)\n- **Use Cases**: \n  - Federation with external identity providers\n  - MFA-protected API access\n  - Cross-account role assumption\n  - Temporary access with GetSessionToken\n- **Security Implications**:\n  - Enhanced security through time limitation\n  - Can require additional factors (MFA) for issuance\n  - Can include contextual constraints (source IP, expiration time)\n  - Role or user activity tracked in CloudTrail\n  - Can restrict permissions via session policies\n  - Credentials must be refreshed by application before expiration\n\n**4. AWS SSO / IAM Identity Center Credentials**\n- **Composition**: Access Key ID, Secret Access Key, and Session Token\n- **Permanence**: Very short-lived (typically hours)\n- **Use Cases**: \n  - CLI access for human operators\n  - Federated access to multiple AWS accounts\n  - Programmatic access with CLI credential process\n- **Security Implications**:\n  - Integration with enterprise identity providers\n  - Centralized permission management\n  - Automatic credential refresh\n  - No stored credentials in user profiles\n  - Permissions tied to job function through permission sets\n  - Support for conditional access (device trust, MFA)\n\n**Security Best Practices Across Credential Types**:\n\n1. **Follow the Credential Priority Hierarchy**:\n   - IAM Roles > STS Session Tokens > IAM Identity Center > Access Keys\n   - Always prefer temporary over long-term credentials\n\n2. **Implement Strict Access Controls**:\n   - Apply least privilege principle regardless of credential type\n   - Use conditions to restrict access by IP, time, MFA status\n   - Apply resource-based policies as an additional control layer\n\n3. **Comprehensive Monitoring and Auditing**:\n   - Enable CloudTrail for all accounts\n   - Configure alerts for suspicious credential usage\n   - Use IAM Access Analyzer to find unintended access\n\n4. **Automated Credential Management**:\n   - Enforce access key rotation when long-term keys must be used\n   - Use Secrets Manager for third-party credential storage\n   - Implement automated key expiration for inactive credentials\n\nThe security implications of credential choice are significant - using IAM roles and temporary credentials significantly reduces security risk compared to long-term access keys by limiting the blast radius of potential compromises and providing better auditability.",
+        "tags": [
+            "IAM",
+            "Security Services",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "iam-q40",
+        "type": "open-ended",
+        "question": "Describe how to design a secure cross-account access strategy for a multi-account AWS environment.",
+        "answer": "# Designing a Secure Cross-Account Access Strategy for Multi-Account AWS Environments\n\n## Foundation: AWS Organizations Structure\n\n1. **Create a logical account structure**:\n   - Management account: Reserved for billing, organizational governance, and audit purposes\n   - Security account: Centralized security services and monitoring\n   - Shared Services account: Common infrastructure components\n   - Workload accounts: Grouped by environment (dev, test, prod) or business unit\n\n2. **Implement Service Control Policies (SCPs)**:\n   - Apply preventative guardrails at the organization and OU levels\n   - Restrict sensitive actions like leaving the organization or disabling security services\n   - Enforce encryption and resource protection requirements\n\n## Core Cross-Account Access Model\n\n1. **Create a role-based access hierarchy**:\n   - Define standard role names across accounts (e.g., NetworkAdmin, DatabaseAdmin, ReadOnly)\n   - Establish consistent naming conventions and permission boundaries\n\n2. **Implement the trust relationship pattern**:\n   - Create roles in target accounts with appropriate permissions\n   - Configure trust policies to allow assumption only from specific principal ARNs\n   - Use external ID conditions for third-party access for added security\n\n3. **Set up central identity management**:\n   - Use AWS IAM Identity Center (SSO) as the primary access method\n   - Create Permission Sets aligned with job functions\n   - Associate Permission Sets with OUs or individual accounts\n   - Integrate with corporate identity provider (IdP) using SAML or OIDC\n\n## Enhanced Security Controls\n\n1. **Apply least privilege with conditions**:\n   - Include conditions in trust policies for:\n     - Source IP restrictions (`aws:SourceIp`)\n     - MFA enforcement (`aws:MultiFactorAuthPresent`)\n     - Time-of-day restrictions (`aws:CurrentTime`)\n     - Session duration limits (`aws:TokenIssueTime`)\n   \n2. **Implement cross-account role assumption chains**:\n   - Require users to assume a role in the security account first\n   - From that role, allow assumption into workload accounts\n   - This creates a consistent entry point and audit trail\n\n3. **Use session tags and ABAC**:\n   - Pass session tags when assuming roles across accounts\n   - Implement attribute-based access control using `aws:PrincipalTag` conditions\n   - Propagate identity attributes for consistent permissions\n\n## Resource Sharing\n\n1. **AWS Resource Access Manager (RAM)**:\n   - Share common resources like Transit Gateways, subnets, and License Manager configurations\n   - Use resource sharing for VPC endpoint services and Direct Connect gateways\n\n2. **Resource-based policies**:\n   - Configure cross-account access for S3 buckets, KMS keys, SNS topics, and other services\n   - Include specific principal ARNs rather than whole account IDs when possible\n   - Use conditions to limit scope based on request parameters\n\n3. **VPC endpoint policies**:\n   - Control which principals from which accounts can access endpoints\n   - Restrict actions that can be performed via the endpoint\n\n## Monitoring and Governance\n\n1. **Centralized logging and monitoring**:\n   - Set up CloudTrail organization trails to log to the security account\n   - Use CloudWatch Logs for centralized log aggregation\n   - Create cross-account roles specifically for security tooling\n\n2. **Implement detective controls**:\n   - Deploy GuardDuty across the organization with delegated administration\n   - Use IAM Access Analyzer to identify unintended resource access\n   - Set up Security Hub with compliance standards\n\n3. **Automate access reviews**:\n   - Generate regular reports of cross-account access patterns\n   - Implement automated revocation of unused roles\n   - Use Systems Manager to inventory cross-account configurations\n\n## Access Patterns and Workflows\n\n1. **Break-glass procedures**:\n   - Create emergency access roles with strict controls\n   - Implement just-in-time access approval workflows\n   - Log and alert on emergency role usage\n\n2. **CI/CD pipeline access**:\n   - Use dedicated cross-account roles for deployment pipelines\n   - Separate build, test, and deployment permissions\n   - Implement approval gates for production changes\n\n3. **Service-to-service access**:\n   - Create service-specific roles with cross-account trust\n   - Use resource-based policies when available\n   - Implement private API endpoints with VPC endpoint policies\n\nThis comprehensive approach ensures secure, manageable cross-account access that balances security with operational needs in a multi-account AWS environment.",
+        "tags": [
+            "IAM",
+            "Organizations",
+            "Secure Architectures"
+        ]
+    }
 ]
