@@ -1,0 +1,473 @@
+[
+    {
+        "id": "q001",
+        "type": "multiple-choice",
+        "question": "A company keeps mission-critical media assets in an S3 bucket that must stay available even if an entire Availability Zone fails. Which storage class meets this requirement at the lowest cost while providing 99.99% availability across multiple AZs?",
+        "options": [
+            "S3 Standard-IA",
+            "S3 One Zone-IA",
+            "S3 Glacier Instant Retrieval",
+            "S3 Standard"
+        ],
+        "correctIndex": 0,
+        "explanation": "S3 Standard-IA stores data redundantly in at least three AZs, offers 99.9% availability, and is cheaper than S3 Standard while still protecting against AZ loss. One Zone-IA is single-AZ only, and Glacier classes are not designed for immediate availability.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "Storage Classes"
+        ]
+    },
+    {
+        "id": "q002",
+        "type": "multiple-choice",
+        "question": "An application uploads 20 GB objects into an S3 bucket from client devices worldwide. Uploads are slow for users in remote regions. Which combination of features will accelerate uploads without changing the target region? (Choose TWO.)",
+        "options": [
+            "Switch the bucket to S3 One Zone-IA",
+            "Enable S3 Transfer Acceleration on the bucket",
+            "Use S3 Multi-Part Upload",
+            "Enable S3 Intelligent-Tiering",
+            "Move the bucket to an edge region with CloudFront"
+        ],
+        "correctIndex": 1,
+        "explanation": "Transfer Acceleration routes traffic to the nearest CloudFront edge, then to the bucket. Multi-Part Upload parallelizes large uploads to improve throughput. The other options do not improve upload speed to the existing region.",
+        "tags": [
+            "High-Performing Architectures",
+            "S3",
+            "Performance"
+        ]
+    },
+    {
+        "id": "q003",
+        "type": "multiple-choice",
+        "question": "Which statement about S3 Versioning is TRUE?",
+        "options": [
+            "Deleting an object with a version ID replicates the delete to destination buckets in CRR.",
+            "Suspending versioning deletes all previous object versions automatically.",
+            "Enable versioning by default when a bucket is created.",
+            "Versioning must be enabled to allow MFA Delete."
+        ],
+        "correctIndex": 3,
+        "explanation": "MFA Delete can only be enabled on versioned buckets. Suspension does not delete versions. Versioning is disabled by default. Deletes with a version ID are NOT replicated in CRR to prevent malicious deletes.",
+        "tags": [
+            "Resilient Architectures",
+            "S3",
+            "Versioning"
+        ]
+    },
+    {
+        "id": "q004",
+        "type": "multiple-choice",
+        "question": "A data lake uses an S3 bucket with event notifications to trigger a Lambda function on every object upload. The function is not invoked and CloudWatch shows no errors. What is the MOST likely misconfiguration?",
+        "options": [
+            "The event filter prefix is set to \"/\".",
+            "The bucket uses Object Lock in Governance mode.",
+            "The Lambda function's resource policy does not allow \"s3.amazonaws.com\" to invoke it.",
+            "The bucket lacks an S3 Access Point."
+        ],
+        "correctIndex": 2,
+        "explanation": "S3 must have permission to invoke the Lambda function via a resource-based policy. Missing permission silently drops the notification. Access Points and Object Lock do not affect notifications, and a root prefix filter still triggers events.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Lambda",
+            "Event Notifications"
+        ]
+    },
+    {
+        "id": "q005",
+        "type": "multiple-choice",
+        "question": "A healthcare provider stores patient records in S3. Compliance requires that objects be immutable for 7 years and deletions be impossible even by administrators. Which feature satisfies this requirement?",
+        "options": [
+            "S3 Bucket Policy with explicit deny on DeleteObject",
+            "S3 Versioning with MFA Delete",
+            "S3 Object Lock in Compliance mode",
+            "S3 Glacier Vault Lock"
+        ],
+        "correctIndex": 2,
+        "explanation": "S3 Object Lock in Compliance mode enforces write-once-read-many and prevents any user, including root, from deleting or altering the object until the retention period expires. Vault Lock applies at the vault level and Glacier retrieval times are slower. Bucket policies can still be overridden by root.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Compliance"
+        ]
+    },
+    {
+        "id": "q006",
+        "type": "multiple-choice",
+        "question": "Which S3 encryption option requires clients to include their own encryption key in every request?",
+        "options": [
+            "SSE-S3",
+            "SSE-C",
+            "Client-side encryption using the AWS Encryption SDK",
+            "SSE-KMS"
+        ],
+        "correctIndex": 1,
+        "explanation": "With Server-Side Encryption with Customer-Provided Keys (SSE-C), the client supplies the key on every request. SSE-S3 and SSE-KMS store keys in AWS, and client-side encryption occurs entirely outside S3.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Encryption"
+        ]
+    },
+    {
+        "id": "q007",
+        "type": "multiple-choice",
+        "question": "A finance team wants to analyze S3 storage trends across the organization and identify buckets with noncurrent objects older than 90 days. Which tool provides these insights with the least operational overhead?",
+        "options": [
+            "AWS Glue Data Catalog",
+            "S3 Batch Operations",
+            "Athena queries against S3 Inventory",
+            "S3 Storage Lens with advanced metrics"
+        ],
+        "correctIndex": 3,
+        "explanation": "S3 Storage Lens provides organization-wide dashboards and metrics such as NonCurrentVersionStorageBytes without needing to build queries. Athena on Inventory requires more setup. Batch Operations performs actions not analytics.",
+        "tags": [
+            "Operational Excellence",
+            "S3",
+            "Monitoring"
+        ]
+    },
+    {
+        "id": "q008",
+        "type": "multiple-choice",
+        "question": "Which action will DENY all HTTP (non-TLS) access to objects in an S3 bucket while allowing HTTPS?",
+        "options": [
+            "Enable default encryption with SSE-S3",
+            "Enable Block Public Access",
+            "Enable S3 Access Analyzer",
+            "Create a bucket policy that denies GetObject when aws:SecureTransport is false"
+        ],
+        "correctIndex": 3,
+        "explanation": "A bucket policy condition on aws:SecureTransport denies requests using HTTP. Block Public Access restricts ACLs and public policies, not transport. Encryption and Access Analyzer do not enforce transport layer security.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Security"
+        ]
+    },
+    {
+        "id": "q009",
+        "type": "multiple-choice",
+        "question": "A media company replicates assets from a source bucket in us-east-1 to a destination bucket in eu-west-1. They later enable replication time control (RTC). What additional cost will they incur?",
+        "options": [
+            "A per-GB RTC data transfer fee plus CloudWatch monitoring charges",
+            "An hourly RTC fee per replicated object",
+            "A per-GB RTC data transfer fee only",
+            "No additional cost because cross-region replication already includes RTC"
+        ],
+        "correctIndex": 0,
+        "explanation": "RTC adds a small per-GB replicated data fee and per-ObjectMonitoring metric charges in CloudWatch. Standard CRR alone has no RTC SLA or extra monitoring.",
+        "tags": [
+            "Resilient Architectures",
+            "S3",
+            "Replication"
+        ]
+    },
+    {
+        "id": "q010",
+        "type": "multiple-choice",
+        "question": "Which scenario requires an S3 Access Point rather than a single bucket policy?",
+        "options": [
+            "Enforcing encryption at rest",
+            "Adding lifecycle rules for log files",
+            "Enabling transfer acceleration for global uploads",
+            "Segmenting access for multiple applications each needing different prefixes within the same bucket"
+        ],
+        "correctIndex": 3,
+        "explanation": "Access Points simplify managing distinct permissions for different consumers of the same bucket. The other tasks are handled via bucket-level settings.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Access Points"
+        ]
+    },
+    {
+        "id": "q011",
+        "type": "multiple-choice",
+        "question": "A researcher must share a private S3 object with an external partner for 12 hours. Which method meets this requirement with the LEAST privilege?",
+        "options": [
+            "Generate a pre-signed URL with a 12-hour expiration",
+            "Add the partner's IAM user to the bucket policy with GetObject permission",
+            "Enable public read ACL on the object",
+            "Set the object to S3 One Zone-IA and share the URL"
+        ],
+        "correctIndex": 0,
+        "explanation": "A pre-signed URL grants time-limited access without changing bucket policies or object ACLs. Making the object public or updating policies grants broader, not minimal, access.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Pre-Signed URLs"
+        ]
+    },
+    {
+        "id": "q012",
+        "type": "multiple-choice",
+        "question": "Which S3 feature allows transformation of objects (for example, redacting PII) at retrieval time without storing additional copies?",
+        "options": [
+            "S3 Event Notifications",
+            "S3 Select",
+            "S3 Object Lambda",
+            "S3 Batch Operations"
+        ],
+        "correctIndex": 2,
+        "explanation": "S3 Object Lambda invokes a Lambda function to modify data as it is returned to the requester, enabling on-the-fly transformation. S3 Select only filters CSV/JSON/Parquet data but cannot perform arbitrary transforms.",
+        "tags": [
+            "High-Performing Architectures",
+            "S3",
+            "Serverless"
+        ]
+    },
+    {
+        "id": "q013",
+        "type": "multiple-choice",
+        "question": "A large analytics file (8 GB) must be uploaded daily. Which BEST practice improves upload performance and resiliency?",
+        "options": [
+            "Use S3 Multi-Part Upload",
+            "Change storage class to Glacier Flexible Retrieval",
+            "Use S3 Transfer Acceleration",
+            "Enable S3 Intelligent-Tiering"
+        ],
+        "correctIndex": 0,
+        "explanation": "Multi-Part Upload is required for files larger than 5 GB and enables parallel uploads and resume on failure. Transfer Acceleration may help but is optional and incurs cost. Storage class changes do not improve upload performance.",
+        "tags": [
+            "High-Performing Architectures",
+            "S3",
+            "Performance"
+        ]
+    },
+    {
+        "id": "q014",
+        "type": "multiple-choice",
+        "question": "In an S3 bucket using lifecycle rules, which action will permanently remove incomplete multipart uploads older than 7 days?",
+        "options": [
+            "Enable versioning and suspend it after 7 days",
+            "Add a transition rule to S3 Glacier after 7 days",
+            "Enable S3 Intelligent-Tiering",
+            "Configure an expiration action with DaysAfterInitiation set to 7"
+        ],
+        "correctIndex": 3,
+        "explanation": "A lifecycle rule with AbortIncompleteMultipartUpload after N days cleans up aborted uploads. Transition rules move completed objects between classes, not incomplete parts.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "Lifecycle"
+        ]
+    },
+    {
+        "id": "q015",
+        "type": "multiple-choice",
+        "question": "Which S3 storage class is MOST cost effective for data accessed once a quarter that must be retrieved within milliseconds?",
+        "options": [
+            "S3 Glacier Deep Archive",
+            "S3 Glacier Flexible Retrieval",
+            "S3 Standard-IA",
+            "S3 Intelligent-Tiering Archive Instant Access"
+        ],
+        "correctIndex": 3,
+        "explanation": "Intelligent-Tiering Archive Instant Access provides millisecond retrieval at lower cost for infrequently accessed data. Flexible Retrieval and Deep Archive require hours. Standard-IA costs more than Intelligent-Tiering for this pattern.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "Storage Classes"
+        ]
+    },
+    {
+        "id": "q016",
+        "type": "multiple-choice",
+        "question": "A bucket owner wants requesters to pay for data transfer and API costs but still cover storage themselves. How can this be achieved?",
+        "options": [
+            "Set a bucket policy denying anonymous access",
+            "Enable S3 Access Analyzer",
+            "Enable S3 Requester Pays on the bucket",
+            "Use S3 Transfer Acceleration"
+        ],
+        "correctIndex": 2,
+        "explanation": "Requester Pays transfers request and download costs to the requester while the owner pays storage. The requester must be authenticated.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "Billing"
+        ]
+    },
+    {
+        "id": "q017",
+        "type": "multiple-choice",
+        "question": "Which mechanism prevents a root user from accidentally deleting S3 object versions while still allowing delete markers to replicate?",
+        "options": [
+            "Use S3 Object Lock Governance mode",
+            "Enable CRR with 'replicate delete markers' checked and rely on default behavior for version deletes",
+            "Enable CRR and disable versioning",
+            "Enable replication for delete markers only"
+        ],
+        "correctIndex": 1,
+        "explanation": "CRR can replicate delete markers but will not replicate deletions that specify a version ID, protecting the destination from malicious deletes.",
+        "tags": [
+            "Resilient Architectures",
+            "S3",
+            "Replication"
+        ]
+    },
+    {
+        "id": "q018",
+        "type": "multiple-choice",
+        "question": "A security team needs to audit all object-level API activity in an S3 bucket. Which services should be enabled?",
+        "options": [
+            "Enable S3 Access Logs",
+            "Enable EventBridge rule for Object Created events",
+            "Enable S3 Storage Lens advanced metrics",
+            "Enable CloudTrail data events for the bucket"
+        ],
+        "correctIndex": 3,
+        "explanation": "CloudTrail data events log object-level operations such as GetObject, PutObject. S3 Access Logs capture access records but not all API calls. Storage Lens is analytics, and EventBridge rules do not keep detailed audit logs.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Monitoring"
+        ]
+    },
+    {
+        "id": "q019",
+        "type": "multiple-choice",
+        "question": "A global web application serves static content from an S3 bucket via CloudFront. Which header must be added to force encryption at rest for all uploaded objects?",
+        "options": [
+            "x-amz-server-side-encryption: AES256",
+            "x-amz-grant-read: uri=\"http://acs.amazonaws.com/groups/global/AllUsers\"",
+            "x-amz-storage-class: STANDARD",
+            "x-amz-meta-content-type: text/html"
+        ],
+        "correctIndex": 0,
+        "explanation": "The header x-amz-server-side-encryption: AES256 requests SSE-S3. Bucket policies can enforce its presence.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Encryption"
+        ]
+    },
+    {
+        "id": "q020",
+        "type": "open-ended",
+        "question": "Explain how S3 Intelligent-Tiering works, including its monitoring and automatic transition process, and describe a use case where it offers cost benefits over S3 Standard-IA.",
+        "answer": "S3 Intelligent-Tiering places new objects in the frequent access tier. An internal 30-day monitoring job evaluates access patterns. If an object is not accessed for 30 consecutive days, it moves to the infrequent access tier. After 90 days without access, it can transition to Archive Instant tier, and optionally to Archive and Deep Archive tiers at configurable thresholds. When an object is accessed again, it automatically returns to the frequent tier. A small per-object monitoring fee funds this automation. It is cost-effective for data with unpredictable access, such as user-generated media where some files become cold but occasionally get accessed again, eliminating retrieval charges and manual lifecycle management compared to Standard-IA.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "Storage Classes"
+        ]
+    },
+    {
+        "id": "q021",
+        "type": "open-ended",
+        "question": "Describe the differences between SSE-S3 and SSE-KMS, focusing on key management, additional costs, and potential performance considerations.",
+        "answer": "SSE-S3 uses keys fully managed by AWS within S3; customers cannot view or control them. There is no extra cost beyond normal S3 pricing. SSE-KMS stores data keys encrypted under a customer-managed KMS key. Customers can define rotation, use key policies, and audit usage via CloudTrail. SSE-KMS incurs KMS request costs for every object upload and download call that requires a decryption operation, and is subject to KMS quota limits. Because each operation generates a KMS call, very high request rates can introduce slight latency and require quota increases.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Encryption",
+            "KMS"
+        ]
+    },
+    {
+        "id": "q022",
+        "type": "open-ended",
+        "question": "Explain how S3 Multi-Part Upload improves resiliency during large file uploads and outline the steps to resume an interrupted upload.",
+        "answer": "Multi-Part Upload divides an object into parts (up to 10 GB each) that upload independently and in parallel. If a network interruption occurs, only the failed parts need to be retried. The process involves InitiateMultipartUpload (which returns an upload ID), UploadPart calls for each part, optional UploadPartCopy, and CompleteMultipartUpload to finalize. To resume, list the parts with ListParts using the upload ID, identify missing or corrupted parts, re-upload them, then complete. Unfinished uploads can be aborted to release storage using AbortMultipartUpload or lifecycle rules.",
+        "tags": [
+            "High-Performing Architectures",
+            "S3",
+            "Performance"
+        ]
+    },
+    {
+        "id": "q023",
+        "type": "open-ended",
+        "question": "Outline the steps to configure Cross-Region Replication (CRR) between two AWS accounts, including required permissions and optional replication of delete markers.",
+        "answer": "1. Enable versioning on both source and destination buckets. 2. In the destination account, create an IAM role that trusts the source account's S3 service principal and grants PutObject, ReplicateObject, ReplicateDelete, and ReplicateTags to the destination bucket. 3. Configure a replication rule in the source bucket that specifies the destination bucket ARN, the IAM role, and optional filters (prefix/tags). 4. Choose whether to replicate delete markers and existing objects. 5. Save the rule; new objects are replicated asynchronously. To replicate existing objects, use S3 Batch Replication. If delete marker replication is enabled, only markers (no specific version deletions) propagate.",
+        "tags": [
+            "Resilient Architectures",
+            "S3",
+            "Replication",
+            "Multi-Account"
+        ]
+    },
+    {
+        "id": "q024",
+        "type": "open-ended",
+        "question": "What is S3 Batch Operations and how can it be combined with S3 Inventory and AWS Lambda to encrypt previously unencrypted objects?",
+        "answer": "S3 Batch Operations executes large-scale actions on existing objects. Generate an S3 Inventory report listing objects without encryption (filter via Athena). Provide this manifest to Batch Operations with the action 'Invoke Lambda'. The Lambda function reads each object, downloads it, re-uploads with the desired server-side encryption header, and copies metadata. Batch Operations tracks progress, retries failures, and writes a completion report. This approach avoids custom scripts and scales transparently.",
+        "tags": [
+            "Operational Excellence",
+            "S3",
+            "Batch Operations",
+            "Lambda"
+        ]
+    },
+    {
+        "id": "q025",
+        "type": "open-ended",
+        "question": "Compare S3 Access Logs and CloudTrail data events for auditing, including granularity, storage location, and common use cases.",
+        "answer": "S3 Access Logs capture HTTP access records (requester, bucket, object key, operation, response code) and write them as log files into another S3 bucket. They do not log object metadata changes like ACL updates. Logs are batched and can be delayed. CloudTrail data events record API calls at object level, such as GetObject, PutObject, DeleteObject, and include identity context, request parameters, and are delivered to CloudTrail logs (S3/CloudWatch). Data events are near-real-time and support fine-grained filtering. Use Access Logs for web-style access analysis and billing, and CloudTrail for security auditing and compliance.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Monitoring",
+            "Logging"
+        ]
+    },
+    {
+        "id": "q026",
+        "type": "open-ended",
+        "question": "Explain how Amazon S3 handles read and write consistency and why most modern applications no longer need key-naming randomness to achieve high request rates.",
+        "answer": "S3 provides strong read-after-write consistency for PUTs of new objects and for DELETEs in all regions. Overwrites are read-after-write consistent in versioned buckets using the latest version ID. S3 has removed any performance penalty for sequential key patterns. Internal partitioning now auto-scales, supporting at least 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD requests per second per prefix. By using multiple prefixes (virtual directories), applications can horizontally scale without random hash prefixes.",
+        "tags": [
+            "High-Performing Architectures",
+            "S3",
+            "Performance"
+        ]
+    },
+    {
+        "id": "q027",
+        "type": "open-ended",
+        "question": "Describe a lifecycle configuration that keeps the latest object version in S3 Standard for 30 days, transitions noncurrent versions to S3 Standard-IA after 30 days, and deletes them after 365 days.",
+        "answer": "Create a lifecycle rule with these actions: 1) Transition noncurrent versions to Standard-IA after 30 days (NoncurrentVersionTransition) and 2) Expire noncurrent versions after 365 days (NoncurrentVersionExpiration). No transition is set for current versions so they remain in Standard. The rule applies to the entire bucket or selected prefixes/tags.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "Lifecycle",
+            "Versioning"
+        ]
+    },
+    {
+        "id": "q028",
+        "type": "open-ended",
+        "question": "How does S3 Object Lock Legal Hold differ from Compliance and Governance modes, and when would you use it?",
+        "answer": "Legal Hold prevents deletion or modification indefinitely until explicitly released, without requiring a retention period. Compliance and Governance modes enforce retention periods. Use Legal Hold when litigation or investigation requires protecting specific data while flexibility to release later is needed, independent of existing retention rules.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Compliance",
+            "Object Lock"
+        ]
+    },
+    {
+        "id": "q029",
+        "type": "open-ended",
+        "question": "What are the security implications of enabling S3 Block Public Access at the account level and how can legitimate public websites still serve assets from S3?",
+        "answer": "Account-level Block Public Access overrides bucket ACLs and public policies, preventing any new or existing public access settings. To host public content, use CloudFront with an origin access control or origin access identity to retrieve private S3 objects. The website remains publicly reachable via CloudFront while the S3 bucket stays private, satisfying security requirements.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "Security"
+        ]
+    },
+    {
+        "id": "q030",
+        "type": "open-ended",
+        "question": "Provide a disaster recovery strategy using S3 and other AWS services to ensure RPO of 15 minutes and RTO of 1 hour for critical data.",
+        "answer": "Store primary data in a versioned S3 bucket. Enable CRR with RTC to a second region for an RPO under 15 minutes. Replicate delete markers to preserve deletes but exclude permanent version deletes. In the secondary region, configure CloudFormation templates or IaC to recreate infrastructure. Use cross-region DynamoDB global tables or Aurora global databases for application state. Pre-provision a minimal pilot-light environment that can scale out with Auto Scaling groups and Route 53 failover routing. Routine DR drills validate that switchover completes within the 1-hour RTO.",
+        "tags": [
+            "Resilient Architectures",
+            "S3",
+            "Disaster Recovery"
+        ]
+    }
+]

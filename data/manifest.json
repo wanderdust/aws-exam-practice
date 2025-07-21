@@ -4,6 +4,7 @@
     "iam-questions.json",
     "elb-asg-questions.json",
     "database-questions.json",
-    "route53-questions.json"
+    "route53-questions.json",
+    "s3-questions.json"
   ]
 }
