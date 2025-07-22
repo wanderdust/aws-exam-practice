@@ -6,6 +6,7 @@
     "database-questions.json",
     "route53-questions.json",
     "s3-questions.json",
-    "cloudfront-questions.json"
+    "cloudfront-questions.json",
+    "storage-questions.json"
   ]
 }
