@@ -1,0 +1,317 @@
+[
+    {
+      "id": "srv-q001",
+      "type": "multiple-choice",
+      "question": "A Lambda function processes images uploaded to an S3 bucket. The team observes high latency on the first invocation after periods of inactivity. Which feature removes this cold-start delay while keeping cost predictable?",
+      "options": [
+        "Provisioned concurrency",
+        "Lambda SnapStart",
+        "Reserved concurrency",
+        "Increasing function memory to 10 GB"
+      ],
+      "correctIndex": 0,
+      "explanation": "Provisioned concurrency keeps a chosen number of execution environments pre-initialised, eliminating cold starts. SnapStart boosts startup for certain runtimes but still incurs latency if no snapshot is pre-warmed. Reserved concurrency only guarantees capacity, not warmth. Extra memory speeds execution but does not remove the cold start itself.",
+      "tags": ["High-Performing Architectures", "Lambda", "Concurrency"]
+    },
+    {
+      "id": "srv-q002",
+      "type": "multiple-choice",
+      "question": "A synchronous Lambda API suddenly returns HTTP 429 errors during a flash sale. What is the root cause and what immediate action should you take?",
+      "options": [
+        "The function hit the memory limit. Increase RAM.",
+        "The account hit the concurrent execution quota. Request a quota increase.",
+        "API Gateway throttled at stage level. Add a usage plan.",
+        "The deployment package exceeded 50 MB. Use layers."
+      ],
+      "correctIndex": 1,
+      "explanation": "HTTP 429 from Lambda indicates throttling because the regional concurrent execution quota (default 1 000) was exceeded. The quick mitigation is to open a quota request and, if possible, enable provisioned or reserved concurrency for this function. Memory, API Gateway usage plans, and package size are unrelated.",
+      "tags": ["Resilient Architectures", "Lambda", "Throttling"]
+    },
+    {
+      "id": "srv-q003",
+      "type": "multiple-choice",
+      "question": "Which Lambda event source mapping guarantees exactly-once processing without duplicate deliveries?",
+      "options": [
+        "SQS FIFO queue",
+        "Kinesis Data Stream",
+        "S3 object created events",
+        "EventBridge scheduled rule"
+      ],
+      "correctIndex": 0,
+      "explanation": "Lambda polls SQS FIFO queues with exactly-once semantics using message group ordering and deduplication IDs. Kinesis and S3 send at-least-once. EventBridge invokes functions directly and may retry, causing duplicates.",
+      "tags": ["Secure Architectures", "Lambda", "SQS"]
+    },
+    {
+      "id": "srv-q004",
+      "type": "multiple-choice",
+      "question": "A Lambda function inside a VPC needs to query an RDS instance in a private subnet. After enabling VPC access, the function experiences long cold-start time. How can you reduce this latency?",
+      "options": [
+        "Enable a NAT gateway",
+        "Attach an AWS Lambda-managed RDS Proxy",
+        "Use an Elastic IP on the function",
+        "Move the RDS instance to public subnets"
+      ],
+      "correctIndex": 1,
+      "explanation": "RDS Proxy keeps persistent connections, reducing time Lambda spends on creating new connections and on ENI exhaustion. NAT does not fix connection overhead. Functions cannot have Elastic IPs, and exposing RDS publicly is insecure.",
+      "tags": ["High-Performing Architectures", "Lambda", "RDS"]
+    },
+    {
+      "id": "srv-q005",
+      "type": "multiple-choice",
+      "question": "A DynamoDB table with on-demand capacity receives traffic peaks of 30 000 write requests per second for 30 minutes each morning. Costs are high. How can you lower cost while meeting demand?",
+      "options": [
+        "Switch to provisioned mode with Auto Scaling and set a max WCU of 30 000",
+        "Enable DynamoDB Accelerator",
+        "Add a global secondary index",
+        "Move to DynamoDB Standard-IA table class"
+      ],
+      "correctIndex": 0,
+      "explanation": "Provisioned mode with Auto Scaling provides WCUs ahead of the peak and is cheaper than on-demand for predictable spikes. DAX only caches reads. GSIs add cost. Standard-IA affects storage price, not writes.",
+      "tags": ["Cost-Optimized Architectures", "DynamoDB", "Auto Scaling"]
+    },
+    {
+      "id": "srv-q006",
+      "type": "multiple-choice",
+      "question": "Which DynamoDB capability automatically removes expired session items without affecting read or write throughput?",
+      "options": [
+        "TTL attribute on items",
+        "Point-in-time recovery",
+        "Streams with Lambda process",
+        "DAX eviction"
+      ],
+      "correctIndex": 0,
+      "explanation": "DynamoDB Time to Live (TTL) marks items for asynchronous deletion based on an epoch timestamp, freeing storage without using WCUs/RCUs. PITR, Streams, and DAX do not delete data automatically.",
+      "tags": ["Operational Excellence", "DynamoDB", "TTL"]
+    },
+    {
+      "id": "srv-q007",
+      "type": "multiple-choice",
+      "question": "A global application needs single-digit millisecond reads and writes in North America and Europe with automatic multi-region replication. Which solution meets this requirement?",
+      "options": [
+        "DynamoDB global tables",
+        "Aurora global database",
+        "S3 Multi-Region Access Point",
+        "RDS Multi-AZ"
+      ],
+      "correctIndex": 0,
+      "explanation": "DynamoDB global tables provide active-active replication, local reads and writes with low latency. Aurora global is low-latency read only in secondaries. S3 is object storage. RDS Multi-AZ is single region.",
+      "tags": ["Resilient Architectures", "DynamoDB", "Global Tables"]
+    },
+    {
+      "id": "srv-q008",
+      "type": "multiple-choice",
+      "question": "API Gateway receives sudden bursts of traffic. Which setting protects the backend Lambda from overload while returning 429 to callers?",
+      "options": [
+        "Usage plan rate and burst limits",
+        "WAF rate-based rule",
+        "Private endpoint",
+        "Enable X-Ray tracing"
+      ],
+      "correctIndex": 0,
+      "explanation": "Usage plans enforce per-API key throttling with configured rate and burst, shielding downstream. WAF helps but operates at web ACL level and may not align with per-client keys. Private endpoints and X-Ray do not throttle.",
+      "tags": ["Secure Architectures", "API Gateway", "Throttling"]
+    },
+    {
+      "id": "srv-q009",
+      "type": "multiple-choice",
+      "question": "An API Gateway REST API must authorize external users through Google and Facebook logins. Which feature simplifies this?",
+      "options": [
+        "Cognito user pool authorizer",
+        "IAM SigV4 authorization",
+        "Lambda custom authorizer with static keys",
+        "API keys"
+      ],
+      "correctIndex": 0,
+      "explanation": "Cognito user pools can federate to social IdPs and issue JWTs verified by API Gateway. IAM auth is for AWS users. Custom authorizers add code. API keys are not auth mechanisms.",
+      "tags": ["Secure Architectures", "API Gateway", "Cognito"]
+    },
+    {
+      "id": "srv-q010",
+      "type": "multiple-choice",
+      "question": "Which Step Functions workflow type supports exactly-once execution with a 1-year history retention and automatic state recovery?",
+      "options": [
+        "Standard workflow",
+        "Express sync workflow",
+        "Express async workflow",
+        "Lambda Destinations"
+      ],
+      "correctIndex": 0,
+      "explanation": "Standard workflows provide durable, exactly-once, long running state machines with 1-year history. Express has 90-day history and at-least-once guarantees. Lambda Destinations are event routing.",
+      "tags": ["Resilient Architectures", "Step Functions", "Durability"]
+    },
+    {
+      "id": "srv-q011",
+      "type": "multiple-choice",
+      "question": "A customer wants single-digit millisecond cache reads in front of DynamoDB without code changes. Which service meets this goal?",
+      "options": [
+        "DAX cluster",
+        "ElastiCache Redis",
+        "S3 Transfer Acceleration",
+        "CloudFront Functions"
+      ],
+      "correctIndex": 0,
+      "explanation": "DynamoDB Accelerator (DAX) is an API-compatible cache layer requiring minimal code adjustments in SDK configuration. Redis needs application changes. The others are unrelated.",
+      "tags": ["High-Performing Architectures", "DynamoDB", "DAX"]
+    },
+    {
+      "id": "srv-q012",
+      "type": "multiple-choice",
+      "question": "For Lambda@Edge, where must the function be deployed?",
+      "options": [
+        "us-east-1",
+        "The same Region as the CloudFront origin",
+        "Any Region chosen at creation",
+        "eu-west-1 only"
+      ],
+      "correctIndex": 0,
+      "explanation": "Lambda@Edge requires that the function reside in us-east-1 and is then replicated to CloudFront edge locations globally.",
+      "tags": ["High-Performing Architectures", "Lambda@Edge", "CloudFront"]
+    },
+    {
+      "id": "srv-q013",
+      "type": "multiple-choice",
+      "question": "Which Cognito feature allows temporary AWS credentials so a mobile app can directly upload to S3 without an intermediary backend?",
+      "options": [
+        "Identity pools",
+        "User pool refresh tokens",
+        "Hosted UI",
+        "AdminInitiateAuth API"
+      ],
+      "correctIndex": 0,
+      "explanation": "Cognito identity pools exchange federated identities for STS credentials tied to IAM roles, enabling direct access to AWS services like S3.",
+      "tags": ["Secure Architectures", "Cognito", "IAM"]
+    },
+    {
+      "id": "srv-q014",
+      "type": "multiple-choice",
+      "question": "A Lambda function must read a 150 MB machine-learning model at startup. What is the MOST efficient method?",
+      "options": [
+        "Ship the model inside the deployment package",
+        "Download the model from S3 into /tmp at runtime",
+        "Mount the model from EFS configured as an elastic file system",
+        "Store the model as an environment variable"
+      ],
+      "correctIndex": 2,
+      "explanation": "EFS provides shared elastic storage up to many GB, avoids 250 MB uncompressed package limit and repeated downloads. Packaging or env vars exceed size limits. Downloading each invoke increases latency.",
+      "tags": ["High-Performing Architectures", "Lambda", "EFS"]
+    },
+    {
+      "id": "srv-q015",
+      "type": "multiple-choice",
+      "question": "You need to store web session data with automatic expiration and occasional large spikes in traffic. Which DynamoDB configuration is MOST cost-effective?",
+      "options": [
+        "On-demand mode with TTL",
+        "Provisioned mode with no Auto Scaling",
+        "Provisioned mode with reserved capacity",
+        "Global table with standard class"
+      ],
+      "correctIndex": 0,
+      "explanation": "On-demand handles unpredictable spikes without capacity planning, and TTL deletes sessions automatically, minimising storage cost.",
+      "tags": ["Cost-Optimized Architectures", "DynamoDB", "TTL"]
+    },
+    {
+      "id": "srv-q016",
+      "type": "multiple-choice",
+      "question": "How can API Gateway reduce JSON payload size when returning large amounts of data to mobile clients?",
+      "options": [
+        "Enable gzip compression",
+        "Use Edge endpoint type",
+        "Switch to WebSocket API",
+        "Enable X-Ray sampling"
+      ],
+      "correctIndex": 0,
+      "explanation": "API Gateway supports response compression (gzip or Brotli) based on the Accept-Encoding header, reducing data transfer. Endpoint type and X-Ray do not affect payload size.",
+      "tags": ["High-Performing Architectures", "API Gateway", "Optimization"]
+    },
+    {
+      "id": "srv-q017",
+      "type": "multiple-choice",
+      "question": "A Step Functions Express workflow triggers Lambda, runs in <30 seconds and executes 100 000 times per minute. What is the primary cost advantage over Standard?",
+      "options": [
+        "Billed per GB-second of runtime instead of state transitions",
+        "Flat monthly fee",
+        "Pay per transition and execution history preserved for 1 year",
+        "Free first million requests per month"
+      ],
+      "correctIndex": 0,
+      "explanation": "Express is metered by GB-seconds and request count, optimised for high-volume short workflows. Standard charges per state transition and can be costlier for large event rates.",
+      "tags": ["Cost-Optimized Architectures", "Step Functions", "Express"]
+    },
+    {
+      "id": "srv-q018",
+      "type": "multiple-choice",
+      "question": "Which Lambda deployment package limit applies when uploading a ZIP file directly through the console?",
+      "options": [
+        "50 MB compressed",
+        "250 MB compressed",
+        "250 MB uncompressed",
+        "10 GB"
+      ],
+      "correctIndex": 0,
+      "explanation": "Lambda console uploads are limited to 50 MB compressed ZIP. For larger artifacts, use S3 deployment or container images.",
+      "tags": ["Operational Excellence", "Lambda", "Limits"]
+    },
+    {
+      "id": "srv-q019",
+      "type": "multiple-choice",
+      "question": "You need to build an authorizer for API Gateway that checks JWT tokens against a custom IdP and caches the result for 10 minutes. Which option fits?",
+      "options": [
+        "Lambda token authorizer with TTL 600",
+        "IAM role authorizer",
+        "Cognito user pool authorizer",
+        "API key validation"
+      ],
+      "correctIndex": 0,
+      "explanation": "A Lambda token authorizer can verify custom JWTs and cache policy decisions for a specified TTL. IAM and API keys are not JWT aware. Cognito authorizer requires Cognito issued tokens.",
+      "tags": ["Secure Architectures", "API Gateway", "Authorizer"]
+    },
+    {
+      "id": "srv-q020",
+      "type": "multiple-choice",
+      "question": "A developer enabled Lambda SnapStart for a Java function. What change is needed to stop SnapStart from impacting secrets retrieved at init?",
+      "options": [
+        "Move the secrets fetch into the handler",
+        "Increase memory",
+        "Disable X-Ray",
+        "Enable provisioned concurrency"
+      ],
+      "correctIndex": 0,
+      "explanation": "SnapStart restores a pre-initialised snapshot, so secrets loaded at init may be stale. Fetch secrets inside the handler or use cache refresh. Memory and X-Ray are unrelated. Provisioned concurrency does not alter SnapStart behaviour.",
+      "tags": ["Secure Architectures", "Lambda", "SnapStart"]
+    },
+    {
+      "id": "srv-q021",
+      "type": "open-ended",
+      "question": "Explain the difference between reserved concurrency and provisioned concurrency in AWS Lambda and give a use case for each.",
+      "answer": "Reserved concurrency sets a hard ceiling and floor on concurrent executions for a function, guaranteeing it capacity and protecting other functions from exhaustion. It is charged only when the function runs. Provisioned concurrency keeps the specified number of execution environments pre-initialised, eliminating cold starts but incurring hourly charges regardless of traffic. Use reserved concurrency to enforce multi-tenant fairness in a shared account. Use provisioned concurrency for latency-sensitive production APIs where every millisecond matters during spiky workloads.",
+      "tags": ["High-Performing Architectures", "Lambda", "Concurrency"]
+    },
+    {
+      "id": "srv-q022",
+      "type": "open-ended",
+      "question": "Describe how DynamoDB Streams and Lambda can be combined to create an audit log of all table changes in S3.",
+      "answer": "Enable DynamoDB Streams with NEW_AND_OLD_IMAGES to capture every insert, update, and delete. Configure a Lambda trigger on the stream. The function serialises each record to JSON and writes it to an S3 object using a time-partitioned prefix such as /year/month/day/hour. Enable S3 lifecycle rules for retention and Athena for querying. This pattern provides an immutable audit log without impacting application write latency.",
+      "tags": ["Resilient Architectures", "DynamoDB", "Streams", "Lambda"]
+    },
+    {
+      "id": "srv-q023",
+      "type": "open-ended",
+      "question": "Outline a serverless architecture that authenticates users with Cognito, exposes a REST API, and stores data with single-digit millisecond latency.",
+      "answer": "Create a Cognito user pool for sign-up and sign-in, optionally federating social IdPs. Configure an API Gateway REST API with a Cognito authorizer that validates JWTs on each request. Integrate API methods with Lambda functions. The functions interact with a DynamoDB table using the user’s sub ID as the partition key for consistent performance. Enable IAM roles for users if direct S3 upload is needed, and use CloudWatch Logs and X-Ray for monitoring.",
+      "tags": ["Secure Architectures", "Cognito", "API Gateway", "Lambda", "DynamoDB"]
+    },
+    {
+      "id": "srv-q024",
+      "type": "open-ended",
+      "question": "What are the trade-offs between Step Functions Standard and Express workflows when orchestrating high volume event processing?",
+      "answer": "Standard offers exactly-once execution, long-running workflows up to one year, detailed execution history, and larger state payloads. Cost is per state transition and can grow with high volume. Express provides at-least-once execution, 90-day history, and lower cost billed by GB-seconds, making it ideal for short (<5 minutes), high-throughput workflows. Express sacrifices execution durability and detailed logging but scales affordably.",
+      "tags": ["Cost-Optimized Architectures", "Step Functions", "Design Tradeoffs"]
+    },
+    {
+      "id": "srv-q025",
+      "type": "open-ended",
+      "question": "How does API Gateway WebSocket API maintain stateful communication, and what AWS service can be integrated for broadcast messages to many connected clients?",
+      "answer": "WebSocket API keeps persistent connections through a callback URL (connection ID) managed by API Gateway. A Lambda function or any service can post messages back using the callback API. For fan-out broadcasting, an SNS topic or EventBridge can publish events to multiple Lambda functions that each call the send-message API for their allotted set of connection IDs, enabling scalable real-time updates.",
+      "tags": ["High-Performing Architectures", "API Gateway", "WebSocket", "SNS"]
+    }
+  ]

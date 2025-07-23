@@ -9,6 +9,7 @@
     "cloudfront-questions.json",
     "storage-questions.json",
     "decoupling-questions.json",
-    "container-questions.json"
+    "container-questions.json",
+    "serverless-questions.json"
   ]
 }
