@@ -8,6 +8,7 @@
     "s3-questions.json",
     "cloudfront-questions.json",
     "storage-questions.json",
-    "decoupling-questions.json"
+    "decoupling-questions.json",
+    "container-questions.json"
   ]
 }
