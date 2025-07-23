@@ -1,0 +1,480 @@
+[
+    {
+        "id": "msg-q001",
+        "type": "multiple-choice",
+        "question": "A web application writes user events to an Amazon SQS standard queue. Developers notice occasional duplicate events in downstream processing. What is the SIMPLEST way to eliminate duplicates without changing the queue type?",
+        "options": [
+            "Add a de-duplication attribute in each message and handle duplicates in consumer code",
+            "Enable content-based deduplication on the queue",
+            "Create a FIFO queue and migrate producers and consumers",
+            "Increase the Message Visibility Timeout"
+        ],
+        "correctIndex": 0,
+        "explanation": "Standard queues offer at-least-once delivery and may introduce duplicates. Adding a unique ID in the message and performing idempotent processing on the consumer removes duplicates with no infrastructure changes. Content-based deduplication and FIFO queues are only available on FIFO queues. Visibility timeout does not fix duplicates.",
+        "tags": [
+            "High-Performing Architectures",
+            "SQS",
+            "Idempotency"
+        ]
+    },
+    {
+        "id": "msg-q002",
+        "type": "multiple-choice",
+        "question": "An SQS FIFO queue receives financial trade events at 100 messages per second. Consumers process messages in order by trader ID. Which configuration ensures ordered parallel processing?",
+        "options": [
+            "Increase the queue's throughput quota with AWS Support",
+            "Set Content-Based Deduplication to true",
+            "Set Message Group ID to the trader ID for each message",
+            "Use batch receive of 10 messages per poll"
+        ],
+        "correctIndex": 2,
+        "explanation": "Message Group ID guarantees ordering within the group while allowing other groups to be processed in parallel. Batch receive does not ensure order. Content-based deduplication removes duplicates but is unrelated to order. FIFO throughput is limited per queue and per group; Support cannot override the design limit.",
+        "tags": [
+            "Resilient Architectures",
+            "SQS",
+            "FIFO"
+        ]
+    },
+    {
+        "id": "msg-q003",
+        "type": "multiple-choice",
+        "question": "Which SQS feature reduces the number of empty ReceiveMessage responses and lowers cost when a queue has infrequent traffic?",
+        "options": [
+            "Delay queues",
+            "Dead-letter queues",
+            "Long polling",
+            "Short polling"
+        ],
+        "correctIndex": 2,
+        "explanation": "Long polling waits up to 20 seconds for a message, decreasing empty responses and API calls. Short polling immediately returns. Delay queues postpone message availability. Dead-letter queues isolate failed messages.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "SQS",
+            "Long Polling"
+        ]
+    },
+    {
+        "id": "msg-q004",
+        "type": "multiple-choice",
+        "question": "A consumer crashes while processing an SQS message. After the Visibility Timeout expires, the same message is delivered to another consumer. How can you PREVENT infinite redelivery of poison messages?",
+        "options": [
+            "Increase the batch size",
+            "Configure a dead-letter queue with a maxReceiveCount",
+            "Enable server-side encryption",
+            "Reduce the queue retention period"
+        ],
+        "correctIndex": 1,
+        "explanation": "A dead-letter queue with maxReceiveCount moves repeatedly failing messages out of the main queue, stopping infinite loops. Encryption, retention, and batch size do not solve poison message issues.",
+        "tags": [
+            "Operational Excellence",
+            "SQS",
+            "Dead-Letter Queue"
+        ]
+    },
+    {
+        "id": "msg-q005",
+        "type": "multiple-choice",
+        "question": "A company sends 5000 mobile push notifications per second through Amazon SNS. Security mandates that topics be encrypted at rest. What should be enabled?",
+        "options": [
+            "Use SNS FIFO topics",
+            "SNS server-side encryption with a customer managed KMS key",
+            "Enable HTTPS in every subscription",
+            "Client-side encryption on the publisher"
+        ],
+        "correctIndex": 1,
+        "explanation": "SNS supports server-side encryption using KMS keys. Client-side encryption is optional but more complex. HTTPS secures data in transit, not at rest. FIFO topics limit throughput and are not required for encryption.",
+        "tags": [
+            "Secure Architectures",
+            "SNS",
+            "KMS"
+        ]
+    },
+    {
+        "id": "msg-q006",
+        "type": "multiple-choice",
+        "question": "An application publishes JSON events to an SNS topic. Two SQS queues subscribe with filter policies: one for {\"event\":\"signup\"} and one for {\"event\":\"purchase\"}. What happens when a message with {\"event\":\"signup\"} is published?",
+        "options": [
+            "Both queues receive the message",
+            "The message is dropped",
+            "Only the purchase queue receives the message",
+            "Only the signup queue receives the message"
+        ],
+        "correctIndex": 3,
+        "explanation": "Message filtering delivers the payload only to subscriptions whose filter policy matches. The signup queue matches, the purchase queue does not. No message is dropped because at least one subscription matches.",
+        "tags": [
+            "High-Performing Architectures",
+            "SNS",
+            "Message Filtering"
+        ]
+    },
+    {
+        "id": "msg-q007",
+        "type": "multiple-choice",
+        "question": "Which pattern combines SNS and SQS to provide reliable fan-out with individual retry logic for each subscriber?",
+        "options": [
+            "Kinesis stream to multiple Lambda functions",
+            "Direct SNS push to Lambda",
+            "SQS to SNS chaining",
+            "SNS topic with multiple SQS queue subscriptions"
+        ],
+        "correctIndex": 3,
+        "explanation": "The fan-out pattern uses an SNS topic that publishes to multiple SQS queues, each handled independently. This provides persistence and retries per consumer. Other options do not offer per-subscriber durability.",
+        "tags": [
+            "Resilient Architectures",
+            "SNS",
+            "Fan Out"
+        ]
+    },
+    {
+        "id": "msg-q008",
+        "type": "multiple-choice",
+        "question": "A real-time log ingestion system needs millisecond-level latency and the ability to replay data for reprocessing. Which service BEST fits these requirements?",
+        "options": [
+            "Amazon SQS FIFO",
+            "Amazon MQ",
+            "Amazon Kinesis Data Firehose",
+            "Amazon Kinesis Data Streams"
+        ],
+        "correctIndex": 3,
+        "explanation": "Kinesis Data Streams delivers sub-second latency, stores data up to 365 days, and supports replay. Firehose is near-real-time and cannot replay. SQS FIFO is not designed for high-frequency streaming. MQ targets compatibility, not large-scale streaming.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis Data Streams",
+            "Streaming"
+        ]
+    },
+    {
+        "id": "msg-q009",
+        "type": "multiple-choice",
+        "question": "Which Kinesis capacity mode automatically scales shards based on traffic without user intervention?",
+        "options": [
+            "Enhanced fan-out mode",
+            "On-demand mode",
+            "Provisioned mode",
+            "Aggregated batching mode"
+        ],
+        "correctIndex": 1,
+        "explanation": "On-demand mode elastically adjusts throughput up to defined limits without manual shard management. Provisioned mode requires manual scaling. Enhanced fan-out improves consumer throughput. Aggregated batching is a client-side technique.",
+        "tags": [
+            "Operational Excellence",
+            "Kinesis Data Streams",
+            "Scaling"
+        ]
+    },
+    {
+        "id": "msg-q010",
+        "type": "multiple-choice",
+        "question": "A Kinesis Data Firehose delivery stream buffers records for 5 MB or 60 seconds, whichever comes first, before delivering to S3. What is the impact of lowering the buffer interval to 10 seconds?",
+        "options": [
+            "Lower latency and more S3 PUT requests",
+            "No change in cost or performance",
+            "Firehose switches to real-time mode",
+            "Higher latency and fewer S3 PUT requests"
+        ],
+        "correctIndex": 0,
+        "explanation": "Reducing the buffer interval flushes data more often, decreasing delivery latency but increasing the number of S3 PUT operations and associated cost.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Kinesis Firehose",
+            "Buffering"
+        ]
+    },
+    {
+        "id": "msg-q011",
+        "type": "multiple-choice",
+        "question": "Which destination is NOT directly supported by Amazon Kinesis Data Firehose as of 2025?",
+        "options": [
+            "Amazon RDS MySQL",
+            "MongoDB Atlas",
+            "Amazon OpenSearch Service",
+            "Amazon Redshift"
+        ],
+        "correctIndex": 0,
+        "explanation": "Firehose can deliver to S3, Redshift, OpenSearch, and third-party integrations such as MongoDB Atlas, but it does not write directly into relational databases like Amazon RDS MySQL.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis Firehose",
+            "Destinations"
+        ]
+    },
+    {
+        "id": "msg-q012",
+        "type": "multiple-choice",
+        "question": "A team needs JMS-compatible messaging with ordered and transactional semantics to migrate an on-premises application to AWS with minimal code changes. Which service is the BEST choice?",
+        "options": [
+            "Kinesis Data Streams",
+            "Amazon MQ ActiveMQ",
+            "Amazon SNS FIFO",
+            "Amazon SQS FIFO"
+        ],
+        "correctIndex": 1,
+        "explanation": "Amazon MQ provides managed ActiveMQ or RabbitMQ brokers supporting JMS APIs, preserving existing code. SQS and SNS provide different APIs. Kinesis is not JMS compatible.",
+        "tags": [
+            "Migration",
+            "Amazon MQ",
+            "Resilient Architectures"
+        ]
+    },
+    {
+        "id": "msg-q013",
+        "type": "multiple-choice",
+        "question": "How does Amazon MQ achieve Multi-AZ high availability?",
+        "options": [
+            "SNS fallback notifications",
+            "Active-standby brokers in different AZs with shared EFS storage",
+            "Active-active brokers across regions using global endpoints",
+            "Built-in cross-region replication of queues"
+        ],
+        "correctIndex": 1,
+        "explanation": "Amazon MQ deploys an active broker and a standby broker in separate AZs that share message storage on EFS. Automatic failover promotes the standby on failure. Global endpoints and cross-region replication are not native features. SNS is unrelated.",
+        "tags": [
+            "Resilient Architectures",
+            "Amazon MQ",
+            "High Availability"
+        ]
+    },
+    {
+        "id": "msg-q014",
+        "type": "multiple-choice",
+        "question": "Which SQS metric should be used to trigger Auto Scaling of consumers when queue backlog increases?",
+        "options": [
+            "NumberOfMessagesReceived",
+            "ApproximateAgeOfOldestMessage",
+            "NumberOfMessagesDeleted",
+            "ReceivedEmptyResponses"
+        ],
+        "correctIndex": 1,
+        "explanation": "ApproximateAgeOfOldestMessage indicates how long messages are waiting and is a reliable signal for scaling. MessageReceived and Deleted track throughput, not backlog age. Empty responses show polling efficiency.",
+        "tags": [
+            "Operational Excellence",
+            "SQS",
+            "Auto Scaling"
+        ]
+    },
+    {
+        "id": "msg-q015",
+        "type": "multiple-choice",
+        "question": "Which AWS service combination provides an event bus for decoupled microservices when ordering is NOT required but latency must be under one second?",
+        "options": [
+            "Amazon MQ with durable topics",
+            "Application Load Balancer with WebSockets",
+            "SNS topic with SQS standard queue subscribers",
+            "Kinesis Data Streams"
+        ],
+        "correctIndex": 2,
+        "explanation": "SNS plus SQS offers sub-second fan-out, loose ordering, durable queues, and independent retries. MQ topics add operational overhead. Kinesis targets ordered streaming. WebSockets are stateful and not decoupled.",
+        "tags": [
+            "High-Performing Architectures",
+            "SNS",
+            "SQS",
+            "Microservices"
+        ]
+    },
+    {
+        "id": "msg-q016",
+        "type": "multiple-choice",
+        "question": "A developer accidentally sets the SQS Message Visibility Timeout to 12 hours. Consumers fail after 10 minutes. What is the most IMMEDIATE consequence?",
+        "options": [
+            "Messages remain invisible for 12 hours before redelivery",
+            "Messages are delivered to another consumer after 10 minutes",
+            "Messages are moved to the dead-letter queue",
+            "Messages are deleted by SQS"
+        ],
+        "correctIndex": 0,
+        "explanation": "SQS hides the message for the full visibility period. If consumers crash early, the message is not redelivered until the period expires, delaying processing. Dead-letter queue movement only occurs after maxReceiveCount.",
+        "tags": [
+            "Operational Excellence",
+            "SQS",
+            "Visibility Timeout"
+        ]
+    },
+    {
+        "id": "msg-q017",
+        "type": "multiple-choice",
+        "question": "In Kinesis Data Streams, what determines the ordering of records?",
+        "options": [
+            "Record timestamp",
+            "Arrival time in the stream",
+            "Sequence number across shards",
+            "Partition key"
+        ],
+        "correctIndex": 3,
+        "explanation": "Within a shard, records with the same partition key are ordered. Sequence numbers are unique per shard but derived from the partition key assignment. Timestamps and arrival time do not guarantee order.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis Data Streams",
+            "Ordering"
+        ]
+    },
+    {
+        "id": "msg-q018",
+        "type": "multiple-choice",
+        "question": "Firehose data transformation using Lambda is failing due to message size exceeding payload limit. Each record is 8 MB gzip compressed. What is the BEST solution?",
+        "options": [
+            "Use Firehose data parsing without Lambda",
+            "Compress data with snappy instead of gzip",
+            "Switch to Kinesis Data Streams and process with AWS Glue",
+            "Increase the Firehose Lambda buffer size to process smaller batches"
+        ],
+        "correctIndex": 3,
+        "explanation": "Reducing batch size ensures each Lambda invocation payload stays within the 6 MB compressed limit. Switching services may add complexity. Compression type does not change size significantly. Parsing alone may not meet transformation needs.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Kinesis Firehose",
+            "Lambda Transformation"
+        ]
+    },
+    {
+        "id": "msg-q019",
+        "type": "multiple-choice",
+        "question": "Which advantage does enhanced fan-out provide for Kinesis Data Streams consumers?",
+        "options": [
+            "Automatic consumer scaling",
+            "Shared 2 MB/s outbound throughput per shard",
+            "Dedicated 2 MB/s outbound throughput per consumer per shard",
+            "Cross-region replication of records"
+        ],
+        "correctIndex": 2,
+        "explanation": "Enhanced fan-out allocates a dedicated throughput lane of up to 2 MB/s per consumer per shard, avoiding competition. Standard consumers share shard limits. Scaling is still user managed. Replication is not provided.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis Data Streams",
+            "Enhanced Fan-out"
+        ]
+    },
+    {
+        "id": "msg-q020",
+        "type": "multiple-choice",
+        "question": "Which AWS managed service is LEAST suitable for implementing a request-reply RPC style pattern?",
+        "options": [
+            "Amazon SNS",
+            "Amazon MQ",
+            "AWS AppSync",
+            "Amazon SQS"
+        ],
+        "correctIndex": 0,
+        "explanation": "SNS is fire-and-forget pub/sub without correlation IDs or reply queues. MQ supports temporary queues. SQS can implement request and response queues. AppSync supports GraphQL request-reply.",
+        "tags": [
+            "Architecture Design",
+            "SNS",
+            "RPC"
+        ]
+    },
+    {
+        "id": "msg-q021",
+        "type": "open-ended",
+        "question": "Explain how the Visibility Timeout and the Message Retention Period interact in Amazon SQS. Include a scenario where misconfiguration could lead to data loss or delays.",
+        "answer": "Visibility Timeout is the period after a consumer receives a message during which the message remains hidden from other consumers. If the consumer deletes the message within this time, processing is acknowledged. The Message Retention Period is how long SQS stores a message before discarding it if not deleted. If Visibility Timeout is set longer than the retention period, a message could expire while invisible, leading to data loss. Conversely, if Visibility Timeout is too short, messages may be redelivered prematurely, causing duplicate processing or delays due to repeated retries.",
+        "tags": [
+            "Operational Excellence",
+            "SQS",
+            "Visibility Timeout",
+            "Retention"
+        ]
+    },
+    {
+        "id": "msg-q022",
+        "type": "open-ended",
+        "question": "Compare Amazon Kinesis Data Streams and Amazon Kinesis Data Firehose. Focus on replay capability, latency, and operational effort.",
+        "answer": "Kinesis Data Streams offers real-time streaming with millisecond latency, up to 365 days of retained data, manual shard scaling, and the ability to replay any time range by re-reading from a shard iterator. It requires monitoring and capacity planning. Kinesis Data Firehose is near-real-time with buffering from 60 seconds or 1 MB, no data storage once delivered, fully serverless scaling, and no replay. Firehose simplifies delivery to destinations like S3, Redshift, and OpenSearch but is unsuitable for reprocessing historical data.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis Data Streams",
+            "Kinesis Firehose"
+        ]
+    },
+    {
+        "id": "msg-q023",
+        "type": "open-ended",
+        "question": "Describe how message filtering works in Amazon SNS and provide an example use case where it reduces consumer complexity.",
+        "answer": "Each SNS subscription can define a filter policy as a JSON object. When a message with structured attributes is published, SNS evaluates the attributes against every subscription policy and delivers only to matching endpoints. For example, an e-commerce topic may include an attribute type=orderStatus. Subscriptions for 'created', 'shipped', and 'delivered' filter policies receive only relevant events, eliminating the need for downstream services to discard unrelated messages.",
+        "tags": [
+            "High-Performing Architectures",
+            "SNS",
+            "Message Filtering"
+        ]
+    },
+    {
+        "id": "msg-q024",
+        "type": "open-ended",
+        "question": "Outline the steps to implement a serverless microservice that ingests clickstream data using Kinesis Data Streams and processes it with AWS Lambda for real-time analytics.",
+        "answer": "1) Create a Kinesis Data Stream with on-demand capacity. 2) Configure the front-end application to put records with a partition key such as userID. 3) Set up an AWS Lambda function as an event source mapping with batch size tuned for latency. 4) In the function, aggregate or transform events and push metrics to Amazon Timestream or DynamoDB. 5) Enable error handling with a destination or DLQ. 6) Use CloudWatch alarms on IncomingBytes and IteratorAge to scale or troubleshoot.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis Data Streams",
+            "Lambda",
+            "Serverless"
+        ]
+    },
+    {
+        "id": "msg-q025",
+        "type": "open-ended",
+        "question": "Explain the fan-out design pattern using SNS and SQS, listing its fault tolerance characteristics and limitations.",
+        "answer": "SNS publishes a single message to a topic; multiple SQS queues subscribe. Each queue receives a copy, providing isolation and individual retry logic. If one consumer fails, others continue. Persistence in SQS prevents data loss. Limitations include eventual consistency between publish and queue delivery, per-queue ordering constraints, and potential duplication if the SNS retries. Costs accrue per subscription delivery.",
+        "tags": [
+            "Resilient Architectures",
+            "SNS",
+            "SQS",
+            "Fan Out"
+        ]
+    },
+    {
+        "id": "msg-q026",
+        "type": "open-ended",
+        "question": "Discuss security best practices for an SQS queue that accepts messages from multiple AWS accounts.",
+        "answer": "Use an SQS access policy specifying the permitted account IDs and actions such as SendMessage. Enforce TLS by requiring aws:SecureTransport=true. Optionally enable server-side encryption with a customer managed KMS key and grant kms:GenerateDataKey permission to the same accounts. Implement least-privilege IAM roles in each account and monitor CloudTrail data events for PutMessage and DeleteMessage.",
+        "tags": [
+            "Secure Architectures",
+            "SQS",
+            "Cross-Account"
+        ]
+    },
+    {
+        "id": "msg-q027",
+        "type": "open-ended",
+        "question": "What considerations determine whether to choose Amazon MQ over Amazon SQS for migrating an on-premises message broker?",
+        "answer": "Choose MQ when the application depends on protocols such as JMS, AMQP, MQTT, or STOMP, requires transactions, acknowledgments, or message selectors, and a lift-and-shift with minimal code change is desired. Use SQS when the application can adopt at-least-once delivery with simple API, needs unlimited scaling, and can tolerate eventual ordering or duplicates. Operational complexity and cost differ: MQ brokers must be sized and patched by AWS but still accrue instance hours, whereas SQS is serverless.",
+        "tags": [
+            "Migration",
+            "Amazon MQ",
+            "SQS"
+        ]
+    },
+    {
+        "id": "msg-q028",
+        "type": "open-ended",
+        "question": "How can the ApproximateAgeOfOldestMessage CloudWatch metric be used to avoid message backlog in an SQS-based system?",
+        "answer": "Set an alarm when the age exceeds a threshold, indicating consumers are falling behind. Trigger Auto Scaling to launch more consumer instances or invoke Lambda functions. After scaling, monitor that the metric drops, confirming backlog reduction. Include a second alarm to notify operators if the age continues rising, suggesting downstream bottlenecks.",
+        "tags": [
+            "Operational Excellence",
+            "SQS",
+            "Monitoring",
+            "Auto Scaling"
+        ]
+    },
+    {
+        "id": "msg-q029",
+        "type": "open-ended",
+        "question": "Provide a strategy to deliver streaming IoT telemetry from Edge devices into Amazon OpenSearch with minimal code running on the device.",
+        "answer": "Deploy Kinesis Data Firehose on AWS. Devices send JSON payloads via HTTPS to the Firehose API endpoint. Configure buffering at 1 MB or 60 seconds, enable conversion to Parquet for storage, and select OpenSearch as a destination with backup to S3. Optionally add a Lambda transformation for enrichment. This removes the need to manage shards or scaling and automatically retries delivery.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis Firehose",
+            "OpenSearch",
+            "IoT"
+        ]
+    },
+    {
+        "id": "msg-q030",
+        "type": "open-ended",
+        "question": "Describe how to implement exactly once processing with SQS FIFO and Lambda, including idempotency enforcement.",
+        "answer": "Configure a FIFO queue with content-based deduplication or provide a MessageDeduplicationId. Set a Lambda event source mapping with batch size up to 10 and enable scaling. Inside Lambda, use the message ID or business key to check a DynamoDB idempotency table before processing. If the key exists, skip the operation; otherwise, write the key with a TTL and process the record. Delete the batch from the queue only after successful writes to maintain exactly once semantics.",
+        "tags": [
+            "Secure Architectures",
+            "SQS",
+            "FIFO",
+            "Lambda",
+            "Idempotency"
+        ]
+    }
+]

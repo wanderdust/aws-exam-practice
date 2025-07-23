@@ -7,6 +7,7 @@
     "route53-questions.json",
     "s3-questions.json",
     "cloudfront-questions.json",
-    "storage-questions.json"
+    "storage-questions.json",
+    "decoupling-questions.json"
   ]
 }
