@@ -11,6 +11,7 @@
     "decoupling-questions.json",
     "container-questions.json",
     "serverless-questions.json",
-    "database-ii-questions.json"
+    "database-ii-questions.json",
+    "data-and-analytics-questions.json"
   ]
 }

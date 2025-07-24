@@ -1,0 +1,340 @@
+[
+    {
+        "id": "q001",
+        "type": "multiple-choice",
+        "question": "A data engineer must reduce Amazon Athena query costs and improve performance when analysts run interactive queries against several years of web-server logs stored in Amazon S3. Which solution meets these requirements with the LEAST operational overhead?",
+        "options": [
+            "Enable S3 Transfer Acceleration on the bucket that stores the logs",
+            "Use AWS Glue to convert the logs to Apache Parquet and partition the data on request date",
+            "Create an Athena workgroup with a lower query-timeout setting",
+            "Store query results in an S3 One Zone-IA bucket instead of the default location"
+        ],
+        "correctIndex": 1,
+        "explanation": "Converting the raw text logs to a columnar, compressed format such as Parquet and partitioning on a commonly filtered column (for example, date) drastically lowers the amount of data scanned by Athena, reducing both latency and the $5-per-TB charge. The other options do not decrease the amount of data scanned or meaningfully improve query cost/performance.",
+        "tags": [
+            "High-Performing Architectures",
+            "Athena",
+            "S3",
+            "Glue",
+            "Cost-Optimized Architectures"
+        ]
+    },
+    {
+        "id": "q002",
+        "type": "multiple-choice",
+        "question": "A company uses Amazon Redshift Serverless for its analytics workload. Data scientists complain that query latency increases whenever an ad-hoc reporting job runs nightly. What is the MOST cost-effective way to eliminate the contention?",
+        "options": [
+            "Configure a separate Redshift Serverless workgroup for the reporting workload and set a maximum concurrency level",
+            "Migrate the nightly job to Amazon Athena to offload it from Redshift",
+            "Enable concurrency scaling on the workgroup",
+            "Increase the base RPU (Redshift Processing Unit) capacity for the existing workgroup"
+        ],
+        "correctIndex": 1,
+        "explanation": "Running the reporting workload in Athena against data stored in S3 decouples the heavy, infrequent job from the interactive queries while avoiding additional Redshift capacity costs. Creating another Redshift workgroup or increasing RPUs would add recurring costs. Concurrency scaling is not available for Redshift Serverless.",
+        "tags": [
+            "High-Performing Architectures",
+            "Redshift",
+            "Athena",
+            "Cost-Optimized Architectures"
+        ]
+    },
+    {
+        "id": "q003",
+        "type": "multiple-choice",
+        "question": "A startup wants to ingest clickstream data from its mobile app with minimal operational overhead, then make the data searchable in near real time using partial-text matching. Which architecture BEST meets these requirements?",
+        "options": [
+            "Amazon Kinesis Data Firehose \u2192 Amazon S3 \u2192 Amazon Athena",
+            "Amazon Managed Streaming for Apache Kafka (MSK) \u2192 AWS Glue ETL \u2192 Amazon Redshift",
+            "Amazon SQS queue \u2192 AWS Lambda \u2192 Amazon DynamoDB",
+            "Amazon Kinesis Data Streams \u2192 AWS Lambda \u2192 Amazon OpenSearch Service domain"
+        ],
+        "correctIndex": 3,
+        "explanation": "Using Kinesis Data Streams to buffer events and a Lambda function to transform and load them into an OpenSearch domain provides near-real-time ingestion with operational simplicity. OpenSearch supports full-text and partial-text search. The other options either add unnecessary latency or do not enable efficient text search.",
+        "tags": [
+            "High-Performing Architectures",
+            "OpenSearch",
+            "Kinesis",
+            "Lambda",
+            "Serverless"
+        ]
+    },
+    {
+        "id": "q004",
+        "type": "multiple-choice",
+        "question": "A company needs fine-grained, column-level security on data in an S3 data lake that is accessed by multiple AWS services. Which AWS service provides the SIMPLEST way to implement this requirement centrally?",
+        "options": [
+            "IAM permission boundaries",
+            "S3 Access Point policies",
+            "KMS customer-managed keys",
+            "AWS Lake Formation"
+        ],
+        "correctIndex": 3,
+        "explanation": "Lake Formation offers table, row, and column-level permissions that apply across integrated services such as Athena, Redshift Spectrum, and EMR. IAM and S3 policies cannot enforce column-level controls, and KMS only protects at the object or bucket level.",
+        "tags": [
+            "Secure Architectures",
+            "Lake Formation",
+            "S3",
+            "Data Protection"
+        ]
+    },
+    {
+        "id": "q005",
+        "type": "multiple-choice",
+        "question": "An analytics team wants to run highly parallel Apache Spark jobs for a short time each night and terminate the cluster afterward to save money. Which deployment option BEST meets this requirement?",
+        "options": [
+            "Create a transient Amazon EMR cluster with Spot Instances for the task and core nodes",
+            "Run Spark on Amazon EKS Fargate",
+            "Use AWS Glue Studio to run the Spark jobs",
+            "Provision an always-on Amazon EMR cluster on On-Demand Instances"
+        ],
+        "correctIndex": 0,
+        "explanation": "A transient EMR cluster spun up only when needed and using Spot Instances for task (and optionally core) nodes minimizes cost while providing the managed Spark environment required. The other options either keep resources running or add operational complexity.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "EMR",
+            "Spot Instances",
+            "High-Performing Architectures"
+        ]
+    },
+    {
+        "id": "q006",
+        "type": "multiple-choice",
+        "question": "Which Amazon QuickSight feature allows an analyst to cache imported data in memory for low-latency, high-concurrency dashboards?",
+        "options": [
+            "Analysis Templates",
+            "Row-level Security",
+            "Reader Quotas",
+            "SPICE"
+        ],
+        "correctIndex": 3,
+        "explanation": "SPICE (Super-fast, Parallel, In-memory Calculation Engine) stores imported data in QuickSight\u2019s in-memory engine, delivering fast performance at scale. The other options do not provide an in-memory cache.",
+        "tags": [
+            "High-Performing Architectures",
+            "QuickSight",
+            "Analytics"
+        ]
+    },
+    {
+        "id": "q007",
+        "type": "multiple-choice",
+        "question": "A data lake team uses AWS Glue crawlers to catalog new objects in an S3 bucket. They notice the same data is processed repeatedly, increasing crawler time and costs. Which Glue feature should they enable to prevent reprocessing unchanged data?",
+        "options": [
+            "Partition Projection",
+            "Glue Blueprints",
+            "Schema Registry",
+            "Job Bookmarks"
+        ],
+        "correctIndex": 3,
+        "explanation": "Glue Job Bookmarks track previously processed files or partitions so the job (or crawler) skips them in subsequent runs, reducing cost. The other options do not address duplicate processing directly.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Glue",
+            "Operational Excellence"
+        ]
+    },
+    {
+        "id": "q008",
+        "type": "multiple-choice",
+        "question": "A solutions architect must design a disaster-recovery strategy for a critical Amazon Redshift cluster that requires an RPO of 4 hours and an RTO of 2 hours. Which approach satisfies these objectives with the LEAST additional cost?",
+        "options": [
+            "Use Redshift Spectrum to query the data directly from S3 in the secondary Region",
+            "Enable automated snapshots and cross-region snapshot copy, restoring from the latest snapshot when needed",
+            "Create a multi-AZ Redshift cluster",
+            "Configure AWS Database Migration Service (AWS DMS) to replicate data continuously to another Redshift cluster"
+        ],
+        "correctIndex": 1,
+        "explanation": "Automated snapshots occur at least every 8 hours or 5 GiB of changes, but the snapshot schedule can be tuned to meet a 4-hour RPO. Cross-region copy enables recovery within the RTO by restoring the latest snapshot, without the expense of a live secondary cluster. Multi-AZ is not currently available for all Redshift deployments, and DMS continuous replication plus a hot cluster costs more.",
+        "tags": [
+            "Resilient Architectures",
+            "Redshift",
+            "Disaster Recovery"
+        ]
+    },
+    {
+        "id": "q009",
+        "type": "multiple-choice",
+        "question": "An application streams high-volume sensor data into Amazon Managed Service for Apache Flink for real-time aggregation. Which source combination is supported natively by Flink in this managed service?",
+        "options": [
+            "AWS IoT Core and DynamoDB Streams",
+            "Amazon Kinesis Data Streams and Amazon MSK",
+            "Amazon SQS and Amazon SNS",
+            "Amazon Kinesis Data Firehose and S3"
+        ],
+        "correctIndex": 1,
+        "explanation": "Managed Flink can read from Kinesis Data Streams or Apache Kafka topics in MSK as streaming sources. Firehose delivers to storage destinations, not directly into Flink. SQS, SNS, IoT Core, and DynamoDB Streams are not direct Flink streaming sources in the managed service.",
+        "tags": [
+            "High-Performing Architectures",
+            "Flink",
+            "Kinesis",
+            "MSK",
+            "Serverless"
+        ]
+    },
+    {
+        "id": "q010",
+        "type": "multiple-choice",
+        "question": "Which statement about Amazon OpenSearch Service serverless collections is TRUE?",
+        "options": [
+            "They require at least three data nodes across Availability Zones",
+            "They automatically scale compute and storage based on ingestion and query volume without user-defined capacity units",
+            "They must be deployed in a VPC and cannot be publicly accessible",
+            "They do not support fine-grained access control through IAM"
+        ],
+        "correctIndex": 1,
+        "explanation": "OpenSearch Serverless uses capacity-based pricing and auto-scales compute and storage behind the scenes. The other options refer to managed clusters or misstate feature support.",
+        "tags": [
+            "High-Performing Architectures",
+            "OpenSearch",
+            "Serverless"
+        ]
+    },
+    {
+        "id": "q011",
+        "type": "multiple-choice",
+        "question": "A company wants to minimize Amazon Athena query costs for logs that arrive hourly. The data is stored as compressed Parquet files partitioned by date=YYYY-MM-DD. Analysts often run queries for specific hourly windows. How should the partitions be redesigned to achieve the goal?",
+        "options": [
+            "Add an hour partition so the path is date=YYYY-MM-DD/hour=HH",
+            "Switch to a Gzip-compressed CSV format and keep daily partitions",
+            "Disable partition projection and rely on filename filters",
+            "Use AWS Glue DynamicFrame to merge small files into one large file per day"
+        ],
+        "correctIndex": 0,
+        "explanation": "Adding an hour partition lets Athena prune partitions more effectively, scanning less data and reducing cost. Changing to CSV increases data size, merging into large daily files hurts hour-level queries, and disabling partition projection does not change partition granularity.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Athena",
+            "S3",
+            "Partitioning"
+        ]
+    },
+    {
+        "id": "q012",
+        "type": "multiple-choice",
+        "question": "A data scientist needs to join historical data in Amazon Redshift with raw files in S3 without loading them into Redshift. Which feature allows this requirement?",
+        "options": [
+            "Redshift Data Sharing",
+            "Redshift Materialized Views",
+            "Redshift Spectrum",
+            "AWS Glue DataBrew"
+        ],
+        "correctIndex": 2,
+        "explanation": "Redshift Spectrum enables SQL queries that join Redshift tables with data in S3 directly, avoiding full load. The other options either require data ingestion or do not enable cross-storage joins.",
+        "tags": [
+            "High-Performing Architectures",
+            "Redshift",
+            "Spectrum",
+            "S3"
+        ]
+    },
+    {
+        "id": "q013",
+        "type": "multiple-choice",
+        "question": "Which AWS Glue component stores table metadata that is shared across services like Athena, Redshift Spectrum, and EMR?",
+        "options": [
+            "AWS Glue Studio",
+            "AWS Glue ETL Jobs",
+            "AWS Glue Crawlers",
+            "AWS Glue Data Catalog"
+        ],
+        "correctIndex": 3,
+        "explanation": "The Glue Data Catalog is the central metadata repository for tables, schemas, and partitions used by multiple analytics services. Studio, Crawlers, and ETL Jobs interact with\u2014but do not act as\u2014the metadata store.",
+        "tags": [
+            "Operational Excellence",
+            "Glue",
+            "Athena",
+            "Redshift",
+            "EMR"
+        ]
+    },
+    {
+        "id": "q014",
+        "type": "multiple-choice",
+        "question": "A company operates a business-critical Kafka cluster on Amazon MSK. Which configuration provides the HIGHEST availability and durability for broker storage?",
+        "options": [
+            "Enable MSK serverless mode with default capacity",
+            "Deploy two brokers in a single AZ with instance store volumes",
+            "Deploy the cluster with three brokers in three AZs and enable EBS volume replication",
+            "Set up cross-region MSK replication using MSK Replicator"
+        ],
+        "correctIndex": 2,
+        "explanation": "Three brokers spread across three Availability Zones with EBS storage provide fault tolerance at the AZ and broker level, meeting strict durability and availability needs. Single-AZ, serverless (currently single-region), or cross-region replication adds complexity or latency without necessarily improving local durability.",
+        "tags": [
+            "Resilient Architectures",
+            "MSK",
+            "Kafka",
+            "High Availability"
+        ]
+    },
+    {
+        "id": "q015",
+        "type": "open-ended",
+        "question": "Explain how Amazon QuickSight enforces row-level security (RLS) and how that differs from column-level security (CLS). Include best practices for managing permissions at scale.",
+        "answer": "QuickSight enforces RLS by applying a dataset-level rules table that maps users or groups to the set of rows they are allowed to see, based on column values such as tenant_id. When a user runs a query, QuickSight automatically rewrites it to include a WHERE clause that filters out unauthorized rows before results reach SPICE or the client. CLS, available in Enterprise edition, limits visibility of specified columns entirely, so unauthorized users cannot query or view sensitive fields. To manage permissions at scale, store the rules table in an external source such as Athena or RDS and use IAM-based federation or AWS SSO groups. Automate updates through CI/CD pipelines and version control, and favor group-based mappings over user-specific rules to minimize maintenance.",
+        "tags": [
+            "Secure Architectures",
+            "QuickSight",
+            "Row-level Security",
+            "Column-level Security"
+        ]
+    },
+    {
+        "id": "q016",
+        "type": "open-ended",
+        "question": "Describe the lifecycle of an Apache Spark job running on a transient Amazon EMR cluster that uses Spot task nodes. Include how EMR handles provisioning, job execution, and cluster termination.",
+        "answer": "When a transient EMR cluster is launched, the control plane provisions a master node and core nodes (often On-Demand for stability) along with any task nodes, which can be Spot Instances for cost savings. Cluster bootstrap actions run first. After provisioning, Spark submits the job using YARN (or Kubernetes on EMR 6.x). Executors are launched on core and task nodes; if a Spot node is reclaimed, Spark retries the failed tasks on remaining nodes or new Spot capacity subject to Instance Fleets or EMR Managed Scaling. Once all steps in the step queue finish successfully (or fail irrecoverably), EMR triggers a graceful shutdown, deallocating all EC2 instances. Logs are persisted to S3, and CloudWatch metrics and events record the cluster\u2019s lifecycle.",
+        "tags": [
+            "Operational Excellence",
+            "EMR",
+            "Spot Instances",
+            "Spark"
+        ]
+    },
+    {
+        "id": "q017",
+        "type": "open-ended",
+        "question": "What are the advantages of using AWS Lake Formation over managing S3 bucket policies and IAM roles directly for a multi-tenant data lake, and when might direct S3 controls still be appropriate?",
+        "answer": "Lake Formation centralizes fine-grained access control (table, row, column) across integrated analytics services, reducing policy sprawl and simplifying audits. It supports data-sharing workflows, data catalog integration, and temporary credentials, and enforces the least-privilege principle without duplicating S3 ACLs. Direct S3 controls remain appropriate for static, coarse-grained permissions (for example, public data sets or logs) and for services not yet integrated with Lake Formation. They may also be simpler for small, single-tenant environments where the overhead of Lake Formation governance is not justified.",
+        "tags": [
+            "Secure Architectures",
+            "Lake Formation",
+            "S3",
+            "Governance"
+        ]
+    },
+    {
+        "id": "q018",
+        "type": "open-ended",
+        "question": "Outline a cost-optimized architecture for querying ad-hoc, petabyte-scale data in Amazon S3 without maintaining long-running compute resources. Mention at least two AWS services and key configuration considerations.",
+        "answer": "Storing raw and processed data in S3 with partitioning (for example, date, region) and columnar formats (Parquet or ORC) keeps storage costs low. Analysts query the data using Amazon Athena, which is serverless and charges only for data scanned. AWS Glue Data Catalog stores metadata and partitions, and Glue ETL jobs convert incoming files into efficient formats. Configure partition projection in Athena to avoid crawler overhead for dynamic partitions, and use S3 lifecycle policies to transition older data to Glacier Instant Retrieval for additional savings. Optionally, Amazon QuickSight can visualize the results without provisioning servers.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "Athena",
+            "Glue"
+        ]
+    },
+    {
+        "id": "q019",
+        "type": "open-ended",
+        "question": "How does Redshift Spectrum improve query concurrency for mixed workloads, and what best practices ensure optimal performance when multiple users access external tables concurrently?",
+        "answer": "Spectrum offloads queries against external tables to a fleet of Spectrum nodes that scale independently from the main Redshift cluster, increasing concurrency without exhausting cluster slots. Best practices include: partitioning S3 data to enable predicate pushdown; using columnar formats and compression; leveraging the Glue Data Catalog for consistent schema; limiting result set size with projections; and isolating heavy ETL queries in separate queues or workgroups. Monitoring STL_SPECTRUM tables and CloudWatch metrics helps tune slots and identify bottlenecks.",
+        "tags": [
+            "High-Performing Architectures",
+            "Redshift",
+            "Spectrum",
+            "S3"
+        ]
+    },
+    {
+        "id": "q020",
+        "type": "open-ended",
+        "question": "Compare Amazon Kinesis Data Streams and Amazon Managed Streaming for Apache Kafka (MSK) in terms of scalability, operational effort, and common use cases for streaming analytics pipelines.",
+        "answer": "Kinesis Data Streams offers serverless scaling up to many terabytes per hour with simple shard-based throughput and automatic provisioning, requiring minimal operations. It integrates tightly with AWS services like Lambda and Firehose. MSK provides a managed, open-source Kafka environment with control over broker configurations, partitions, and client protocols, suitable for workloads that rely on Kafka ecosystems or need exactly-once semantics with transactional APIs. Kinesis is ideal for AWS-native, low-ops use cases such as clickstream ingestion, while MSK is preferred when existing Kafka applications must be migrated or advanced Kafka features (e.g., stream processing with Kafka Streams) are required.",
+        "tags": [
+            "High-Performing Architectures",
+            "Kinesis",
+            "MSK",
+            "Streaming"
+        ]
+    }
+]
