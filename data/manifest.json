@@ -1,4 +1,36 @@
 {
+  "profiles": {
+    "architect-associate": {
+      "name": "AWS Solutions Architect Associate (SAA-C03)",
+      "description": "Solutions Architect Associate exam preparation",
+      "files": [
+        "ec2-questions.json",
+        "iam-questions.json",
+        "elb-asg-questions.json",
+        "database-questions.json",
+        "route53-questions.json",
+        "s3-questions.json",
+        "cloudfront-questions.json",
+        "storage-questions.json",
+        "decoupling-questions.json",
+        "container-questions.json",
+        "serverless-questions.json"
+      ]
+    },
+    "data-engineering": {
+      "name": "AWS Certified Data Engineer (DAS-C01)",
+      "description": "Data Engineering exam preparation",
+      "files": [
+        "database-questions.json",
+        "database-ii-questions.json",
+        "data-and-analytics-questions.json",
+        "s3-questions.json",
+        "iam-questions.json",
+        "serverless-questions.json",
+        "container-questions.json"
+      ]
+    }
+  },
   "files": [
     "ec2-questions.json",
     "iam-questions.json",

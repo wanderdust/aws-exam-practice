@@ -7,11 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedTags: new Set(),
         availableTags: new Set(),
         answeredQuestions: new Set(), // Track questions that have been answered
-        questionCounter: 0 // Track the sequential counter for questions
+        questionCounter: 0, // Track the sequential counter for questions
+        profiles: {}, // Available exam profiles
+        selectedProfile: 'all' // Currently selected profile
     };
 
     // DOM elements
     const elements = {
+        profileSelector: document.getElementById('profile-selector'),
         tagsContainer: document.getElementById('tags-container'),
         clearFiltersBtn: document.getElementById('clear-filters'),
         nextQuestionBtn: document.getElementById('next-question'),
@@ -34,41 +37,88 @@ document.addEventListener('DOMContentLoaded', () => {
         showNextQuestion();
     }
 
-    // Load all question files from data directory
-    async function loadAllQuestions() {
+    // Load profiles and initialize profile selector
+    async function loadProfiles() {
         try {
-            // Instead of trying to fetch the directory listing, we now use a manifest file
             const manifestResponse = await fetch('data/manifest.json');
             if (!manifestResponse.ok) throw new Error('Failed to access data manifest');
             
             const manifest = await manifestResponse.json();
-            const fileLinks = manifest.files;
+            state.profiles = manifest.profiles || {};
             
-            console.log('Found JSON files from manifest:', fileLinks);
+            // Populate profile selector
+            Object.entries(state.profiles).forEach(([profileId, profile]) => {
+                const option = document.createElement('option');
+                option.value = profileId;
+                option.textContent = profile.name;
+                elements.profileSelector.appendChild(option);
+            });
             
-            if (fileLinks.length === 0) {
-                throw new Error('No JSON files found in the manifest');
+            return manifest;
+        } catch (error) {
+            console.error('Error loading profiles:', error);
+            throw error;
+        }
+    }
+
+    // Load questions based on selected profile
+    async function loadQuestionsForProfile(profileId, manifest) {
+        try {
+            let fileLinks;
+            
+            if (profileId === 'all') {
+                // Load all files if 'all' is selected
+                fileLinks = manifest.files;
+            } else if (state.profiles[profileId]) {
+                // Load files for specific profile
+                fileLinks = state.profiles[profileId].files;
+            } else {
+                throw new Error(`Profile ${profileId} not found`);
             }
             
-            // Load and merge all question files
-            const promises = fileLinks.map(async (fileName) => {
-                const response = await fetch(`data/${fileName}`);
-                if (!response.ok) throw new Error(`Failed to load ${fileName}`);
-                return await response.json();
+            console.log(`Loading questions for profile '${profileId}':`, fileLinks);
+            
+            if (fileLinks.length === 0) {
+                throw new Error('No question files found for selected profile');
+            }
+            
+            // Load all question files for the profile
+            const promises = fileLinks.map(async (file) => {
+                const response = await fetch(`data/${file}`);
+                if (!response.ok) throw new Error(`Failed to load ${file}`);
+                return response.json();
             });
             
             const questionSets = await Promise.all(promises);
             state.allQuestions = questionSets.flat();
             
             // Extract all unique tags
+            state.availableTags.clear();
             state.allQuestions.forEach(question => {
                 question.tags.forEach(tag => state.availableTags.add(tag));
             });
             
-            // Initialize filtered questions to all questions
+            // Reset filters and initialize filtered questions
+            state.selectedTags.clear();
             state.filteredQuestions = [...state.allQuestions];
+            state.answeredQuestions.clear();
+            state.questionCounter = 0;
             
+            // Update UI
+            renderTags();
             updateQuestionCounter();
+            
+        } catch (error) {
+            console.error('Error loading questions for profile:', error);
+            alert('Failed to load questions. Please check the console for details.');
+        }
+    }
+
+    // Load all question files from data directory
+    async function loadAllQuestions() {
+        try {
+            const manifest = await loadProfiles();
+            await loadQuestionsForProfile(state.selectedProfile, manifest);
         } catch (error) {
             console.error('Error loading questions:', error);
             alert('Failed to load questions. Please check the console for details.');
@@ -77,6 +127,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set up event listeners
     function setupEventListeners() {
+        // Profile selector
+        elements.profileSelector.addEventListener('change', async (e) => {
+            state.selectedProfile = e.target.value;
+            console.log(`Switching to profile: ${state.selectedProfile}`);
+            
+            // Load manifest and questions for new profile
+            try {
+                const manifestResponse = await fetch('data/manifest.json');
+                if (!manifestResponse.ok) throw new Error('Failed to access data manifest');
+                const manifest = await manifestResponse.json();
+                
+                await loadQuestionsForProfile(state.selectedProfile, manifest);
+                showNextQuestion();
+            } catch (error) {
+                console.error('Error switching profile:', error);
+                alert('Failed to switch profile. Please check the console for details.');
+            }
+        });
+        
         // Next question button
         elements.nextQuestionBtn.addEventListener('click', showNextQuestion);
         

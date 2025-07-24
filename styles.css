@@ -9,29 +9,40 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f5f7f9;
+    background-color: #f0f3f8;
     padding: 20px;
+    background-image: linear-gradient(to bottom right, #f0f3f8, #e6eaf0);
+    min-height: 100vh;
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 header {
     text-align: center;
     margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f3f8;
+    position: relative;
 }
 
 header h1 {
-    color: #0073bb;
-    font-size: 28px;
+    color: #232f3e; /* AWS dark blue */
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+header h1 i {
+    color: #ff9900; /* AWS orange */
+    margin-right: 10px;
 }
 
 /* Controls section */
@@ -40,10 +51,52 @@ header h1 {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 25px;
+    gap: 20px;
+}
+
+.profile-section {
+    flex-basis: 30%;
+}
+
+.profile-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+#profile-selector {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px auto;
+    padding-right: 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#profile-selector:hover {
+    border-color: #0073bb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#profile-selector:focus {
+    outline: none;
+    border-color: #0073bb;
+    box-shadow: 0 0 0 3px rgba(0, 115, 187, 0.2);
 }
 
 .filter-section {
-    flex-basis: 40%;
+    flex-basis: 35%;
 }
 
 .filter-section h3 {
@@ -98,25 +151,30 @@ header h1 {
 }
 
 .tag {
-    background-color: #e1f5fe;
-    border: 1px solid #b3e5fc;
-    color: #0288d1;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 12px;
+    display: inline-block;
+    background-color: #e9f5ff;
+    color: #0073bb;
+    padding: 6px 12px;
+    border-radius: 20px;
+    margin: 3px;
+    font-size: 13px;
     cursor: pointer;
-    transition: all 0.2s;
-    margin: 2px;
-    white-space: nowrap;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 115, 187, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .tag:hover {
-    background-color: #b3e5fc;
+    background-color: #d0ebff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .tag.selected {
-    background-color: #0288d1;
+    background-color: #0073bb;
     color: white;
+    border-color: #0073bb;
+    font-weight: 500;
 }
 
 /* Question container styling */
@@ -130,8 +188,13 @@ header h1 {
 
 #question-text {
     font-size: 18px;
-    margin-bottom: 20px;
-    line-height: 1.5;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    padding: 15px 20px;
+    background-color: #f8fafc;
+    border-radius: 10px;
+    border-left: 4px solid #0073bb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 /* Multiple choice styling */
@@ -143,21 +206,26 @@ header h1 {
 }
 
 .option {
-    padding: 12px 15px;
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .option:hover {
-    background-color: #e9ecef;
+    background-color: #f9f9f9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .option.selected {
-    background-color: #e3f2fd;
-    border-color: #90caf9;
+    border-color: #0073bb;
+    background-color: #e9f5ff;
+    font-weight: 500;
 }
 
 .option.correct {
@@ -203,15 +271,39 @@ button {
     background-color: #0073bb;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
+    padding: 10px 18px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #005a8e;
+    background-color: #005a93;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+button i {
+    font-size: 14px;
 }
 
 #clear-filters {
@@ -230,16 +322,22 @@ button:hover {
 
 /* Disclaimer footer styling */
 .disclaimer {
-    margin-top: 25px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f3f8;
+    font-size: 13px;
+    color: #888;
     text-align: center;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
 }
 
 .disclaimer p {
+    margin-bottom: 8px;
+}
+
+.copyright {
     font-size: 12px;
-    color: #777;
-    font-style: italic;
+    color: #aaa;
+    margin-top: 10px;
 }
 
 /* Utility classes */
