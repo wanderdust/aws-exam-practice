@@ -10,6 +10,7 @@
     "storage-questions.json",
     "decoupling-questions.json",
     "container-questions.json",
-    "serverless-questions.json"
+    "serverless-questions.json",
+    "database-ii-questions.json"
   ]
 }
