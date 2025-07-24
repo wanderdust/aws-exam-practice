@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM elements
     const elements = {
         profileSelector: document.getElementById('profile-selector'),
-        tagsContainer: document.getElementById('tags-container'),
+        tagSearch: document.getElementById('tag-search'),
+        tagSuggestions: document.getElementById('tag-suggestions'),
+        selectedTagsContainer: document.getElementById('selected-tags-container'),
         clearFiltersBtn: document.getElementById('clear-filters'),
         nextQuestionBtn: document.getElementById('next-question'),
         questionCounter: document.getElementById('question-counter'),
@@ -33,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function init() {
         await loadAllQuestions();
         setupEventListeners();
-        renderTags();
+        initTagSystem();
         showNextQuestion();
     }
 
@@ -105,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             state.questionCounter = 0;
             
             // Update UI
-            renderTags();
+            renderSelectedTags();
             updateQuestionCounter();
             
         } catch (error) {
@@ -146,14 +148,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
+        // Tag search input
+        elements.tagSearch.addEventListener('input', (e) => {
+            const searchQuery = e.target.value.trim();
+            if (searchQuery.length > 0) {
+                showTagSuggestions(searchQuery);
+            } else {
+                hideTagSuggestions();
+            }
+        });
+        
+        // Focus and blur events for tag search
+        elements.tagSearch.addEventListener('focus', () => {
+            if (elements.tagSearch.value.trim().length > 0) {
+                showTagSuggestions(elements.tagSearch.value.trim());
+            }
+        });
+        
+        // Close suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!elements.tagSearch.contains(e.target) && 
+                !elements.tagSuggestions.contains(e.target)) {
+                hideTagSuggestions();
+            }
+        });
+        
         // Next question button
         elements.nextQuestionBtn.addEventListener('click', showNextQuestion);
         
         // Clear filters button
         elements.clearFiltersBtn.addEventListener('click', () => {
             state.selectedTags.clear();
-            updateTagSelection();
+            renderSelectedTags();
             filterQuestions();
+            elements.tagSearch.value = '';
         });
         
         // Submit answer button (for multiple choice)
@@ -163,22 +191,68 @@ document.addEventListener('DOMContentLoaded', () => {
         // because we need to mark the question as answered when it's revealed
     }
 
-    // Render all available tags
-    function renderTags() {
-        elements.tagsContainer.innerHTML = '';
+    // Show tag suggestions based on search query
+    function showTagSuggestions(searchQuery) {
+        elements.tagSuggestions.innerHTML = '';
+        elements.tagSuggestions.classList.remove('hidden');
         
-        Array.from(state.availableTags).sort().forEach(tag => {
+        // Filter tags based on search query
+        const filteredTags = Array.from(state.availableTags)
+            .filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+            .filter(tag => !state.selectedTags.has(tag)) // Exclude already selected tags
+            .sort();
+        
+        if (filteredTags.length === 0) {
+            const noResults = document.createElement('div');
+            noResults.classList.add('tag-suggestion');
+            noResults.textContent = 'No matching tags found';
+            noResults.style.fontStyle = 'italic';
+            noResults.style.color = '#888';
+            elements.tagSuggestions.appendChild(noResults);
+            return;
+        }
+        
+        // Create suggestion elements
+        filteredTags.forEach(tag => {
+            const suggestion = document.createElement('div');
+            suggestion.classList.add('tag-suggestion');
+            suggestion.textContent = tag;
+            suggestion.addEventListener('click', () => {
+                toggleTag(tag);
+                elements.tagSearch.value = ''; // Clear search input
+                hideTagSuggestions();
+                elements.tagSearch.focus(); // Keep focus on search input
+            });
+            
+            elements.tagSuggestions.appendChild(suggestion);
+        });
+    }
+    
+    // Hide tag suggestions
+    function hideTagSuggestions() {
+        elements.tagSuggestions.classList.add('hidden');
+    }
+    
+    // Render selected tags
+    function renderSelectedTags() {
+        elements.selectedTagsContainer.innerHTML = '';
+        
+        if (state.selectedTags.size === 0) {
+            return;
+        }
+        
+        Array.from(state.selectedTags).sort().forEach(tag => {
             const tagElement = document.createElement('span');
-            tagElement.classList.add('tag');
-            if (state.selectedTags.has(tag)) {
-                tagElement.classList.add('selected');
-            }
-            tagElement.textContent = tag;
+            tagElement.classList.add('tag', 'selected');
+            
+            // Create tag content with remove icon
+            tagElement.innerHTML = `${tag} <i class="fas fa-times-circle"></i>`;
+            
             tagElement.addEventListener('click', () => {
                 toggleTag(tag);
             });
             
-            elements.tagsContainer.appendChild(tagElement);
+            elements.selectedTagsContainer.appendChild(tagElement);
         });
     }
 
@@ -190,20 +264,13 @@ document.addEventListener('DOMContentLoaded', () => {
             state.selectedTags.add(tag);
         }
         
-        updateTagSelection();
+        renderSelectedTags();
         filterQuestions();
     }
 
-    // Update the visual selection of tags
-    function updateTagSelection() {
-        document.querySelectorAll('.tag').forEach(tagElement => {
-            const tag = tagElement.textContent;
-            if (state.selectedTags.has(tag)) {
-                tagElement.classList.add('selected');
-            } else {
-                tagElement.classList.remove('selected');
-            }
-        });
+    // Initialize tag system
+    function initTagSystem() {
+        renderSelectedTags();
     }
 
     // Filter questions based on selected tags
