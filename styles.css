@@ -177,10 +177,64 @@ header h1 i {
     cursor: pointer;
     transition: background-color 0.2s;
     border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .tag-suggestion:hover {
     background-color: #f5f9ff;
+}
+
+.tag-suggestion .checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.tag-suggestion.selected .checkbox {
+    background-color: #0073bb;
+    border-color: #0073bb;
+}
+
+.tag-suggestion.selected .checkbox:after {
+    content: '\2713';
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.tag-suggestion.selected {
+    background-color: #f0f7ff;
+}
+
+.multi-select-actions {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    background-color: #f8fafc;
+}
+
+.multi-select-actions button {
+    padding: 5px 10px;
+    font-size: 12px;
+    background-color: #f0f3f8;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.multi-select-actions button.apply {
+    background-color: #0073bb;
+    color: white;
+    border: none;
 }
 
 .tag-suggestion:last-child {

@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // because we need to mark the question as answered when it's revealed
     }
 
-    // Show tag suggestions based on search query
+    // Show tag suggestions based on search query with multi-select support
     function showTagSuggestions(searchQuery) {
         elements.tagSuggestions.innerHTML = '';
         elements.tagSuggestions.classList.remove('hidden');
@@ -212,20 +212,78 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
+        // Temporary state for multi-select
+        const tempSelectedTags = new Set();
+        
         // Create suggestion elements
         filteredTags.forEach(tag => {
             const suggestion = document.createElement('div');
             suggestion.classList.add('tag-suggestion');
-            suggestion.textContent = tag;
+            
+            // Create checkbox for multi-select
+            const checkbox = document.createElement('span');
+            checkbox.classList.add('checkbox');
+            
+            // Create tag text
+            const tagText = document.createElement('span');
+            tagText.textContent = tag;
+            tagText.style.flexGrow = '1';
+            
+            // Add elements to suggestion
+            suggestion.appendChild(checkbox);
+            suggestion.appendChild(tagText);
+            
+            // Click handler for multi-select
             suggestion.addEventListener('click', () => {
-                toggleTag(tag);
-                elements.tagSearch.value = ''; // Clear search input
-                hideTagSuggestions();
-                elements.tagSearch.focus(); // Keep focus on search input
+                if (suggestion.classList.contains('selected')) {
+                    suggestion.classList.remove('selected');
+                    tempSelectedTags.delete(tag);
+                } else {
+                    suggestion.classList.add('selected');
+                    tempSelectedTags.add(tag);
+                }
             });
             
             elements.tagSuggestions.appendChild(suggestion);
         });
+        
+        // Add action buttons for multi-select
+        const actionsContainer = document.createElement('div');
+        actionsContainer.classList.add('multi-select-actions');
+        
+        // Cancel button
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.addEventListener('click', () => {
+            hideTagSuggestions();
+            elements.tagSearch.value = '';
+        });
+        
+        // Apply button
+        const applyButton = document.createElement('button');
+        applyButton.textContent = 'Apply Selected';
+        applyButton.classList.add('apply');
+        applyButton.addEventListener('click', () => {
+            // Add all temporarily selected tags
+            tempSelectedTags.forEach(tag => {
+                state.selectedTags.add(tag);
+            });
+            
+            // Update UI and filter questions
+            renderSelectedTags();
+            filterQuestions();
+            
+            // Clear search and hide suggestions
+            elements.tagSearch.value = '';
+            hideTagSuggestions();
+        });
+        
+        // Add buttons to actions container
+        actionsContainer.appendChild(cancelButton);
+        actionsContainer.appendChild(applyButton);
+        
+        // Add actions container to suggestions
+        elements.tagSuggestions.appendChild(actionsContainer);
     }
     
     // Hide tag suggestions
