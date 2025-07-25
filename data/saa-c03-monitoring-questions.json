@@ -1,0 +1,264 @@
+[
+    {
+        "id": "mon-001",
+        "type": "multiple-choice",
+        "question": "A company needs to monitor their AWS resources and set up automated responses to operational changes. They want to detect unusual API activity in their AWS account. Which AWS service should they configure?",
+        "options": [
+            "CloudTrail with CloudTrail Insights",
+            "CloudWatch with detailed monitoring",
+            "EventBridge with custom event patterns",
+            "AWS Config with Config Rules"
+        ],
+        "correctIndex": 0,
+        "explanation": "CloudTrail with CloudTrail Insights is the correct solution for detecting unusual API activity. CloudTrail Insights analyzes API call patterns to establish baselines and then automatically detects unusual activity, such as spikes in resource provisioning or bursts of IAM actions. AWS Config monitors configuration changes but doesn't detect unusual API patterns. CloudWatch monitors performance metrics but doesn't specifically analyze API call patterns. EventBridge reacts to events but doesn't have built-in anomaly detection for API calls.",
+        "tags": [
+            "CloudTrail",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-002",
+        "type": "multiple-choice",
+        "question": "A solutions architect needs to design a solution that will automatically remediate non-compliant security group rules that allow unrestricted access (0.0.0.0/0) to specific ports. Which combination of services should be used?",
+        "options": [
+            "CloudWatch Events and Lambda",
+            "EventBridge and AWS Shield",
+            "AWS Config Rules and Systems Manager Automation",
+            "CloudTrail and Amazon SNS"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS Config Rules and Systems Manager Automation is the correct solution. AWS Config Rules can detect non-compliant security group configurations that allow unrestricted access (0.0.0.0/0) to specific ports. When a non-compliant resource is detected, Config can trigger Systems Manager Automation to remediate the issue by modifying the security group rules to comply with the security policy. CloudWatch Events (now EventBridge) with Lambda could potentially work but is not as purpose-built for configuration compliance as AWS Config. CloudTrail with SNS would only notify about changes but not automatically remediate them. EventBridge and AWS Shield are not designed for configuration compliance monitoring and remediation.",
+        "tags": [
+            "AWS Config",
+            "Systems Manager",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-003",
+        "type": "multiple-choice",
+        "question": "A company wants to monitor the memory utilization of their EC2 instances and trigger auto-scaling actions based on memory usage. What must be configured to achieve this?",
+        "options": [
+            "Install the CloudWatch Logs agent on the EC2 instances",
+            "Install the CloudWatch Unified Agent on the EC2 instances",
+            "Enable CloudWatch Container Insights",
+            "Enable detailed monitoring in CloudWatch"
+        ],
+        "correctIndex": 1,
+        "explanation": "The CloudWatch Unified Agent must be installed on the EC2 instances to collect memory utilization metrics. By default, CloudWatch does not collect memory metrics from EC2 instances. The Unified Agent can collect system metrics like memory, disk, and CPU usage, as well as log files. Once collected, these custom metrics can be used to trigger auto-scaling actions. Detailed monitoring only increases the frequency of the default metrics collection (from 5 minutes to 1 minute) but doesn't add new metric types. The CloudWatch Logs agent only collects log data, not performance metrics. Container Insights is for monitoring containerized applications, not standard EC2 instances.",
+        "tags": [
+            "CloudWatch",
+            "EC2",
+            "High-Performing Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-004",
+        "type": "multiple-choice",
+        "question": "A solutions architect needs to design a solution that will automatically restart an EC2 instance if it fails a status check. Which approach should be used?",
+        "options": [
+            "Configure EC2 Auto Recovery",
+            "Create a CloudWatch alarm that performs a reboot action",
+            "Set up an EventBridge rule that triggers a Lambda function",
+            "Use AWS Systems Manager Automation to monitor and restart the instance"
+        ],
+        "correctIndex": 1,
+        "explanation": "Creating a CloudWatch alarm that performs a reboot action is the correct solution. CloudWatch can monitor EC2 status checks and trigger an action when an alarm state is reached. You can configure the alarm to automatically reboot the EC2 instance when it fails a status check. EC2 Auto Recovery is designed to recover instances to new hardware if there's an underlying hardware failure, not for general status check failures. EventBridge with Lambda would work but is more complex than using CloudWatch's built-in EC2 actions. AWS Systems Manager Automation could be configured for this purpose but is more complex than the direct CloudWatch alarm approach.",
+        "tags": [
+            "CloudWatch",
+            "EC2",
+            "Resilient Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-005",
+        "type": "open-ended",
+        "question": "Explain the differences between CloudWatch Logs, CloudWatch Logs Insights, and CloudWatch Logs Subscriptions, and provide use cases for each.",
+        "answer": "CloudWatch Logs, CloudWatch Logs Insights, and CloudWatch Logs Subscriptions are related but serve different purposes in AWS's logging ecosystem:\n\n**CloudWatch Logs**:\nThis is the core logging service that collects, stores, and provides access to log files from AWS resources, applications, and on-premises servers. It allows you to centralize logs from multiple sources.\n\nUse cases:\n- Centralized storage of application logs from EC2 instances\n- Collecting and retaining AWS service logs (e.g., Lambda, API Gateway)\n- Monitoring application logs for specific error patterns\n- Setting up metric filters to create CloudWatch metrics from log data\n- Long-term log retention and archiving\n\n**CloudWatch Logs Insights**:\nThis is a query and analysis tool built on top of CloudWatch Logs that allows you to search and analyze log data using a purpose-built query language.\n\nUse cases:\n- Troubleshooting operational issues by quickly searching across log files\n- Identifying patterns in application behavior\n- Analyzing error rates and types over time\n- Creating visualizations of log data for dashboards\n- Performing ad-hoc analysis during incident response\n- Extracting specific fields from semi-structured log data\n\n**CloudWatch Logs Subscriptions**:\nThis feature allows you to get access to a real-time feed of log events from CloudWatch Logs and have it delivered to other services for processing, analysis, or loading to other systems.\n\nUse cases:\n- Real-time log processing with Lambda functions\n- Sending logs to Amazon Elasticsearch Service for advanced search and analytics\n- Streaming logs to Amazon Kinesis Data Firehose for delivery to S3, Redshift, or third-party tools\n- Aggregating logs from multiple accounts or regions into a central account\n- Building custom log processing pipelines\n- Integrating with third-party log analytics platforms\n\n**Key Differences**:\n\n1. **Purpose**:\n   - CloudWatch Logs: Storage and basic monitoring\n   - Logs Insights: Interactive querying and analysis\n   - Logs Subscriptions: Real-time streaming and integration\n\n2. **Timing**:\n   - CloudWatch Logs: Primarily for historical logs (though can be viewed in near real-time)\n   - Logs Insights: For historical analysis (queries run against stored logs)\n   - Logs Subscriptions: Real-time processing of log events as they arrive\n\n3. **Integration**:\n   - CloudWatch Logs: Primary integration point for AWS services\n   - Logs Insights: Built-in analysis within CloudWatch\n   - Logs Subscriptions: Connects logs to external processing systems\n\n4. **Scalability**:\n   - CloudWatch Logs: Handles large volumes of logs but with retention limits\n   - Logs Insights: Optimized for querying large datasets but with query timeout limits\n   - Logs Subscriptions: Designed for high-throughput streaming to other services\n\nIn a comprehensive logging strategy, you might use all three: CloudWatch Logs for centralized collection, Logs Insights for ad-hoc analysis and troubleshooting, and Logs Subscriptions for real-time processing and long-term analytics in specialized systems.",
+        "tags": [
+            "CloudWatch",
+            "Resilient Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-006",
+        "type": "multiple-choice",
+        "question": "A company wants to monitor their AWS resources for compliance with internal security policies. They need to track configuration changes and maintain a history of changes over time. Which service should they use?",
+        "options": [
+            "Amazon CloudWatch",
+            "AWS Systems Manager",
+            "AWS CloudTrail",
+            "AWS Config"
+        ],
+        "correctIndex": 3,
+        "explanation": "AWS Config is the correct service for monitoring resources for compliance with security policies and tracking configuration changes over time. AWS Config provides a detailed inventory of AWS resources and configuration history, allowing you to assess how resource configurations change over time. It can evaluate these configurations against desired configurations using Config Rules. CloudTrail tracks API calls but doesn't focus on resource configurations. CloudWatch monitors performance metrics but doesn't track configuration changes. Systems Manager helps manage infrastructure but isn't primarily designed for configuration compliance monitoring and history tracking.",
+        "tags": [
+            "AWS Config",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-007",
+        "type": "multiple-choice",
+        "question": "A company needs to route events from multiple AWS services to different targets based on event content. They want to implement event filtering and transformation before delivery. Which service should they use?",
+        "options": [
+            "AWS CloudTrail",
+            "Amazon SNS",
+            "AWS EventBridge",
+            "Amazon SQS"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS EventBridge is the correct service for routing events from multiple AWS services to different targets based on event content with filtering and transformation capabilities. EventBridge (formerly CloudWatch Events) is a serverless event bus that connects application data from your own applications, SaaS applications, and AWS services. It allows you to create rules that match events and route them to targets with the ability to filter and transform the events. SNS is a pub/sub messaging service but lacks the advanced event pattern matching and transformation capabilities of EventBridge. SQS is a message queue service without event routing features. CloudTrail records API activity but doesn't provide event routing functionality.",
+        "tags": [
+            "EventBridge",
+            "Integration Services",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-008",
+        "type": "multiple-choice",
+        "question": "A solutions architect needs to implement a solution that will automatically take action when specific API calls are made in their AWS account. Which combination of services should be used?",
+        "options": [
+            "AWS Config and Systems Manager Automation",
+            "CloudWatch Logs and Lambda",
+            "GuardDuty and Security Hub",
+            "CloudTrail, EventBridge, and Lambda"
+        ],
+        "correctIndex": 3,
+        "explanation": "CloudTrail, EventBridge, and Lambda is the correct combination. CloudTrail records API calls made within the AWS account. EventBridge can create rules that match specific CloudTrail events (API calls) and route them to targets. Lambda can be used as a target to execute custom code in response to the detected API calls. This combination provides a complete solution for monitoring specific API activities and taking automated actions. CloudWatch Logs and Lambda could process log data but wouldn't directly capture API calls without CloudTrail. AWS Config and Systems Manager focus on resource configurations rather than API activities. GuardDuty and Security Hub are security services that focus on threat detection rather than general API call monitoring and response.",
+        "tags": [
+            "CloudTrail",
+            "EventBridge",
+            "Lambda",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-009",
+        "type": "multiple-choice",
+        "question": "A company wants to implement automated remediation for non-compliant resources detected by AWS Config. Which service should they integrate with AWS Config to achieve this?",
+        "options": [
+            "Amazon SNS",
+            "Amazon EventBridge",
+            "AWS Systems Manager Automation",
+            "AWS Lambda"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS Systems Manager Automation is the correct service to integrate with AWS Config for automated remediation of non-compliant resources. AWS Config can trigger Systems Manager Automation documents when it detects non-compliant resources. These documents can contain predefined remediation actions specifically designed to fix common compliance issues. While Lambda could also be used for remediation, Systems Manager Automation is purpose-built for infrastructure automation tasks with built-in approval workflows and error handling. SNS would only provide notifications without remediation capabilities. EventBridge could route events but would still need another service like Lambda or Systems Manager to perform the actual remediation.",
+        "tags": [
+            "AWS Config",
+            "Systems Manager",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-010",
+        "type": "open-ended",
+        "question": "Explain the differences between CloudWatch Alarms, EventBridge Rules, and AWS Config Rules, and provide use cases for each.",
+        "answer": "CloudWatch Alarms, EventBridge Rules, and AWS Config Rules serve different monitoring and automation purposes in AWS:\n\n**CloudWatch Alarms**:\nCloudWatch Alarms monitor metrics over a specified time period and perform actions based on the value of those metrics relative to a threshold.\n\nKey characteristics:\n- Based on metrics (numerical data points)\n- Time-based evaluation (e.g., CPU > 80% for 5 minutes)\n- Support for statistical functions (Average, Sum, Min, Max, etc.)\n- Can trigger actions when entering or exiting alarm states\n\nUse cases:\n- Monitoring infrastructure performance (CPU, memory, disk usage)\n- Scaling applications based on load (triggering Auto Scaling)\n- Monitoring business metrics (transaction rates, error rates)\n- Detecting anomalies in application behavior\n- Automating recovery actions (restarting instances, failover)\n- Cost control (alerting on spending thresholds)\n\n**EventBridge Rules**:\nEventBridge Rules match events (structured JSON data representing changes or activities) and route them to target services for processing or action.\n\nKey characteristics:\n- Event-driven (triggered by specific events, not metrics)\n- Pattern matching against event content\n- Support for scheduled events (cron expressions)\n- Can filter, transform, and enrich events\n- Integrates with 100+ AWS services and SaaS applications\n\nUse cases:\n- Responding to state changes in AWS resources\n- Triggering workflows based on API calls\n- Building event-driven architectures\n- Scheduled tasks and batch processing\n- Cross-account event processing\n- SaaS application integration\n- Custom application events processing\n\n**AWS Config Rules**:\nAWS Config Rules evaluate the configuration settings of AWS resources against desired configurations and mark them as compliant or non-compliant.\n\nKey characteristics:\n- Configuration-based evaluation\n- Triggered by configuration changes or on a schedule\n- Evaluates point-in-time states against rules\n- Maintains configuration history\n- Can trigger remediation actions\n\nUse cases:\n- Ensuring compliance with security policies\n- Enforcing governance standards\n- Tracking resource configurations over time\n- Validating resource relationships\n- Detecting unauthorized configuration changes\n- Implementing guardrails for cloud resources\n- Automated remediation of non-compliant resources\n\n**Key Differences**:\n\n1. **Focus**:\n   - CloudWatch Alarms: Metric-based monitoring (numerical data)\n   - EventBridge Rules: Event-based processing (activities and changes)\n   - Config Rules: Configuration compliance (resource settings)\n\n2. **Trigger Mechanism**:\n   - CloudWatch Alarms: Threshold breaches on metrics\n   - EventBridge Rules: Matching event patterns or schedules\n   - Config Rules: Resource configuration changes or periodic evaluations\n\n3. **Time Aspect**:\n   - CloudWatch Alarms: Evaluates data over a time window\n   - EventBridge Rules: Processes events in real-time\n   - Config Rules: Point-in-time evaluation with historical tracking\n\n4. **Primary Purpose**:\n   - CloudWatch Alarms: Performance and operational monitoring\n   - EventBridge Rules: Event routing and workflow automation\n   - Config Rules: Compliance and governance\n\n**Integration Example**:\nA comprehensive monitoring solution might use all three:\n1. CloudWatch Alarms monitor application performance metrics\n2. When an alarm triggers, it generates an event caught by EventBridge\n3. EventBridge routes this to Lambda for remediation\n4. AWS Config Rules ensure the remediation maintains compliance\n\nThis multi-layered approach provides comprehensive monitoring, event handling, and compliance management for AWS environments.",
+        "tags": [
+            "CloudWatch",
+            "EventBridge",
+            "AWS Config",
+            "Management Services",
+            "Resilient Architectures"
+        ]
+    },
+    {
+        "id": "mon-011",
+        "type": "multiple-choice",
+        "question": "A company needs to collect custom metrics from their applications running on EC2 instances and send them to CloudWatch. Which approach is MOST efficient?",
+        "options": [
+            "Use AWS X-Ray to trace application metrics and forward them to CloudWatch",
+            "Write metrics to log files and use CloudWatch Logs metric filters",
+            "Use the CloudWatch API PutMetricData from the application code",
+            "Install the CloudWatch Unified Agent and configure custom metrics collection"
+        ],
+        "correctIndex": 3,
+        "explanation": "Installing the CloudWatch Unified Agent and configuring custom metrics collection is the most efficient approach. The CloudWatch Unified Agent is specifically designed to collect both system metrics and custom application metrics from EC2 instances and send them to CloudWatch. It supports collecting custom metrics from various sources including StatsD and collectd, making it flexible for different application types. The PutMetricData API call works but requires custom code implementation and maintenance. Writing metrics to logs and using metric filters is inefficient for high-volume metrics collection. AWS X-Ray is designed for distributed tracing, not general metrics collection.",
+        "tags": [
+            "CloudWatch",
+            "EC2",
+            "High-Performing Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-012",
+        "type": "multiple-choice",
+        "question": "A company wants to create a dashboard that shows the correlation between their application logs and metrics. Which CloudWatch feature should they use?",
+        "options": [
+            "CloudWatch Synthetics",
+            "CloudWatch Logs Insights",
+            "CloudWatch Contributor Insights",
+            "CloudWatch Container Insights"
+        ],
+        "correctIndex": 1,
+        "explanation": "CloudWatch Logs Insights is the correct feature for creating a dashboard that shows correlation between application logs and metrics. CloudWatch Logs Insights allows you to interactively search and analyze log data in CloudWatch Logs, create queries that extract fields from logs, and visualize log data alongside CloudWatch metrics in dashboards. This enables correlation between log events and metric data. Contributor Insights analyzes log data to find top contributors to metrics but doesn't focus on correlation with other metrics. Synthetics is for canary testing of endpoints. Container Insights provides monitoring for containerized applications but doesn't specialize in log-metric correlation.",
+        "tags": [
+            "CloudWatch",
+            "Resilient Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-013",
+        "type": "multiple-choice",
+        "question": "A solutions architect needs to implement a solution that will automatically archive CloudTrail logs to Amazon S3 Glacier after 90 days for long-term retention. Which approach should be used?",
+        "options": [
+            "Configure CloudWatch Logs retention and export to S3 Glacier",
+            "Create a Lambda function triggered by CloudWatch Events",
+            "Configure CloudTrail to directly write to S3 Glacier",
+            "Use S3 Lifecycle policies on the CloudTrail S3 bucket"
+        ],
+        "correctIndex": 3,
+        "explanation": "Using S3 Lifecycle policies on the CloudTrail S3 bucket is the correct approach. CloudTrail can be configured to deliver logs to an S3 bucket, and then S3 Lifecycle policies can be set up to automatically transition objects to S3 Glacier after 90 days. This is a serverless, fully managed solution that doesn't require any custom code or additional services. CloudTrail cannot write directly to S3 Glacier. A Lambda function triggered by CloudWatch Events would be an unnecessarily complex solution. CloudWatch Logs can export to S3 but this would be an indirect approach since CloudTrail already delivers logs to S3.",
+        "tags": [
+            "CloudTrail",
+            "S3",
+            "Cost-Optimized Architectures",
+            "Management Services"
+        ]
+    },
+    {
+        "id": "mon-014",
+        "type": "multiple-choice",
+        "question": "A company wants to be notified when specific configuration changes occur in their AWS environment. Which combination of services should they use?",
+        "options": [
+            "AWS Config, EventBridge, and Amazon SNS",
+            "CloudWatch Logs, Lambda, and Amazon SQS",
+            "CloudTrail, CloudWatch Alarms, and Amazon SNS",
+            "AWS Config, Amazon SNS, and Amazon SQS"
+        ],
+        "correctIndex": 0,
+        "explanation": "AWS Config, EventBridge, and Amazon SNS is the correct combination. AWS Config tracks resource configuration changes and can publish these changes as events to EventBridge. EventBridge can then filter these events based on specific configuration changes of interest and route them to SNS for notifications. This provides a streamlined, event-driven approach to monitoring and responding to specific configuration changes. AWS Config with SNS and SQS would work but lacks the filtering capabilities of EventBridge. CloudTrail with CloudWatch Alarms focuses on API activity rather than resource configurations. CloudWatch Logs with Lambda would require custom log parsing and would be more complex.",
+        "tags": [
+            "AWS Config",
+            "EventBridge",
+            "SNS",
+            "Management Services",
+            "Secure Architectures"
+        ]
+    },
+    {
+        "id": "mon-015",
+        "type": "open-ended",
+        "question": "Compare and contrast AWS CloudTrail and AWS Config, explaining when to use each service and how they can complement each other.",
+        "answer": "**AWS CloudTrail and AWS Config Comparison**\n\n**AWS CloudTrail**\n\nCloudTrail is primarily an API auditing service that records and logs all API calls made within an AWS account.\n\nCore capabilities:\n- Records API calls made by users, roles, or AWS services\n- Captures metadata about each API call (who, what, when, where)\n- Logs management events (control plane operations) and data events (data plane operations)\n- Provides event history for the past 90 days\n- Can store logs indefinitely in S3 buckets\n- Supports log file integrity validation\n- Offers CloudTrail Insights for detecting unusual API activity\n\nKey use cases:\n- Security analysis and auditing of user activity\n- Compliance with regulatory requirements\n- Operational troubleshooting of API issues\n- Tracking changes initiated through the AWS Management Console, CLI, or SDKs\n- Detecting unauthorized or unusual account activity\n- Supporting security incident investigations\n\n**AWS Config**\n\nAWS Config is a configuration management service that tracks the state and changes of AWS resources over time.\n\nCore capabilities:\n- Maintains an inventory of AWS resources and their configurations\n- Records configuration changes as configuration items\n- Provides a complete history of resource configurations\n- Evaluates resources against compliance rules\n- Supports custom and managed rules for compliance checking\n- Enables remediation actions for non-compliant resources\n- Offers relationship mapping between resources\n\nKey use cases:\n- Configuration compliance monitoring and enforcement\n- Resource change tracking and history\n- Security posture assessment\n- Governance enforcement through Config Rules\n- Configuration auditing and reporting\n- Understanding resource relationships and dependencies\n\n**When to Use Each Service**\n\n**Use CloudTrail when:**\n- You need to know who made what API calls in your AWS account\n- You're investigating security incidents related to user actions\n- You need to track changes made through the AWS Management Console, CLI, or SDKs\n- You need to maintain an audit trail of all control plane operations\n- You want to detect unusual API activity patterns\n- You need to understand the sequence of API calls that led to a particular outcome\n\n**Use AWS Config when:**\n- You need to track the configuration state of resources over time\n- You want to evaluate resource configurations against compliance rules\n- You need to understand how resources relate to each other\n- You want to assess the impact of a configuration change\n- You need to implement automated remediation for non-compliant resources\n- You want to maintain a configuration history beyond API calls\n\n**How They Complement Each Other**\n\nCloudTrail and AWS Config work together to provide comprehensive governance, compliance, and security monitoring:\n\n1. **Complete Change Tracking**:\n   - CloudTrail shows who made a change and how (the API calls)\n   - AWS Config shows what changed in the resource configuration\n\n2. **Cause and Effect Analysis**:\n   - CloudTrail provides the cause (the API calls)\n   - AWS Config shows the effect (the resulting configuration changes)\n\n3. **Security Incident Investigation**:\n   - CloudTrail identifies the actor and action\n   - AWS Config reveals the impact on resource configurations\n\n4. **Compliance Framework**:\n   - CloudTrail supports audit requirements for user activity\n   - AWS Config supports compliance requirements for resource states\n\n5. **Remediation Workflows**:\n   - CloudTrail identifies problematic API calls\n   - AWS Config triggers automated remediation of resulting configuration issues\n\n**Integration Example**:\n\nConsider a scenario where an unauthorized security group change occurs:\n\n1. CloudTrail logs the `ModifySecurityGroupRules` API call, recording who made it, when, and from where\n2. AWS Config records the configuration change to the security group\n3. AWS Config evaluates the new configuration against a rule that prohibits open access\n4. AWS Config marks the security group as non-compliant\n5. AWS Config triggers a remediation action to restore the security group to compliance\n6. Security teams can use CloudTrail logs to investigate who made the unauthorized change\n\nBy using both services together, organizations gain visibility into both the actions that caused changes (CloudTrail) and the resulting state of their AWS resources (AWS Config), creating a comprehensive governance and compliance solution.",
+        "tags": [
+            "CloudTrail",
+            "AWS Config",
+            "Secure Architectures",
+            "Management Services"
+        ]
+    }
+]
