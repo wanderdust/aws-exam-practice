@@ -4,48 +4,48 @@
       "name": "AWS Solutions Architect Associate (SAA-C03)",
       "description": "Solutions Architect Associate exam preparation",
       "files": [
-        "ec2-questions.json",
-        "iam-questions.json",
-        "elb-asg-questions.json",
-        "database-questions.json",
-        "route53-questions.json",
-        "s3-questions.json",
-        "cloudfront-questions.json",
-        "storage-questions.json",
-        "decoupling-questions.json",
-        "container-questions.json",
-        "serverless-questions.json",
-        "ml-questions.json"
+        "saa-c03-ec2-questions.json",
+        "saa-c03-iam-questions.json",
+        "saa-c03-elb-asg-questions.json",
+        "saa-c03-database-questions.json",
+        "saa-c03-route53-questions.json",
+        "saa-c03-s3-questions.json",
+        "saa-c03-cloudfront-questions.json",
+        "saa-c03-storage-questions.json",
+        "saa-c03-decoupling-questions.json",
+        "saa-c03-container-questions.json",
+        "saa-c03-serverless-questions.json",
+        "saa-c03-ml-questions.json"
       ]
     },
     "data-engineering": {
       "name": "AWS Certified Data Engineer (DAS-C01)",
       "description": "Data Engineering exam preparation",
       "files": [
-        "database-questions.json",
-        "database-ii-questions.json",
-        "data-and-analytics-questions.json",
-        "s3-questions.json",
-        "iam-questions.json",
-        "serverless-questions.json",
-        "container-questions.json"
+        "saa-c03-database-questions.json",
+        "saa-c03-database-ii-questions.json",
+        "saa-c03-data-and-analytics-questions.json",
+        "saa-c03-s3-questions.json",
+        "saa-c03-iam-questions.json",
+        "saa-c03-serverless-questions.json",
+        "saa-c03-container-questions.json"
       ]
     }
   },
   "files": [
-    "ec2-questions.json",
-    "iam-questions.json",
-    "elb-asg-questions.json",
-    "database-questions.json",
-    "route53-questions.json",
-    "s3-questions.json",
-    "cloudfront-questions.json",
-    "storage-questions.json",
-    "decoupling-questions.json",
-    "container-questions.json",
-    "serverless-questions.json",
-    "database-ii-questions.json",
-    "data-and-analytics-questions.json",
-    "ml-questions.json"
+    "saa-c03-ec2-questions.json",
+    "saa-c03-iam-questions.json",
+    "saa-c03-elb-asg-questions.json",
+    "saa-c03-database-questions.json",
+    "saa-c03-route53-questions.json",
+    "saa-c03-s3-questions.json",
+    "saa-c03-cloudfront-questions.json",
+    "saa-c03-storage-questions.json",
+    "saa-c03-decoupling-questions.json",
+    "saa-c03-container-questions.json",
+    "saa-c03-serverless-questions.json",
+    "saa-c03-database-ii-questions.json",
+    "saa-c03-data-and-analytics-questions.json",
+    "saa-c03-ml-questions.json"
   ]
 }
