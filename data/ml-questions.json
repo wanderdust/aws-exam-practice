@@ -1,0 +1,221 @@
+[
+    {
+        "id": "ml001",
+        "type": "multiple-choice",
+        "question": "A retail company wants to implement personalized product recommendations on their e-commerce website. They have a large dataset of customer purchase history but limited ML expertise. Which AWS service would be the MOST appropriate solution?",
+        "options": [
+            "Amazon Comprehend",
+            "Amazon Rekognition",
+            "Amazon Personalize",
+            "Amazon SageMaker"
+        ],
+        "correctIndex": 2,
+        "explanation": "Amazon Personalize is specifically designed for building personalized product recommendations with minimal ML expertise. It uses the same technology as Amazon.com's recommendation system and can be integrated with minimal effort. SageMaker would require more ML expertise to build custom models. Comprehend is for natural language processing, and Rekognition is for image and video analysis.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Personalize"
+        ]
+    },
+    {
+        "id": "ml002",
+        "type": "multiple-choice",
+        "question": "A healthcare organization needs to extract medical information from unstructured clinical text documents. Which AWS service would be MOST suitable for this requirement?",
+        "options": [
+            "Amazon Comprehend Medical",
+            "Amazon Textract",
+            "Amazon Kendra",
+            "Amazon Translate"
+        ],
+        "correctIndex": 0,
+        "explanation": "Amazon Comprehend Medical is specifically designed for extracting medical information from unstructured clinical text. It can identify medical conditions, medications, dosages, and protected health information (PHI). Textract is for extracting text from documents but lacks medical-specific capabilities. Translate is for language translation, and Kendra is a search service.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Comprehend Medical"
+        ]
+    },
+    {
+        "id": "ml003",
+        "type": "multiple-choice",
+        "question": "A solutions architect is designing a content moderation system for a social media platform. The system must automatically detect and flag inappropriate images and videos. Which AWS service should be used?",
+        "options": [
+            "Amazon Forecast",
+            "Amazon Textract",
+            "Amazon Polly",
+            "Amazon Rekognition"
+        ],
+        "correctIndex": 3,
+        "explanation": "Amazon Rekognition provides content moderation capabilities that can detect inappropriate, unwanted, or offensive content in images and videos. It can identify explicit adult content, violent content, and more. Polly is for text-to-speech, Textract is for document text extraction, and Forecast is for time-series forecasting.",
+        "tags": [
+            "Secure Architectures",
+            "ML Services",
+            "Rekognition"
+        ]
+    },
+    {
+        "id": "ml004",
+        "type": "multiple-choice",
+        "question": "A company needs to build a chatbot for their customer service department that can understand natural language and maintain context throughout conversations. Which combination of AWS services should they use?",
+        "options": [
+            "Amazon Lex and Amazon Connect",
+            "Amazon Polly and Amazon Connect",
+            "Amazon Kendra and Amazon Textract",
+            "Amazon Transcribe and Amazon Comprehend"
+        ],
+        "correctIndex": 0,
+        "explanation": "Amazon Lex provides the natural language understanding (NLU) capabilities needed for building conversational interfaces (chatbots) that can maintain context. Amazon Connect is a contact center service that integrates with Lex to provide a complete customer service solution. Polly is for text-to-speech, Transcribe is for speech-to-text, Comprehend is for general NLP, Kendra is for search, and Textract is for document processing.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Lex",
+            "Connect"
+        ]
+    },
+    {
+        "id": "ml005",
+        "type": "multiple-choice",
+        "question": "A multinational company wants to translate their product documentation into multiple languages automatically while preserving the technical terminology specific to their industry. Which AWS service should they use?",
+        "options": [
+            "Amazon Translate with custom terminology",
+            "Amazon Transcribe",
+            "Amazon Polly",
+            "Amazon Comprehend"
+        ],
+        "correctIndex": 0,
+        "explanation": "Amazon Translate with custom terminology allows organizations to define specific translations for domain-specific terms, ensuring consistency and accuracy in technical translations. This feature preserves industry-specific terminology while translating the rest of the content automatically. Comprehend is for text analysis, Transcribe is for speech-to-text, and Polly is for text-to-speech.",
+        "tags": [
+            "Operational Excellence",
+            "ML Services",
+            "Translate"
+        ]
+    },
+    {
+        "id": "ml006",
+        "type": "multiple-choice",
+        "question": "A financial services company needs to extract data from scanned loan application forms, including handwritten fields. Which AWS service should they use?",
+        "options": [
+            "Amazon SageMaker",
+            "Amazon Rekognition",
+            "Amazon Comprehend",
+            "Amazon Textract"
+        ],
+        "correctIndex": 3,
+        "explanation": "Amazon Textract is specifically designed to extract text, handwriting, and data from scanned documents. It can identify form fields and extract the values, making it ideal for processing loan applications with both printed and handwritten content. Rekognition is for image and video analysis but not optimized for document processing. Comprehend is for natural language processing, and SageMaker is a general-purpose ML platform.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Textract"
+        ]
+    },
+    {
+        "id": "ml007",
+        "type": "multiple-choice",
+        "question": "A company wants to implement a voice-enabled interface for their mobile application that converts text responses to lifelike speech. Which AWS service should they use?",
+        "options": [
+            "Amazon Transcribe",
+            "Amazon Connect",
+            "Amazon Lex",
+            "Amazon Polly"
+        ],
+        "correctIndex": 3,
+        "explanation": "Amazon Polly converts text into lifelike speech, allowing applications to talk with natural-sounding voices. It supports multiple languages and voices, making it ideal for voice-enabled interfaces. Transcribe does the opposite (speech-to-text), Lex is for building conversational interfaces, and Connect is a contact center service.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Polly"
+        ]
+    },
+    {
+        "id": "ml008",
+        "type": "multiple-choice",
+        "question": "A media company needs to automatically generate subtitles for their video content in multiple languages. Which sequence of AWS services should they use?",
+        "options": [
+            "Amazon Transcribe \u2192 Amazon Translate",
+            "Amazon Rekognition \u2192 Amazon Polly \u2192 Amazon Translate",
+            "Amazon Rekognition \u2192 Amazon Comprehend \u2192 Amazon Translate",
+            "Amazon Transcribe \u2192 Amazon Translate \u2192 Amazon Polly"
+        ],
+        "correctIndex": 0,
+        "explanation": "To generate subtitles in multiple languages, the company should use Amazon Transcribe to convert the audio to text (creating subtitles in the original language), followed by Amazon Translate to translate those subtitles into multiple languages. Rekognition is for image/video analysis but doesn't handle speech-to-text. Polly converts text to speech, which isn't needed for subtitles.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Transcribe",
+            "Translate"
+        ]
+    },
+    {
+        "id": "ml009",
+        "type": "multiple-choice",
+        "question": "A solutions architect is designing a document search system for a legal firm that needs to quickly find relevant information across millions of legal documents. Which AWS service would be MOST appropriate?",
+        "options": [
+            "Amazon DynamoDB",
+            "Amazon Elasticsearch Service",
+            "Amazon Kendra",
+            "Amazon Neptune"
+        ],
+        "correctIndex": 2,
+        "explanation": "Amazon Kendra is an intelligent search service powered by machine learning, specifically designed for document search. It can understand natural language queries and return precise answers from documents, making it ideal for searching through legal documents. Elasticsearch is a general search engine but lacks Kendra's ML-powered natural language understanding. DynamoDB is a NoSQL database, and Neptune is a graph database.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Kendra"
+        ]
+    },
+    {
+        "id": "ml010",
+        "type": "multiple-choice",
+        "question": "A company wants to build a custom computer vision model to detect defects in their manufacturing process. They have a team of data scientists but need a service that provides the infrastructure for training and deploying ML models. Which AWS service should they use?",
+        "options": [
+            "AWS Lambda",
+            "Amazon Rekognition",
+            "Amazon Comprehend",
+            "Amazon SageMaker"
+        ],
+        "correctIndex": 3,
+        "explanation": "Amazon SageMaker provides the complete infrastructure and tools for building, training, and deploying custom machine learning models, including computer vision models. It's designed for data scientists and developers to work with their own models. Rekognition provides pre-built computer vision capabilities but doesn't support custom model training for specific defect detection. Comprehend is for NLP, and Lambda is a compute service without ML-specific capabilities.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "SageMaker"
+        ]
+    },
+    {
+        "id": "ml011",
+        "type": "multiple-choice",
+        "question": "A retail company is implementing a system to forecast product demand based on historical sales data. Which AWS service should they use?",
+        "options": [
+            "Amazon EMR",
+            "Amazon Athena",
+            "Amazon Forecast",
+            "Amazon QuickSight"
+        ],
+        "correctIndex": 2,
+        "explanation": "Amazon Forecast is a fully managed service that uses machine learning to deliver highly accurate forecasts based on time-series data such as product demand. It's specifically designed for forecasting scenarios. QuickSight is for business intelligence and visualization, Athena is for SQL queries on S3 data, and EMR is for big data processing.",
+        "tags": [
+            "High-Performing Architectures",
+            "ML Services",
+            "Forecast"
+        ]
+    },
+    {
+        "id": "ml012",
+        "type": "multiple-choice",
+        "question": "A company needs to process and analyze customer support call recordings to identify common issues and sentiment trends. Which combination of AWS services would be MOST efficient?",
+        "options": [
+            "Amazon Rekognition and Amazon Textract",
+            "Amazon Transcribe and Amazon Comprehend",
+            "Amazon Connect and Amazon Lex",
+            "Amazon Polly and Amazon Translate"
+        ],
+        "correctIndex": 1,
+        "explanation": "For analyzing recorded calls, Amazon Transcribe would first convert the speech to text, and then Amazon Comprehend would analyze the text to identify common issues (key phrases, entities) and sentiment trends. Connect and Lex are for creating contact centers and chatbots, not analyzing existing recordings. Polly is for text-to-speech, and Rekognition/Textract are for image/document analysis.",
+        "tags": [
+            "Operational Excellence",
+            "ML Services",
+            "Transcribe",
+            "Comprehend"
+        ]
+    }
+]

@@ -14,7 +14,8 @@
         "storage-questions.json",
         "decoupling-questions.json",
         "container-questions.json",
-        "serverless-questions.json"
+        "serverless-questions.json",
+        "ml-questions.json"
       ]
     },
     "data-engineering": {
@@ -44,6 +45,7 @@
     "container-questions.json",
     "serverless-questions.json",
     "database-ii-questions.json",
-    "data-and-analytics-questions.json"
+    "data-and-analytics-questions.json",
+    "ml-questions.json"
   ]
 }
