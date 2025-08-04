@@ -15,7 +15,8 @@
         "saa-c03-decoupling-questions.json",
         "saa-c03-container-questions.json",
         "saa-c03-serverless-questions.json",
-        "saa-c03-ml-questions.json"
+        "saa-c03-ml-questions.json",
+        "saa-c03-security-encryption-questions.json"
       ]
     },
     "data-engineering": {
@@ -29,7 +30,8 @@
         "saa-c03-iam-questions.json",
         "saa-c03-serverless-questions.json",
         "saa-c03-container-questions.json",
-        "saa-c03-monitoring-questions.json"
+        "saa-c03-monitoring-questions.json",
+        "saa-c03-security-encryption-questions.json"
       ]
     }
   },
@@ -48,6 +50,7 @@
     "saa-c03-database-ii-questions.json",
     "saa-c03-data-and-analytics-questions.json",
     "saa-c03-ml-questions.json",
+    "saa-c03-security-encryption-questions.json",
     "saa-c03-monitoring-questions.json"
   ]
 }

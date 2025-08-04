@@ -1,0 +1,438 @@
+[
+    {
+        "id": "sec-q01",
+        "type": "multiple-choice",
+        "question": "A company needs to encrypt data in their S3 buckets across multiple AWS regions while maintaining the ability to decrypt the data in any region without making cross-region API calls. Which KMS solution best meets these requirements?",
+        "options": [
+            "Create a single KMS key in one region and use cross-region API calls to encrypt/decrypt data",
+            "Create separate KMS keys in each region with identical key policies",
+            "Use KMS Multi-Region keys with the same key ID across all regions",
+            "Use AWS owned keys which are automatically available in all regions"
+        ],
+        "correctIndex": 2,
+        "explanation": "KMS Multi-Region keys are designed for exactly this scenario. They have the same key ID across regions and can decrypt data that was encrypted in another region without making cross-region API calls. This provides better performance and availability compared to using a single key with cross-region calls. Separate keys with identical policies would still require re-encryption when moving between regions, and AWS owned keys don't provide the control needed for customer-managed encryption scenarios.",
+        "tags": [
+            "KMS",
+            "S3",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q02",
+        "type": "multiple-choice",
+        "question": "A solutions architect needs to implement automatic rotation of encryption keys for a highly secure application. Which KMS key type supports automatic key rotation?",
+        "options": [
+            "AWS owned keys",
+            "AWS managed keys",
+            "Customer managed keys created in KMS",
+            "Customer managed keys imported into KMS"
+        ],
+        "correctIndex": 2,
+        "explanation": "Customer managed keys created in KMS support automatic key rotation when enabled. AWS managed keys automatically rotate every year without requiring configuration. AWS owned keys are also rotated automatically but are managed entirely by AWS. Imported keys (where you provide the key material) cannot be automatically rotated by AWS - they require manual rotation because AWS doesn't have access to the source key material.",
+        "tags": [
+            "KMS",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q03",
+        "type": "multiple-choice",
+        "question": "A company is implementing cross-region disaster recovery for their RDS database. They need to ensure that the encrypted snapshots can be restored in the backup region. What is required to enable this functionality?",
+        "options": [
+            "Use the same KMS key ARN in both regions",
+            "Copy the KMS key from the primary region to the backup region",
+            "Allow RDS to create a new KMS key in the destination region during the copy process",
+            "Use a Multi-Region KMS key for the source database encryption"
+        ],
+        "correctIndex": 2,
+        "explanation": "When copying an encrypted RDS snapshot to another region, the snapshot is decrypted using the original KMS key and then re-encrypted using a new KMS key in the destination region. You must specify a KMS key in the destination region or allow RDS to create a new one for you. KMS keys are region-specific, so the same key cannot be used across regions unless it's a Multi-Region key, but even with Multi-Region keys, RDS still re-encrypts the snapshot in the destination region.",
+        "tags": [
+            "KMS",
+            "RDS",
+            "Resilient Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q04",
+        "type": "multiple-choice",
+        "question": "A company needs to encrypt data with a key that can be used both within AWS and by external partners who don't have access to AWS. Which KMS key type should they use?",
+        "options": [
+            "Symmetric KMS key (AES-256)",
+            "Asymmetric KMS key (RSA or ECC)",
+            "AWS managed key",
+            "Customer managed imported symmetric key"
+        ],
+        "correctIndex": 1,
+        "explanation": "Asymmetric KMS keys generate a key pair (public and private keys). The public key can be downloaded and used outside of AWS by partners who don't have access to the KMS API, while the private key remains secured in KMS. Symmetric keys require access to the KMS API for both encryption and decryption operations, making them unsuitable for external partners without AWS access. AWS managed keys and imported symmetric keys also require KMS API access for all operations.",
+        "tags": [
+            "KMS",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q05",
+        "type": "open-ended",
+        "question": "Explain the key differences between AWS KMS policies and IAM policies for controlling access to KMS keys, and when you would use each approach.",
+        "answer": "KMS key policies and IAM policies serve complementary roles in controlling access to KMS keys:\n\n1. KMS Key Policies:\n   - Required for every KMS key - without a key policy, no one can access the key\n   - Define the primary access control for the key\n   - Can explicitly allow other AWS accounts to access the key\n   - Can delegate permission management to IAM policies by including the statement that allows the account root to manage the key\n   - Best used for: cross-account access, defining baseline permissions, and establishing trust relationships\n\n2. IAM Policies:\n   - Optional additional layer of permissions\n   - Only effective if the key policy allows the account to use IAM policies\n   - Can grant or deny permissions to IAM principals (users, roles, groups)\n   - More flexible for managing permissions across many users\n   - Best used for: managing permissions for many users within the same account, implementing least privilege access\n\nYou would use key policies when:\n- Setting up cross-account access to KMS keys\n- Establishing baseline permissions that shouldn't change frequently\n- Defining which principals can administer the key versus use the key\n\nYou would use IAM policies when:\n- Managing permissions for many users, roles, or groups in your account\n- Implementing attribute-based access control (ABAC) with tags\n- Creating more complex conditional access rules\n- Centralizing permission management across multiple keys\n\nBest practice is to use both in combination: use key policies to establish basic trust relationships and delegate to IAM, then use IAM policies for fine-grained access control within your account.",
+        "tags": [
+            "KMS",
+            "IAM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q06",
+        "type": "multiple-choice",
+        "question": "A company is implementing S3 bucket replication with server-side encryption. Which statement is true regarding the replication of encrypted objects?",
+        "options": [
+            "Objects encrypted with SSE-KMS cannot be replicated across regions",
+            "Objects encrypted with SSE-C are automatically replicated without additional configuration",
+            "Objects encrypted with SSE-S3 are replicated by default",
+            "Objects encrypted with SSE-KMS require no additional permissions for replication"
+        ],
+        "correctIndex": 2,
+        "explanation": "Objects encrypted with SSE-S3 (S3-managed keys) are replicated by default without additional configuration. Objects encrypted with SSE-KMS (KMS-managed keys) require additional configuration - you must explicitly enable the option in the replication configuration and ensure proper KMS key permissions. Objects encrypted with SSE-C (customer-provided keys) cannot be replicated automatically because AWS doesn't store the customer's encryption keys.",
+        "tags": [
+            "KMS",
+            "S3",
+            "Resilient Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q07",
+        "type": "multiple-choice",
+        "question": "A company wants to share an encrypted AMI with another AWS account while maintaining security. What is required to allow the target account to launch EC2 instances from this encrypted AMI?",
+        "options": [
+            "Create a new unencrypted copy of the AMI before sharing",
+            "Share the KMS key used to encrypt the AMI with the target account",
+            "Configure the AMI to use an AWS managed key instead of a customer managed key",
+            "Re-encrypt the AMI with the target account's default KMS key"
+        ],
+        "correctIndex": 1,
+        "explanation": "When sharing an encrypted AMI with another account, you must also share the KMS key used to encrypt the AMI. This involves modifying the key policy to grant the target account permission to use the key for decryption. Without access to the KMS key, the target account cannot launch instances from the encrypted AMI. Creating an unencrypted copy would compromise security, AWS managed keys cannot be shared across accounts, and re-encryption requires the target account to first have access to launch and then create their own AMI.",
+        "tags": [
+            "KMS",
+            "EC2",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q08",
+        "type": "multiple-choice",
+        "question": "A company is implementing a solution that requires storing sensitive configuration values that need to be accessed by multiple AWS services. Which service provides the most cost-effective solution for storing small amounts of encrypted configuration data with integration to KMS?",
+        "options": [
+            "AWS Secrets Manager",
+            "Amazon S3 with server-side encryption",
+            "AWS Systems Manager Parameter Store",
+            "Amazon DynamoDB with encryption at rest"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS Systems Manager Parameter Store is the most cost-effective solution for storing small amounts of encrypted configuration data. It integrates with KMS for encryption, offers a free tier (Standard tier with up to 10,000 parameters), and provides seamless integration with many AWS services. Secrets Manager is designed specifically for automatic rotation of credentials and costs $0.40 per secret per month. S3 and DynamoDB would be overkill for simple configuration values and would incur additional costs for storage and requests.",
+        "tags": [
+            "KMS",
+            "Systems Manager",
+            "Cost-Optimized Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q09",
+        "type": "open-ended",
+        "question": "Describe the process and security considerations when using AWS KMS for envelope encryption. Why is envelope encryption preferred over direct encryption for large datasets?",
+        "answer": "Envelope encryption is a practice where data is encrypted using a data key, and then that data key is encrypted with a master key (CMK in KMS). Here's the process and security considerations:\n\n**Process of Envelope Encryption with KMS:**\n\n1. **Generate Data Key**: Call KMS GenerateDataKey API, which returns both a plaintext version and an encrypted version of a data key\n2. **Encrypt Data**: Use the plaintext data key to encrypt your data using a symmetric algorithm (typically AES-256-GCM)\n3. **Discard Plaintext Key**: Remove the plaintext data key from memory as soon as encryption is complete\n4. **Store Encrypted Data and Encrypted Key**: Store both the encrypted data and the encrypted data key together\n5. **Decryption Process**: To decrypt, first call KMS Decrypt API with the encrypted data key to get the plaintext key, then use that to decrypt the data\n\n**Security Considerations:**\n\n- The master key (CMK) never leaves KMS, reducing exposure risk\n- Each data object can use a unique data key, limiting the impact of key compromise\n- Access to the master key is controlled through KMS policies and IAM\n- KMS provides an immutable audit trail of key usage through CloudTrail\n- Key rotation can be implemented without re-encrypting all data\n\n**Why Envelope Encryption is Preferred for Large Datasets:**\n\n1. **Performance**: KMS has API rate limits and would be inefficient for directly encrypting large amounts of data. Envelope encryption only requires KMS API calls for the small data key operations.\n\n2. **Cost Efficiency**: KMS charges per API call. Using envelope encryption significantly reduces the number of API calls needed, as you only call KMS to encrypt/decrypt the data key, not the entire dataset.\n\n3. **Reduced Network Overhead**: With direct encryption, all data would need to be sent to KMS. Envelope encryption allows the bulk encryption to happen locally where the data resides.\n\n4. **Offline Operations**: Once you have the plaintext data key, you can perform multiple encryption operations without additional KMS API calls, enabling batch processing.\n\n5. **Granular Access Control**: Different data keys can be used for different parts of the dataset, allowing more precise access control.\n\n6. **Simplified Key Rotation**: When rotating the master key, only the data keys need to be re-encrypted, not the entire dataset.\n\nEnvelope encryption is the standard approach used by AWS services like S3, EBS, and RDS when they integrate with KMS for encryption at rest.",
+        "tags": [
+            "KMS",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q10",
+        "type": "multiple-choice",
+        "question": "A company is implementing a solution that requires automatic rotation of database credentials. Which AWS service should they use?",
+        "options": [
+            "AWS KMS",
+            "AWS Systems Manager Parameter Store",
+            "AWS Secrets Manager",
+            "AWS Certificate Manager"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS Secrets Manager is specifically designed for storing and automatically rotating sensitive credentials such as database passwords. It includes built-in integration for RDS, DocumentDB, and Redshift database credential rotation, and supports custom Lambda functions for rotating other types of secrets. While KMS manages encryption keys, it doesn't handle credential rotation. Parameter Store can store secrets but doesn't include automatic rotation capabilities without custom implementation. Certificate Manager handles TLS certificates, not database credentials.",
+        "tags": [
+            "Secrets Manager",
+            "KMS",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q11",
+        "type": "multiple-choice",
+        "question": "A company needs to implement TLS certificates for their public-facing web applications running on multiple AWS services. Which AWS service should they use for certificate management?",
+        "options": [
+            "AWS KMS",
+            "AWS Certificate Manager (ACM)",
+            "AWS Secrets Manager",
+            "AWS Systems Manager Parameter Store"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS Certificate Manager (ACM) is the correct service for managing TLS certificates for public-facing web applications. ACM provides free public and private certificates, handles automatic renewal, and integrates seamlessly with AWS services like Elastic Load Balancers, CloudFront, and API Gateway. KMS is for encryption key management, not certificates. Secrets Manager is for storing and rotating secrets like database credentials. Parameter Store can store configuration data but isn't designed specifically for certificate management.",
+        "tags": [
+            "ACM",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q12",
+        "type": "multiple-choice",
+        "question": "A company is implementing a web application firewall to protect their public-facing applications from common web exploits. Which AWS service should they use?",
+        "options": [
+            "AWS Shield",
+            "AWS Network Firewall",
+            "AWS WAF",
+            "AWS Security Hub"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS WAF (Web Application Firewall) is specifically designed to protect web applications from common web exploits at Layer 7 (HTTP/HTTPS). It can be deployed on Application Load Balancers, API Gateway, CloudFront, and AppSync to filter malicious traffic based on rules for IP addresses, HTTP headers, URI strings, SQL injection, and cross-site scripting. AWS Shield protects against DDoS attacks but doesn't filter web application traffic. Network Firewall operates at the network level (Layer 3-4), not the application level. Security Hub is a security posture management service, not a firewall.",
+        "tags": [
+            "WAF",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q13",
+        "type": "multiple-choice",
+        "question": "A company wants to protect their applications against distributed denial-of-service (DDoS) attacks. Which AWS service provides comprehensive DDoS protection?",
+        "options": [
+            "AWS WAF",
+            "AWS Shield",
+            "AWS Firewall Manager",
+            "AWS Network Firewall"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS Shield is specifically designed for DDoS protection. AWS Shield Standard is included at no additional cost and protects against common network and transport layer DDoS attacks. AWS Shield Advanced provides enhanced protection for EC2, ELB, CloudFront, Global Accelerator, and Route 53 resources with 24/7 access to the AWS DDoS Response Team, cost protection, and detailed attack diagnostics. AWS WAF protects against web application vulnerabilities but isn't specifically for DDoS. Firewall Manager helps centrally configure and manage firewall rules. Network Firewall is a network-level firewall service.",
+        "tags": [
+            "Shield",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q14",
+        "type": "multiple-choice",
+        "question": "A company needs to centrally manage security policies across multiple AWS accounts in their organization. Which AWS service should they use?",
+        "options": [
+            "AWS Config",
+            "AWS Security Hub",
+            "AWS Firewall Manager",
+            "AWS Systems Manager"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS Firewall Manager is designed to centrally configure and manage security policies across multiple AWS accounts in an AWS Organization. It allows you to apply common security policies for AWS WAF, AWS Shield Advanced, security groups, AWS Network Firewall, and DNS Firewall across accounts and resources, even as new resources are added. AWS Config monitors resource configurations but doesn't manage security policies. Security Hub aggregates security findings but doesn't manage firewall rules. Systems Manager helps manage infrastructure but isn't specifically for security policy management across accounts.",
+        "tags": [
+            "Firewall Manager",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q15",
+        "type": "open-ended",
+        "question": "Explain the differences between AWS Shield Standard and AWS Shield Advanced, and when an organization should consider upgrading to Shield Advanced.",
+        "answer": "# AWS Shield Standard vs. AWS Shield Advanced\n\n## AWS Shield Standard\n\n**Key Features:**\n- Included at no additional cost for all AWS customers\n- Automatic protection against common, frequently occurring network and transport layer DDoS attacks\n- Integrated with services like Amazon CloudFront and Amazon Route 53\n- Always-on detection and automatic inline mitigations\n- Protection against SYN/UDP floods, reflection attacks, and other layer 3/layer 4 attacks\n\n**Limitations:**\n- No access to the DDoS Response Team (DRT)\n- No real-time visibility into attacks\n- No cost protection for scaling during DDoS events\n- Limited to network and transport layer protection\n- No custom mitigations\n\n## AWS Shield Advanced\n\n**Key Features:**\n- Premium DDoS protection service (additional cost)\n- Enhanced protection for EC2, ELB, CloudFront, Global Accelerator, and Route 53\n- Near real-time visibility into attacks with detailed metrics\n- 24/7 access to the AWS DDoS Response Team for custom mitigations\n- Cost protection for scaling during DDoS events\n- Integration with AWS WAF (WAF charges waived for web ACLs used for DDoS mitigation)\n- Proactive engagement from AWS when potential DDoS activities are detected\n- Health-based detection using application-specific health checks\n- Protection against more sophisticated and larger attacks\n- Advanced application layer protection when used with AWS WAF\n\n**Cost Structure:**\n- Monthly subscription fee per organization\n- Additional data transfer and request charges based on protected resources\n- 1-year commitment required\n\n## When to Upgrade to Shield Advanced\n\nOrganizations should consider upgrading to AWS Shield Advanced in the following scenarios:\n\n1. **High-Value Applications**: When running mission-critical applications where downtime would result in significant financial loss or reputational damage\n\n2. **High-Profile Targets**: Organizations that are likely targets for DDoS attacks due to their industry, visibility, or controversial nature\n\n3. **Compliance Requirements**: When specific compliance frameworks require enhanced DDoS protection and incident response capabilities\n\n4. **Financial Protection Needed**: When the potential cost impact of scaling resources during a DDoS attack is a concern (Shield Advanced provides cost protection)\n\n5. **Application Layer Protection Required**: When applications need protection against sophisticated Layer 7 attacks (HTTP/HTTPS) in addition to network/transport layer attacks\n\n6. **Need for Expert Support**: When in-house DDoS mitigation expertise is limited and access to AWS DDoS Response Team would be valuable\n\n7. **Real-time Visibility Requirements**: When the organization needs detailed visibility into attack patterns and metrics for security operations or compliance reporting\n\n8. **Multi-layer Architecture**: When using multiple AWS services (EC2, ELB, CloudFront, etc.) that would benefit from coordinated protection\n\n9. **Historical DDoS Targets**: Organizations that have experienced DDoS attacks in the past and want to improve their protection\n\n10. **Global Presence**: Organizations with resources distributed across multiple regions that need consistent protection\n\nThe decision to upgrade should be based on a risk assessment that considers the likelihood and potential impact of DDoS attacks against the cost of Shield Advanced. For many small applications or non-critical workloads, Shield Standard's protection may be sufficient, while high-visibility or business-critical applications often justify the additional cost of Shield Advanced.",
+        "tags": [
+            "Shield",
+            "DDoS Protection",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q16",
+        "type": "multiple-choice",
+        "question": "A company is designing a secure VPC architecture for a multi-tier application. Which of the following is a security best practice for network design?",
+        "options": [
+            "Place all resources in public subnets for easier management",
+            "Use a single large CIDR block for all subnets to simplify routing",
+            "Place database servers in private subnets with no direct internet access",
+            "Configure security groups to allow all traffic between application tiers"
+        ],
+        "correctIndex": 2,
+        "explanation": "Placing database servers in private subnets with no direct internet access is a security best practice for VPC design. This follows the principle of defense in depth, where sensitive resources like databases are isolated in private subnets that don't have direct routes to the internet. Public-facing components like web servers can be placed in public subnets, while application servers and databases should be in private subnets. Traffic between tiers should be restricted based on least privilege principles, not allowing all traffic. Using separate CIDR blocks for different subnets helps with network segmentation and security.",
+        "tags": [
+            "VPC",
+            "Network Security",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q17",
+        "type": "multiple-choice",
+        "question": "A company needs to implement a solution to detect and protect against suspicious activities and potential security threats across their AWS accounts. Which AWS service should they use?",
+        "options": [
+            "AWS Config",
+            "Amazon Inspector",
+            "AWS GuardDuty",
+            "AWS Trusted Advisor"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS GuardDuty is a threat detection service that continuously monitors for malicious activity and unauthorized behavior to protect AWS accounts, workloads, and data. It uses machine learning, anomaly detection, and integrated threat intelligence to identify and prioritize potential threats. GuardDuty analyzes billions of events across multiple AWS data sources, such as AWS CloudTrail, Amazon VPC Flow Logs, and DNS logs. AWS Config is for resource configuration assessment, Amazon Inspector is for vulnerability assessment of EC2 instances and container images, and AWS Trusted Advisor provides recommendations across performance, security, and cost optimization but isn't specifically for threat detection.",
+        "tags": [
+            "GuardDuty",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q18",
+        "type": "multiple-choice",
+        "question": "A company needs to track all API calls made to their AWS resources for security analysis and compliance auditing. Which AWS service should they use?",
+        "options": [
+            "Amazon CloudWatch",
+            "AWS CloudTrail",
+            "AWS Config",
+            "VPC Flow Logs"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS CloudTrail is the correct service for tracking API calls made to AWS resources. It provides event history of all API calls across your AWS infrastructure, including actions taken through the AWS Management Console, AWS SDKs, command line tools, and other AWS services. CloudTrail helps with security analysis, resource change tracking, compliance auditing, and operational troubleshooting. CloudWatch is for monitoring and observability, AWS Config tracks resource configurations and relationships, and VPC Flow Logs capture network traffic information but not API calls.",
+        "tags": [
+            "CloudTrail",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q19",
+        "type": "multiple-choice",
+        "question": "A company wants to ensure that all S3 buckets in their AWS account enforce encryption of data at rest. Which AWS service can automatically remediate non-compliant buckets?",
+        "options": [
+            "AWS CloudTrail",
+            "Amazon Macie",
+            "AWS Config with Remediation Actions",
+            "AWS Security Hub"
+        ],
+        "correctIndex": 2,
+        "explanation": "AWS Config with Remediation Actions can automatically remediate non-compliant resources, including S3 buckets without encryption. You can create AWS Config Rules to evaluate if S3 buckets have encryption enabled, and then attach automatic remediation actions that will apply the required encryption settings when violations are detected. CloudTrail tracks API activity but doesn't remediate issues. Macie identifies sensitive data in S3 buckets but doesn't enforce encryption automatically. Security Hub aggregates security findings but relies on other services like Config for remediation.",
+        "tags": [
+            "S3",
+            "AWS Config",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q20",
+        "type": "multiple-choice",
+        "question": "A company is implementing security controls for their S3 buckets. Which combination of features provides the most comprehensive protection against unauthorized access and accidental exposure?",
+        "options": [
+            "S3 bucket policies and IAM policies",
+            "S3 Block Public Access settings, bucket policies, and default encryption",
+            "S3 ACLs and VPC endpoints",
+            "S3 CORS configuration and bucket ownership settings"
+        ],
+        "correctIndex": 1,
+        "explanation": "S3 Block Public Access settings, bucket policies, and default encryption provide the most comprehensive protection for S3 buckets. Block Public Access settings prevent any public access regardless of bucket policies or ACLs. Bucket policies define fine-grained access controls for specific principals. Default encryption ensures all objects are automatically encrypted at rest. While IAM policies are important, they don't prevent public access if bucket policies allow it. S3 ACLs and VPC endpoints are useful but don't provide comprehensive protection on their own. CORS configuration is for cross-origin resource sharing and bucket ownership settings manage object ownership, neither of which are primarily for preventing unauthorized access.",
+        "tags": [
+            "S3",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q21",
+        "type": "multiple-choice",
+        "question": "A company needs to implement a solution to detect vulnerabilities in their Amazon EC2 instances and container images. Which AWS service should they use?",
+        "options": [
+            "Amazon GuardDuty",
+            "AWS Security Hub",
+            "Amazon Inspector",
+            "AWS Trusted Advisor"
+        ],
+        "correctIndex": 2,
+        "explanation": "Amazon Inspector is an automated vulnerability management service that continually scans AWS workloads for software vulnerabilities and unintended network exposure. It automatically discovers and scans Amazon EC2 instances and container images residing in Amazon ECR for known vulnerabilities in the operating system and application packages. GuardDuty is for threat detection, not vulnerability assessment. Security Hub aggregates security findings from multiple services but doesn't perform vulnerability scanning itself. Trusted Advisor provides some security checks but doesn't offer comprehensive vulnerability scanning.",
+        "tags": [
+            "Inspector",
+            "EC2",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q22",
+        "type": "open-ended",
+        "question": "Explain the security benefits of using VPC endpoints and when an organization should implement them in their AWS architecture.",
+        "answer": "# VPC Endpoints: Security Benefits and Implementation Scenarios\n\n## What are VPC Endpoints?\nVPC endpoints are AWS services that enable private connections between your VPC and supported AWS services without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection. Traffic between your VPC and the AWS service does not leave the Amazon network.\n\n## Types of VPC Endpoints\n\n1. **Interface Endpoints (powered by AWS PrivateLink)**\n   - Create an elastic network interface with a private IP in your subnet\n   - Support many AWS services (S3, DynamoDB, CloudWatch, etc.)\n   - Use security groups for access control\n   - Charged hourly and by GB of data processed\n\n2. **Gateway Endpoints**\n   - A gateway that you specify as a target for a route in your route table\n   - Currently only support Amazon S3 and DynamoDB\n   - Use route tables and policies for access control\n   - No additional charges\n\n## Security Benefits of VPC Endpoints\n\n1. **Network Traffic Containment**\n   - Traffic remains within the AWS network and never traverses the public internet\n   - Eliminates exposure to internet-based threats and attacks\n   - Reduces attack surface by removing public IP requirements\n\n2. **Access Control**\n   - Fine-grained control through endpoint policies that restrict actions and resources\n   - For interface endpoints, security groups provide additional network-level control\n   - Can restrict access to specific VPCs, subnets, or AWS principals\n\n3. **Data Protection**\n   - Prevents potential data exfiltration by controlling where service requests can go\n   - Ensures data transferred between services stays within AWS network boundaries\n   - Helps maintain data residency requirements by keeping traffic regional\n\n4. **Compliance Advantages**\n   - Helps meet regulatory requirements that prohibit internet exposure\n   - Provides audit trails for service access through CloudTrail\n   - Supports data sovereignty and residency requirements\n\n5. **Reduced Dependencies**\n   - Eliminates dependencies on internet gateways, NAT gateways, or proxy servers\n   - Removes single points of failure in network architecture\n   - Simplifies network architecture and security management\n\n## When to Implement VPC Endpoints\n\nOrganizations should implement VPC endpoints in the following scenarios:\n\n1. **Private Subnet Access to AWS Services**\n   - When resources in private subnets need to access AWS services without internet access\n   - For workloads that should never have direct internet connectivity\n\n2. **Regulatory Compliance Requirements**\n   - When compliance frameworks require traffic to remain within provider network boundaries\n   - For industries with strict data protection regulations (healthcare, finance, government)\n\n3. **Enhanced Security Posture**\n   - As part of a defense-in-depth strategy to minimize exposure\n   - When implementing a zero-trust network architecture\n\n4. **Cost Optimization**\n   - To reduce or eliminate NAT gateway costs for AWS service traffic\n   - When traffic volumes to AWS services are significant\n\n5. **Hybrid Network Environments**\n   - When on-premises resources access AWS services through AWS Direct Connect or VPN\n   - For multi-account architectures requiring private service access\n\n6. **Data Exfiltration Prevention**\n   - When implementing controls to prevent unauthorized data movement\n   - For environments with sensitive data processing requirements\n\n7. **High Availability Requirements**\n   - To eliminate dependencies on internet connectivity for critical operations\n   - When service availability is paramount even during internet disruptions\n\n8. **Simplified Network Architecture**\n   - When streamlining network design by removing unnecessary components\n   - For reducing the number of security controls needed to protect traffic\n\nVPC endpoints are particularly valuable in architectures that prioritize security, compliance, and reliability. They represent a core component of AWS's shared responsibility model by giving customers powerful tools to secure their network traffic while maintaining the performance and functionality of AWS services.",
+        "tags": [
+            "VPC",
+            "Network Security",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q23",
+        "type": "multiple-choice",
+        "question": "A company needs to implement a solution to detect sensitive data (like PII) in their S3 buckets. Which AWS service should they use?",
+        "options": [
+            "Amazon Inspector",
+            "AWS Config",
+            "Amazon Macie",
+            "AWS CloudTrail"
+        ],
+        "correctIndex": 2,
+        "explanation": "Amazon Macie is a data security service that uses machine learning and pattern matching to discover and protect sensitive data in AWS. It's specifically designed to identify personally identifiable information (PII) and other sensitive data types in S3 buckets. Macie automatically provides an inventory of S3 buckets including a sensitivity score, continuously monitors data access activity for anomalies, and generates alerts when it detects potential risks of unauthorized access or inadvertent data leaks. Amazon Inspector is for vulnerability assessment, AWS Config tracks resource configurations, and CloudTrail records API activity but none of these services specifically identify sensitive data in S3.",
+        "tags": [
+            "Macie",
+            "S3",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q24",
+        "type": "multiple-choice",
+        "question": "A company is implementing a solution to protect their web applications from SQL injection and cross-site scripting attacks. Which AWS service and feature should they use?",
+        "options": [
+            "AWS Shield with DDoS protection rules",
+            "AWS WAF with managed rules for common vulnerabilities",
+            "Security groups with application-layer filtering",
+            "Network ACLs with stateful inspection"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS WAF with managed rules for common vulnerabilities is the correct solution for protecting web applications from SQL injection and cross-site scripting attacks. AWS WAF is a web application firewall that helps protect web applications from common web exploits that could affect application availability, compromise security, or consume excessive resources. The AWS WAF managed rules specifically include rule sets for SQL injection and cross-site scripting protection. AWS Shield protects against DDoS attacks, not application-layer attacks like SQL injection. Security groups and Network ACLs operate at the network level (layers 3-4) and cannot inspect HTTP content to detect application-layer attacks like SQL injection or XSS.",
+        "tags": [
+            "WAF",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    },
+    {
+        "id": "sec-q25",
+        "type": "multiple-choice",
+        "question": "A company wants to implement a security control that prevents EC2 instances from being launched without specific tags. Which AWS service should they use?",
+        "options": [
+            "AWS Config",
+            "AWS CloudTrail",
+            "Service Control Policies (SCPs)",
+            "AWS Organizations with Tag Policies"
+        ],
+        "correctIndex": 2,
+        "explanation": "Service Control Policies (SCPs) in AWS Organizations can be used to prevent EC2 instances from being launched without specific tags. SCPs are a type of organization policy that you can use to manage permissions across your organization. You can create an SCP that denies the ec2:RunInstances action unless specific tags are included in the request. This provides a preventative control that blocks non-compliant instance launches. AWS Config can detect non-compliance after resources are created but cannot prevent creation. CloudTrail logs API activity but doesn't prevent actions. Tag Policies in AWS Organizations define tagging standards but don't enforce them at the prevention level - they only provide compliance reporting.",
+        "tags": [
+            "Organizations",
+            "EC2",
+            "Secure Architectures",
+            "Security Services"
+        ]
+    }
+]
