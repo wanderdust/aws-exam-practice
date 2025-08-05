@@ -16,7 +16,8 @@
         "saa-c03-container-questions.json",
         "saa-c03-serverless-questions.json",
         "saa-c03-ml-questions.json",
-        "saa-c03-security-encryption-questions.json"
+        "saa-c03-security-encryption-questions.json",
+        "saa-c03-vpc-networking-questions.json"
       ]
     },
     "data-engineering": {
