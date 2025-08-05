@@ -1,0 +1,926 @@
+[
+    {
+        "id": "saa-exam-q1",
+        "type": "multiple-choice",
+        "question": "A company plans to migrate a critical web application to AWS. The application must be highly available across multiple Availability Zones (AZs) and automatically scale to handle variable traffic loads. Which solution will meet these requirements with the LEAST operational overhead?",
+        "options": [
+            "Deploy Amazon EC2 instances across multiple AZs behind an Application Load Balancer with an Auto Scaling group spanning the AZs.",
+            "Deploy Amazon EC2 instances in a single AZ behind a Network Load Balancer and configure Auto Scaling groups.",
+            "Deploy Amazon EC2 instances across multiple AZs and use Amazon Route 53 weighted routing to distribute traffic without load balancers.",
+            "Deploy Amazon EC2 Auto Scaling groups in each AZ and use Amazon CloudFront to distribute traffic among them."
+        ],
+        "correctIndex": 0,
+        "explanation": "An Application Load Balancer (ALB) distributes HTTP/HTTPS traffic across multiple AZs. By configuring a single Auto Scaling group that spans multiple AZs, the application gains high availability and automatic scaling with minimal operational effort. The other options either lack multi-AZ redundancy, do not provide layer-7 load balancing, or complicate the architecture unnecessarily.",
+        "tags": [
+            "exam",
+            "Resilient Architectures",
+            "EC2",
+            "Auto Scaling",
+            "ELB"
+        ]
+    },
+    {
+        "id": "saa-exam-q2",
+        "type": "multiple-choice",
+        "question": "A company wants to reduce its Amazon S3 storage costs for data that is accessed less than once per month but must be retrieved immediately when requested. Which S3 storage class should the solutions architect recommend?",
+        "options": [
+            "S3 Standard-Infrequent Access (S3 Standard-IA)",
+            "S3 One Zone-Infrequent Access (S3 One Zone-IA)",
+            "S3 Glacier Instant Retrieval",
+            "S3 Glacier Deep Archive"
+        ],
+        "correctIndex": 0,
+        "explanation": "S3 Standard-IA is designed for data that is accessed infrequently but requires millisecond retrieval. It offers lower storage cost than S3 Standard with a retrieval fee, meeting the requirement for immediate access. S3 Glacier classes require minutes or hours for retrieval, and One Zone-IA does not provide multi-AZ resilience.",
+        "tags": [
+            "exam",
+            "Cost-Optimized Architectures",
+            "S3",
+            "Storage"
+        ]
+    },
+    {
+        "id": "saa-exam-q3",
+        "type": "multiple-choice",
+        "question": "A retail company needs to design a solution to process high volumes of clickstream data in near real time for analytics. Which service combination provides a serverless architecture with the LEAST operational overhead?",
+        "options": [
+            "Amazon Kinesis Data Streams with Amazon EC2 consumers writing to Amazon RDS",
+            "Amazon MSK with Amazon EC2 consumers writing to Amazon Redshift",
+            "Amazon Kinesis Data Streams with AWS Lambda consumers writing to Amazon S3 and Amazon Athena",
+            "Amazon SQS with AWS Lambda consumers writing to Amazon DynamoDB"
+        ],
+        "correctIndex": 2,
+        "explanation": "A serverless architecture using Kinesis Data Streams for ingestion and Lambda for processing minimizes operational management. Writing processed data to S3 allows the use of Athena for ad hoc queries. This solution scales automatically and avoids server management. The other options involve managing EC2 instances or inappropriate services for clickstream analytics.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "Kinesis",
+            "Lambda",
+            "Serverless"
+        ]
+    },
+    {
+        "id": "saa-exam-q4",
+        "type": "multiple-choice",
+        "question": "A company needs to ensure that objects put into an Amazon S3 bucket are encrypted at rest using AWS-managed keys. Which action will meet this requirement with the LEAST operational effort?",
+        "options": [
+            "Upload objects using client-side encryption libraries provided by AWS SDKs.",
+            "Enable server-side encryption with AWS Key Management Service keys (SSE-KMS) and rotate keys annually.",
+            "Enable server-side encryption with Amazon S3 managed keys (SSE-S3) on the bucket.",
+            "Enable server-side encryption with customer-provided keys (SSE-C) on the bucket."
+        ],
+        "correctIndex": 2,
+        "explanation": "Enabling SSE-S3 encrypts objects at rest with AWS-managed keys automatically and requires no additional key management from the customer, providing the simplest solution. SSE-KMS requires key management and additional costs, SSE-C requires providing keys with each request, and client-side encryption increases client complexity.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "S3",
+            "Encryption",
+            "KMS"
+        ]
+    },
+    {
+        "id": "saa-exam-q5",
+        "type": "multiple-choice",
+        "question": "A company stores daily backups in Amazon S3. Compliance rules require data to be retained for 7 years, but the company wants to minimize storage costs. Which lifecycle policy action meets these requirements?",
+        "options": [
+            "Transition objects to S3 Glacier Deep Archive after 30 days and delete them after 7 years.",
+            "Transition objects to S3 Standard-IA after 30 days and delete them after 7 years.",
+            "Transition objects to S3 One Zone-IA after 30 days and keep indefinitely.",
+            "Transition objects to S3 Glacier Instant Retrieval after 30 days and Glacier Deep Archive after 1 year, then expire after 7 years."
+        ],
+        "correctIndex": 0,
+        "explanation": "Transitioning backups to S3 Glacier Deep Archive after 30 days offers the lowest storage cost for long-term retention, while expiring them after 7 years meets compliance. The other options have higher storage costs or do not meet the retention requirement.",
+        "tags": [
+            "exam",
+            "Cost-Optimized Architectures",
+            "S3",
+            "Lifecycle",
+            "Disaster Recovery"
+        ]
+    },
+    {
+        "id": "saa-exam-q6",
+        "type": "multiple-choice",
+        "question": "A company needs to connect its on-premises data center to AWS for workloads requiring consistent low-latency network performance. Which connectivity option should the solutions architect recommend?",
+        "options": [
+            "AWS Direct Connect with a private virtual interface",
+            "AWS Site-to-Site VPN over AWS Transit Gateway",
+            "AWS Client VPN appliance",
+            "AWS VPN over the public internet"
+        ],
+        "correctIndex": 0,
+        "explanation": "AWS Direct Connect provides a dedicated network connection with consistent, low-latency performance compared to VPN over the public internet. A private virtual interface (VIF) enables access to VPC resources with improved stability. VPN solutions traverse the internet and have variable latency.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "Direct Connect",
+            "Networking"
+        ]
+    },
+    {
+        "id": "saa-exam-q7",
+        "type": "multiple-choice",
+        "question": "An application running on Amazon EC2 needs to securely access objects in an S3 bucket. According to security best practices, what is the MOST secure way to grant this access?",
+        "options": [
+            "Embed the S3 credentials in the AMI used to launch the instance.",
+            "Create an IAM user, generate access keys, and store them on the EC2 instance.",
+            "Store S3 credentials in AWS Systems Manager Parameter Store and retrieve them at runtime.",
+            "Attach an IAM role with appropriate permissions to the EC2 instance profile."
+        ],
+        "correctIndex": 3,
+        "explanation": "Attaching an IAM role to the EC2 instance profile provides temporary credentials that are rotated automatically, eliminating the need to manage static keys and adhering to the principle of least privilege. The other options involve static credentials and higher security risk.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "EC2",
+            "IAM"
+        ]
+    },
+    {
+        "id": "saa-exam-q8",
+        "type": "multiple-choice",
+        "question": "A company is deploying a two-tier web application in a single VPC. The web servers in the public subnets must communicate securely with the database servers in the private subnets. Which feature should the solutions architect use to control traffic at the subnet level?",
+        "options": [
+            "AWS WAF",
+            "Route tables",
+            "Network ACLs",
+            "Security groups"
+        ],
+        "correctIndex": 2,
+        "explanation": "Network ACLs operate at the subnet level and can allow or deny traffic between subnets. Security groups operate at the instance level, and route tables dictate network flow but not security. AWS WAF is for web-layer filtering, not VPC internal traffic.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "VPC",
+            "Network ACLs"
+        ]
+    },
+    {
+        "id": "saa-exam-q9",
+        "type": "multiple-choice",
+        "question": "A startup needs a cost-effective solution to host a static website with global reach and minimal latency for users worldwide. Which combination of AWS services should the solutions architect choose?",
+        "options": [
+            "Amazon S3 with static website hosting and Amazon CloudFront",
+            "Amazon Elastic Beanstalk with Auto Scaling and CloudFront",
+            "Amazon Lightsail instances with Route 53 latency-based routing",
+            "Amazon EC2 in multiple Regions behind an Application Load Balancer"
+        ],
+        "correctIndex": 0,
+        "explanation": "Hosting the static site on S3 and fronting it with CloudFront provides a globally distributed, highly available, and cost-effective solution. EC2 or Beanstalk introduces unnecessary compute cost and management overhead. Lightsail is not as globally distributed as CloudFront.",
+        "tags": [
+            "exam",
+            "Cost-Optimized Architectures",
+            "S3",
+            "CloudFront",
+            "Static Website"
+        ]
+    },
+    {
+        "id": "saa-exam-q10",
+        "type": "multiple-choice",
+        "question": "An application processes messages from an Amazon SQS queue and stores results in DynamoDB. The development team observes occasional spikes in message volume, leading to throttling errors in DynamoDB writes. Which solution will address this issue while minimizing code changes?",
+        "options": [
+            "Enable DynamoDB automatic scaling for the write workload.",
+            "Increase the SQS queue visibility timeout to slow processing.",
+            "Use DynamoDB provisioned capacity with a higher write capacity units (WCUs).",
+            "Add an Amazon Kinesis Data Firehose delivery stream between SQS and DynamoDB."
+        ],
+        "correctIndex": 0,
+        "explanation": "DynamoDB auto scaling adjusts provisioned write capacity in response to traffic, preventing throttling during message spikes without code changes. Manually increasing WCUs may be cost-inefficient, adjusting visibility timeout only delays processing, and adding Kinesis introduces complexity.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "DynamoDB",
+            "Auto Scaling",
+            "SQS"
+        ]
+    },
+    {
+        "id": "saa-exam-q11",
+        "type": "multiple-choice",
+        "question": "A company wants to reduce the blast radius of compromised IAM credentials and meet compliance requiring credential rotation every 90 days. Which IAM feature supports this objective?",
+        "options": [
+            "IAM access key rotation",
+            "IAM service-linked roles",
+            "IAM password policy",
+            "IAM user groups"
+        ],
+        "correctIndex": 0,
+        "explanation": "Rotating IAM access keys limits their lifetime, reducing the blast radius if they are compromised and meeting rotation requirements. Password policy applies to console passwords, user groups do not enforce rotation, and service-linked roles are managed by AWS services.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "IAM",
+            "Security"
+        ]
+    },
+    {
+        "id": "saa-exam-q12",
+        "type": "multiple-choice",
+        "question": "An application needs to cache frequently accessed but rarely updated data to improve read performance. The cached data must support automatic failover and multi-AZ redundancy. Which service meets these requirements?",
+        "options": [
+            "Amazon ElastiCache for Redis cluster with Multi-AZ enabled",
+            "Amazon ElastiCache for Memcached",
+            "Amazon CloudFront",
+            "Amazon DynamoDB DAX"
+        ],
+        "correctIndex": 0,
+        "explanation": "ElastiCache for Redis with Multi-AZ provides in-memory caching with automatic failover, enhancing performance and availability. Memcached lacks multi-AZ failover, DAX is specific to DynamoDB, and CloudFront caches at edge locations but not within a VPC for application tier caching.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "ElastiCache",
+            "Redis",
+            "Caching"
+        ]
+    },
+    {
+        "id": "saa-exam-q13",
+        "type": "multiple-choice",
+        "question": "A company must ensure that all new Amazon RDS database instances are encrypted by default. Which feature should the solutions architect use to enforce this requirement across multiple accounts?",
+        "options": [
+            "AWS CloudTrail trail",
+            "AWS Config rule",
+            "AWS Shield Advanced",
+            "RDS parameter group"
+        ],
+        "correctIndex": 1,
+        "explanation": "An AWS Config rule can continuously evaluate whether RDS instances have encryption enabled and notify or remediate noncompliant resources across accounts using AWS Config Aggregator.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "RDS",
+            "Config",
+            "Encryption"
+        ]
+    },
+    {
+        "id": "saa-exam-q14",
+        "type": "multiple-choice",
+        "question": "A solutions architect needs to design a scalable architecture for a stateless RESTful API. The API must handle unpredictable traffic, require minimal administration, and provide high availability. Which approach meets these requirements?",
+        "options": [
+            "Deploy the API as AWS Lambda functions behind Amazon API Gateway",
+            "Deploy the API on Amazon EC2 instances in an Auto Scaling group behind a Network Load Balancer",
+            "Host the API on Amazon Lightsail containers",
+            "Deploy the API using Amazon ECS on EC2 instances"
+        ],
+        "correctIndex": 0,
+        "explanation": "Using API Gateway with Lambda provides a serverless, fully managed solution that scales automatically, requires no server administration, and is highly available by default.",
+        "tags": [
+            "exam",
+            "Resilient Architectures",
+            "Serverless",
+            "API Gateway",
+            "Lambda"
+        ]
+    },
+    {
+        "id": "saa-exam-q15",
+        "type": "multiple-choice",
+        "question": "A data analytics team requires a petabyte-scale, fully managed data warehouse that separates compute and storage to allow independent scaling. Which AWS service should the solutions architect recommend?",
+        "options": [
+            "Amazon EMR",
+            "Amazon RDS for PostgreSQL",
+            "Amazon Aurora",
+            "Amazon Redshift RA3 node types"
+        ],
+        "correctIndex": 3,
+        "explanation": "Amazon Redshift RA3 nodes decouple compute and storage using Redshift Managed Storage (RMS), enabling independent scaling of workloads at petabyte scale, while remaining fully managed.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "Redshift",
+            "Analytics"
+        ]
+    },
+    {
+        "id": "saa-exam-q16",
+        "type": "multiple-choice",
+        "question": "A multifunction application running on AWS must share common configuration parameters (such as environment variables and secrets) securely across multiple Lambda functions. Which solution meets this requirement with minimal operational overhead?",
+        "options": [
+            "Store the parameters in an encrypted S3 bucket and decrypt them in the Lambda function code.",
+            "Embed the parameters directly in the Lambda deployment packages.",
+            "Store the parameters in AWS Systems Manager Parameter Store and access them at runtime with SDK calls.",
+            "Store the parameters in AWS Secrets Manager and reference them in the Lambda environment variables using dynamic references."
+        ],
+        "correctIndex": 2,
+        "explanation": "Systems Manager Parameter Store provides secure, hierarchical storage for configuration and secrets, integrates with IAM, and requires minimal code change. Dynamic references are not supported in Lambda environment variables; Secrets Manager is optimized for secrets, not all configs. S3 storage and embedded parameters require additional management.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "Systems Manager",
+            "Lambda",
+            "Configuration"
+        ]
+    },
+    {
+        "id": "saa-exam-q17",
+        "type": "multiple-choice",
+        "question": "A company wants to improve the performance of a query-heavy DynamoDB table without modifying application code. Which feature should the solutions architect enable?",
+        "options": [
+            "DynamoDB Streams",
+            "On-demand backup and restore",
+            "Global tables",
+            "DynamoDB Accelerator (DAX)"
+        ],
+        "correctIndex": 3,
+        "explanation": "DAX is an in-memory cache that accelerates DynamoDB read performance with API compatibility, requiring no code changes beyond SDK configuration. Streams, global tables, and backups do not improve query performance directly.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "DynamoDB",
+            "DAX",
+            "Caching"
+        ]
+    },
+    {
+        "id": "saa-exam-q18",
+        "type": "multiple-choice",
+        "question": "A company needs to design a disaster recovery (DR) strategy for a mission-critical application running in a single AWS Region. The company has a low RTO (Recovery Time Objective) and low RPO (Recovery Point Objective) requirement. Which DR strategy should the solutions architect recommend?",
+        "options": [
+            "Multi-site active-active",
+            "Pilot light",
+            "Warm standby",
+            "Backup and restore"
+        ],
+        "correctIndex": 0,
+        "explanation": "Multi-site active-active across Regions offers the lowest RTO and RPO by running full-capacity workloads in multiple Regions simultaneously. Warm standby and pilot light have longer recovery times, and backup/restore is the slowest.",
+        "tags": [
+            "exam",
+            "Resilient Architectures",
+            "Disaster Recovery",
+            "High Availability"
+        ]
+    },
+    {
+        "id": "saa-exam-q19",
+        "type": "multiple-choice",
+        "question": "A solutions architect is designing a VPC and must allow resources in private subnets to reach the internet while preventing inbound connections. Which solution meets this requirement?",
+        "options": [
+            "Internet gateway",
+            "VPC peering connection",
+            "VPN gateway",
+            "NAT gateway in a public subnet"
+        ],
+        "correctIndex": 3,
+        "explanation": "A NAT gateway placed in a public subnet enables outbound internet access for resources in private subnets without allowing unsolicited inbound traffic. An internet gateway attaches to the VPC but requires public IPs. Peering and VPN do not provide internet egress.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "VPC",
+            "NAT Gateway",
+            "Networking"
+        ]
+    },
+    {
+        "id": "saa-exam-q20",
+        "type": "multiple-choice",
+        "question": "A company uses AWS Organizations with multiple member accounts. The security team needs to ensure that all member accounts have CloudTrail enabled in all Regions. Which solution meets this requirement?",
+        "options": [
+            "Enable AWS Config rules in each account to check CloudTrail status.",
+            "Create an SCP (service control policy) that requires CloudTrail to be enabled.",
+            "Use AWS Lambda in each account to start CloudTrail if it is stopped.",
+            "Create an organization trail in the management account and apply to all Regions."
+        ],
+        "correctIndex": 3,
+        "explanation": "An organization trail created in the management account automatically enables CloudTrail logging for all member accounts and Regions. SCPs cannot enforce service configuration, and per-account solutions scale poorly.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "CloudTrail",
+            "Organizations"
+        ]
+    },
+    {
+        "id": "saa-exam-q21",
+        "type": "multiple-choice",
+        "question": "A company is launching a new microservices application using Amazon ECS Fargate. The microservices need to communicate with each other using a service discovery mechanism. Which AWS service provides native service discovery for ECS tasks?",
+        "options": [
+            "AWS Cloud Map",
+            "AWS Lambda",
+            "AWS App Mesh",
+            "Amazon Route 53 private hosted zone"
+        ],
+        "correctIndex": 0,
+        "explanation": "AWS Cloud Map integrates with ECS to provide service discovery by registering task endpoints and automatically updating DNS records, enabling microservices to discover each other easily.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "ECS",
+            "Fargate",
+            "Service Discovery"
+        ]
+    },
+    {
+        "id": "saa-exam-q22",
+        "type": "multiple-choice",
+        "question": "An enterprise application requires Amazon RDS to provide automatic failover and minimize downtime during maintenance activities. Which RDS configuration meets this requirement?",
+        "options": [
+            "Single-AZ deployment with read replicas",
+            "Multi-AZ deployment configured with synchronous standby",
+            "Multi-Region read replica configuration",
+            "Single-AZ deployment with automated backups enabled"
+        ],
+        "correctIndex": 1,
+        "explanation": "A Multi-AZ deployment synchronously replicates data to a standby instance in a different AZ and automatically fails over during maintenance or AZ failure, minimizing downtime. Automated backups do not provide standby; read replicas are asynchronous and used for read scaling, and Multi-Region replicas are for cross-Region DR with manual promotion.",
+        "tags": [
+            "exam",
+            "Resilient Architectures",
+            "RDS",
+            "High Availability"
+        ]
+    },
+    {
+        "id": "saa-exam-q23",
+        "type": "multiple-choice",
+        "question": "A video streaming workload requires highly durable storage for user-uploaded content and needs to serve files globally with low latency. Which service combination provides the MOST cost-effective and scalable solution?",
+        "options": [
+            "Amazon EC2 instance store with Amazon CloudFront",
+            "Amazon S3 Standard storage class only",
+            "Amazon EFS with AWS Global Accelerator",
+            "Amazon S3 Standard with Amazon CloudFront"
+        ],
+        "correctIndex": 3,
+        "explanation": "Storing objects in S3 and distributing them via CloudFront edge locations delivers durability, scalability, and low-latency access worldwide at low cost. EFS is not optimal for large media distribution, and instance store is ephemeral.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "S3",
+            "CloudFront",
+            "Media"
+        ]
+    },
+    {
+        "id": "saa-exam-q24",
+        "type": "open-ended",
+        "question": "Explain the differences between security groups and network ACLs in a VPC and describe appropriate use cases for each.",
+        "answer": "Security groups are stateful, instance-level virtual firewalls that allow inbound and outbound rules. Return traffic is automatically allowed. They are ideal for controlling access to individual EC2 instances or ENIs. Network ACLs are stateless, subnet-level filters that evaluate both inbound and outbound rules. They are processed in order and require explicit return-traffic rules. Use NACLs for coarse-grained subnet protection and to block specific IP ranges before traffic reaches instances.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "VPC",
+            "Security"
+        ]
+    },
+    {
+        "id": "saa-exam-q25",
+        "type": "multiple-choice",
+        "question": "A company plans to move a critical MySQL database from on-premises to AWS with minimal code change and needs automatic storage scaling up to 128 TB. Which service meets these requirements?",
+        "options": [
+            "Amazon RDS Custom for MySQL",
+            "Amazon DynamoDB",
+            "Amazon Aurora MySQL-Compatible Edition",
+            "Amazon RDS for MySQL"
+        ],
+        "correctIndex": 2,
+        "explanation": "Aurora MySQL is drop-in compatible with MySQL, automatically scales storage in 10 GB increments up to 128 TB without downtime, and offers high performance and availability.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "Aurora",
+            "Database"
+        ]
+    },
+    {
+        "id": "saa-exam-q26",
+        "type": "multiple-choice",
+        "question": "A company wants to restrict IAM users to launching only specific EC2 instance types to control costs. Which solution will meet this requirement?",
+        "options": [
+            "Tag allowed instance types and create an IAM condition based on tags",
+            "Create an IAM policy that denies ec2:RunInstances except for allowed instance types and attach to the users",
+            "Create SCPs that whitelist the instance types and attach to the IAM users",
+            "Use AWS Budgets to stop users from launching disallowed instances"
+        ],
+        "correctIndex": 1,
+        "explanation": "An IAM policy can include a Condition element on ec2:InstanceType to deny all RunInstances actions except the specified types. SCPs apply to accounts, not individual users.",
+        "tags": [
+            "exam",
+            "Cost-Optimized Architectures",
+            "EC2",
+            "IAM",
+            "Governance"
+        ]
+    },
+    {
+        "id": "saa-exam-q27",
+        "type": "multiple-choice",
+        "question": "A serverless web application stores session data that must be shared across multiple Availability Zones with millisecond latency. Which data store should the solutions architect choose?",
+        "options": [
+            "Amazon Neptune",
+            "Amazon RDS MySQL",
+            "Amazon S3",
+            "Amazon ElastiCache for Redis"
+        ],
+        "correctIndex": 3,
+        "explanation": "ElastiCache Redis offers sub-millisecond latency and can be deployed in cluster mode across AZs, making it ideal for session management in serverless apps.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "ElastiCache",
+            "Redis",
+            "Serverless"
+        ]
+    },
+    {
+        "id": "saa-exam-q28",
+        "type": "multiple-choice",
+        "question": "A security team needs to centrally manage and automate the creation of network firewall rules across multiple AWS accounts. Which AWS service should the solutions architect recommend?",
+        "options": [
+            "AWS Config",
+            "AWS Shield Advanced",
+            "AWS Firewall Manager",
+            "AWS Network Firewall"
+        ],
+        "correctIndex": 2,
+        "explanation": "Firewall Manager integrates with AWS Organizations to centrally configure and manage AWS WAF, Shield Advanced, and VPC Network Firewall rules across accounts.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "Firewall Manager",
+            "Networking",
+            "Organizations"
+        ]
+    },
+    {
+        "id": "saa-exam-q29",
+        "type": "open-ended",
+        "question": "Describe how Amazon S3 Transfer Acceleration works and when it should be used.",
+        "answer": "S3 Transfer Acceleration speeds up uploads and downloads by routing traffic through AWS edge locations using optimized network paths and TCP window sizing. Data enters the AWS backbone at the closest edge location and traverses private links to the S3 bucket\u2019s Region, reducing latency for geographically dispersed clients. Use it for large objects or users far from the target Region when performance gains offset the additional cost.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "S3",
+            "Networking"
+        ]
+    },
+    {
+        "id": "saa-exam-q30",
+        "type": "multiple-choice",
+        "question": "A company must ensure compliance by encrypting all data in transit between EC2 instances and an RDS database. Which solution meets this requirement with LEAST operational overhead?",
+        "options": [
+            "Create an SSL VPN between the EC2 instances and RDS",
+            "Enable RDS instance setting for encryption in transit (TLS) and require SSL",
+            "Use client-side TLS libraries in the application to encrypt connections",
+            "Use AWS Certificate Manager to generate certificates and manually rotate them"
+        ],
+        "correctIndex": 1,
+        "explanation": "Enabling SSL/TLS on the RDS instance and requiring SSL connections allows clients to negotiate encrypted sessions without additional code changes, handled by the database engine.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "RDS",
+            "Encryption",
+            "TLS"
+        ]
+    },
+    {
+        "id": "saa-exam-q31",
+        "type": "multiple-choice",
+        "question": "A batch processing job runs weekly on hundreds of vCPUs for a few hours. Which compute purchasing option will provide the LOWEST cost?",
+        "options": [
+            "On-Demand Instances",
+            "Spot Instances",
+            "Dedicated Hosts",
+            "Reserved Instances"
+        ],
+        "correctIndex": 1,
+        "explanation": "Spot Instances offer up to 90% discount over On-Demand pricing and are ideal for interruptible, flexible batch workloads.",
+        "tags": [
+            "exam",
+            "Cost-Optimized Architectures",
+            "EC2",
+            "Spot",
+            "Batch"
+        ]
+    },
+    {
+        "id": "saa-exam-q32",
+        "type": "multiple-choice",
+        "question": "A company needs near real-time visibility into AWS account activity for security auditing. Which service provides this capability?",
+        "options": [
+            "Amazon CloudWatch Logs Insights",
+            "AWS CloudTrail Lake",
+            "AWS Config",
+            "Amazon GuardDuty"
+        ],
+        "correctIndex": 1,
+        "explanation": "CloudTrail Lake captures, stores, and allows querying of CloudTrail events in near real time for centralized auditing across accounts.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "CloudTrail",
+            "Monitoring"
+        ]
+    },
+    {
+        "id": "saa-exam-q33",
+        "type": "open-ended",
+        "question": "What are the benefits of using Amazon Route 53 alias records over CNAME records at the zone apex?",
+        "answer": "Alias records allow mapping the zone apex to AWS resources such as CloudFront distributions, ELB load balancers, and S3 static websites without requiring an additional DNS lookup. They are free (no query charges) and support both IPv4 and IPv6. Unlike CNAMEs, alias records can coexist with other record types at the apex and comply with DNS RFCs.",
+        "tags": [
+            "exam",
+            "Resilient Architectures",
+            "Route 53",
+            "DNS"
+        ]
+    },
+    {
+        "id": "saa-exam-q34",
+        "type": "multiple-choice",
+        "question": "A company processes sensitive healthcare data and must comply with HIPAA. Which AWS service can securely store encryption keys and provide detailed key usage auditing?",
+        "options": [
+            "AWS Secrets Manager",
+            "AWS CloudHSM",
+            "Amazon S3 Object Lock",
+            "AWS Key Management Service (KMS)"
+        ],
+        "correctIndex": 3,
+        "explanation": "KMS is a managed service for creating and controlling encryption keys, integrates with AWS CloudTrail for audit logs, and is HIPAA eligible.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "KMS",
+            "Compliance"
+        ]
+    },
+    {
+        "id": "saa-exam-q35",
+        "type": "multiple-choice",
+        "question": "A nightly ETL job moves data from S3 to Redshift. The solutions architect wants to reduce Redshift cluster costs while maintaining performance. What should be done?",
+        "options": [
+            "Use Redshift RA3 with managed storage and pause/resume the cluster when not in use",
+            "Use Redshift Concurrency Scaling",
+            "Enable Redshift Spectrum and run queries directly on S3",
+            "Scale up the cluster to process the ETL faster and shut down sooner"
+        ],
+        "correctIndex": 0,
+        "explanation": "RA3 separates compute and storage and supports pause/resume, allowing the cluster to be offline outside ETL windows and billing primarily for storage.",
+        "tags": [
+            "exam",
+            "Cost-Optimized Architectures",
+            "Redshift",
+            "Analytics"
+        ]
+    },
+    {
+        "id": "saa-exam-q36",
+        "type": "multiple-choice",
+        "question": "A solutions architect must design a secure way for mobile clients to upload files directly to S3 without exposing AWS credentials. Which approach meets this requirement?",
+        "options": [
+            "Create a presigned URL using AWS Lambda and return it to the client",
+            "Use Amazon Cognito with an unauthenticated role that has limited S3 permissions",
+            "Generate an IAM access key for each client and embed in the app",
+            "Expose an API Gateway endpoint that proxies uploads to S3 using IAM user credentials"
+        ],
+        "correctIndex": 0,
+        "explanation": "Presigned URLs allow time-limited, permission-scoped access to S3 for specific objects without revealing credentials. Cognito unauthenticated roles still expose AWS credentials in the app, and proxying through Lambda/API increases cost and latency.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "S3",
+            "Presigned URL",
+            "Mobile"
+        ]
+    },
+    {
+        "id": "saa-exam-q37",
+        "type": "open-ended",
+        "question": "How does AWS Global Accelerator improve application availability and performance?",
+        "answer": "Global Accelerator uses the AWS global network to route user traffic to optimal endpoints based on health, geography, and routing policies. It provides two static Anycast IP addresses, performs continuous health checks, and automatically fails over to healthy endpoints, reducing latency and improving availability during regional outages.",
+        "tags": [
+            "exam",
+            "Resilient Architectures",
+            "Global Accelerator",
+            "Networking"
+        ]
+    },
+    {
+        "id": "saa-exam-q38",
+        "type": "multiple-choice",
+        "question": "A company wants to centrally manage patch compliance across hundreds of EC2 instances. Which AWS service simplifies this process?",
+        "options": [
+            "Amazon Inspector",
+            "AWS Config",
+            "AWS Trusted Advisor",
+            "AWS Systems Manager Patch Manager"
+        ],
+        "correctIndex": 3,
+        "explanation": "Patch Manager, a capability of Systems Manager, automates patching across instances, supports compliance reports, and works across Regions and accounts via Quick Setup.",
+        "tags": [
+            "exam",
+            "Operational Excellence",
+            "Systems Manager",
+            "Patching"
+        ]
+    },
+    {
+        "id": "saa-exam-q39",
+        "type": "multiple-choice",
+        "question": "An organization needs to share large datasets stored in S3 with external partners. The data must be accessed over the internet with minimal latency but should not be publicly accessible. Which solution meets these requirements?",
+        "options": [
+            "Use S3 presigned URLs that expire after an appropriate duration",
+            "Create an S3 Access Point with VPC origin and share the ARN",
+            "Distribute the data using Amazon FSx for Lustre",
+            "Enable public read on the bucket and restrict by IP"
+        ],
+        "correctIndex": 0,
+        "explanation": "Presigned URLs provide time-limited, secure access to private S3 objects over HTTPS without making the bucket public, meeting security and performance needs.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "S3",
+            "Sharing"
+        ]
+    },
+    {
+        "id": "saa-exam-q40",
+        "type": "multiple-choice",
+        "question": "A company\u2019s auditing requirements mandate that all API activity be stored for at least 7 years. Which AWS solution is MOST cost effective?",
+        "options": [
+            "Store CloudTrail logs in S3 Standard storage with versioning enabled",
+            "Aggregate CloudTrail logs into an Elasticsearch cluster with snapshots",
+            "Send CloudTrail logs to CloudWatch Logs with long-term retention",
+            "Store CloudTrail logs in S3 Glacier Deep Archive with S3 lifecycle policies"
+        ],
+        "correctIndex": 3,
+        "explanation": "S3 Glacier Deep Archive provides the lowest-cost long-term storage. Lifecycle policies can transition logs from S3 Standard to Deep Archive automatically.",
+        "tags": [
+            "exam",
+            "Cost-Optimized Architectures",
+            "CloudTrail",
+            "S3",
+            "Compliance"
+        ]
+    },
+    {
+        "id": "saa-exam-q41",
+        "type": "open-ended",
+        "question": "What are the main benefits of deploying workloads using AWS Elastic Beanstalk?",
+        "answer": "Elastic Beanstalk abstracts infrastructure provisioning by automatically creating and managing resources such as EC2, Auto Scaling, and ELB. It provides built-in monitoring, scaling, and rolling deployments, enabling developers to focus on code. It supports multiple runtimes and offers full control through configuration files when customization is needed.",
+        "tags": [
+            "exam",
+            "Operational Excellence",
+            "Elastic Beanstalk",
+            "DevOps"
+        ]
+    },
+    {
+        "id": "saa-exam-q42",
+        "type": "multiple-choice",
+        "question": "A company must migrate hundreds of terabytes of on-premises data to S3 within one week. Internet bandwidth is insufficient. Which service should be used?",
+        "options": [
+            "AWS Snowball Edge",
+            "AWS DataSync over VPN",
+            "AWS Storage Gateway",
+            "Amazon S3 Transfer Acceleration"
+        ],
+        "correctIndex": 0,
+        "explanation": "Snowball Edge is an exabyte-scale data transport device that can transfer large datasets offline and import them to S3 within the required timeframe.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "Snowball",
+            "Migration"
+        ]
+    },
+    {
+        "id": "saa-exam-q43",
+        "type": "multiple-choice",
+        "question": "A workload running on Kubernetes in EKS needs to retrieve database credentials securely. According to security best practices, which solution should be implemented?",
+        "options": [
+            "Use AWS Secrets Manager with IAM roles for service accounts (IRSA)",
+            "Embed credentials in the container image",
+            "Mount credentials from a Kubernetes secret stored in plaintext",
+            "Store credentials in environment variables"
+        ],
+        "correctIndex": 0,
+        "explanation": "IRSA allows EKS pods to assume IAM roles and fetch Secrets Manager secrets securely at runtime without storing long-lived credentials in the cluster.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "EKS",
+            "Secrets Manager",
+            "IRSA"
+        ]
+    },
+    {
+        "id": "saa-exam-q44",
+        "type": "multiple-choice",
+        "question": "A company wants to protect its public website from SQL injection and cross-site scripting attacks. Which AWS service provides this capability?",
+        "options": [
+            "Amazon GuardDuty",
+            "AWS WAF",
+            "AWS Firewall Manager",
+            "AWS Shield Standard"
+        ],
+        "correctIndex": 1,
+        "explanation": "AWS WAF inspects HTTP/HTTPS traffic and can block common web exploits such as SQL injection and XSS.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "WAF",
+            "Security"
+        ]
+    },
+    {
+        "id": "saa-exam-q45",
+        "type": "open-ended",
+        "question": "Explain the difference between vertical and horizontal scaling in AWS and give an example service or feature that facilitates each.",
+        "answer": "Vertical scaling (scale-up) adds more resources to a single instance, such as changing an EC2 instance type to one with more vCPUs and RAM. Horizontal scaling (scale-out) adds more instances to distribute load, such as using an EC2 Auto Scaling group behind an Application Load Balancer. RDS instance class modification is vertical scaling; ECS with Fargate tasks is horizontal scaling.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "Auto Scaling",
+            "Architecture"
+        ]
+    },
+    {
+        "id": "saa-exam-q46",
+        "type": "multiple-choice",
+        "question": "A legacy application running on EC2 uses hard-coded IP addresses to connect to a backend service. The backend is being migrated to a new subnet and IP range. How can the migration be performed with minimal downtime and without modifying the legacy application code?",
+        "options": [
+            "Create a VPC peering connection between the old and new subnets",
+            "Update the security group to allow the new subnet",
+            "Assign Elastic IPs to the new backend instances and update DNS",
+            "Use a Network Load Balancer with static IP addresses and update its target group"
+        ],
+        "correctIndex": 3,
+        "explanation": "A Network Load Balancer provides two static IPs per AZ. Point the legacy application to these IPs. During migration, update the NLB target group to the new backend without changing client configuration, minimizing downtime.",
+        "tags": [
+            "exam",
+            "Resilient Architectures",
+            "NLB",
+            "Migration"
+        ]
+    },
+    {
+        "id": "saa-exam-q47",
+        "type": "multiple-choice",
+        "question": "A company needs to ensure that Lambda function versions cannot be modified after deployment to comply with change-control policies. Which feature should the solutions architect use?",
+        "options": [
+            "Lambda aliases",
+            "Lambda layers",
+            "Lambda function versioning",
+            "Enable AWS Config recording"
+        ],
+        "correctIndex": 2,
+        "explanation": "Lambda versioning creates immutable versions of the function code and configuration, ensuring deployed versions remain unchanged. Aliases point to versions but can be changed.",
+        "tags": [
+            "exam",
+            "Operational Excellence",
+            "Lambda",
+            "DevOps"
+        ]
+    },
+    {
+        "id": "saa-exam-q48",
+        "type": "multiple-choice",
+        "question": "A web application running behind an Application Load Balancer experiences sudden traffic spikes, resulting in increased response times. Which ALB feature can improve performance during these spikes without manual intervention?",
+        "options": [
+            "Enable ALB deletion protection",
+            "Enable ALB sticky sessions",
+            "Enable ALB HTTP/2 support",
+            "Enable ALB cross-zone load balancing"
+        ],
+        "correctIndex": 2,
+        "explanation": "HTTP/2 multiplexing allows multiple requests over a single connection, reducing latency and improving performance during traffic bursts. The other features address different use cases.",
+        "tags": [
+            "exam",
+            "High-Performing Architectures",
+            "ELB",
+            "HTTP2"
+        ]
+    },
+    {
+        "id": "saa-exam-q49",
+        "type": "open-ended",
+        "question": "Describe the Shared Responsibility Model for AWS and provide two examples of responsibilities that AWS manages and two responsibilities that the customer manages.",
+        "answer": "AWS is responsible for security **of** the cloud\u2014physical infrastructure, Regions, AZs, networking, and managed service hardware/firmware. Customers are responsible for security **in** the cloud\u2014configuring IAM, encrypting data, and patching guest OS on EC2. Example AWS responsibilities: maintaining data center facilities, edge network. Example customer responsibilities: configuring security groups, managing S3 bucket permissions.",
+        "tags": [
+            "exam",
+            "Secure Architectures",
+            "Governance",
+            "Compliance"
+        ]
+    },
+    {
+        "id": "saa-exam-q50",
+        "type": "multiple-choice",
+        "question": "A monitoring team needs to be alerted if a production DynamoDB table\u2019s consumed read capacity exceeds 80% of the provisioned capacity for five consecutive minutes. Which solution meets this requirement?",
+        "options": [
+            "Create an EventBridge rule to detect high utilization events",
+            "Enable DynamoDB auto scaling with target tracking at 80% utilization",
+            "Create a CloudWatch alarm on the ConsumedReadCapacityUnits metric with a 5-minute period and 80% threshold",
+            "Use AWS Trusted Advisor checks for DynamoDB limits"
+        ],
+        "correctIndex": 2,
+        "explanation": "A CloudWatch alarm configured on the ConsumedReadCapacityUnits metric with the appropriate period and threshold will trigger notifications when utilization crosses the set limit for the specified evaluation periods.",
+        "tags": [
+            "exam",
+            "Operational Excellence",
+            "DynamoDB",
+            "CloudWatch",
+            "Monitoring"
+        ]
+    }
+]
