@@ -151,18 +151,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Tag search input
         elements.tagSearch.addEventListener('input', (e) => {
             const searchQuery = e.target.value.trim();
-            if (searchQuery.length > 0) {
-                showTagSuggestions(searchQuery);
-            } else {
-                hideTagSuggestions();
-            }
+            // Always show suggestions, but filter based on query
+            showTagSuggestions(searchQuery);
         });
         
         // Focus and blur events for tag search
         elements.tagSearch.addEventListener('focus', () => {
-            if (elements.tagSearch.value.trim().length > 0) {
-                showTagSuggestions(elements.tagSearch.value.trim());
-            }
+            // Always show all tags when focused, regardless of input value
+            showTagSuggestions(elements.tagSearch.value.trim());
+        });
+        
+        elements.tagSearch.addEventListener('blur', (e) => {
+            // Don't hide suggestions immediately to allow for clicking on them
+            setTimeout(() => {
+                if (!elements.tagSuggestions.contains(document.activeElement)) {
+                    hideTagSuggestions();
+                }
+            }, 150);
         });
         
         // Close suggestions when clicking outside
@@ -196,9 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.tagSuggestions.innerHTML = '';
         elements.tagSuggestions.classList.remove('hidden');
         
-        // Filter tags based on search query
+        // Filter tags based on search query (if provided)
+        // When empty, show all tags (when clicked on the input)
         const filteredTags = Array.from(state.availableTags)
-            .filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+            .filter(tag => searchQuery === '' || tag.toLowerCase().includes(searchQuery.toLowerCase()))
             .filter(tag => !state.selectedTags.has(tag)) // Exclude already selected tags
             .sort();
         
