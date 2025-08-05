@@ -161,17 +161,13 @@ document.addEventListener('DOMContentLoaded', () => {
             showTagSuggestions(elements.tagSearch.value.trim());
         });
         
-        elements.tagSearch.addEventListener('blur', (e) => {
-            // Don't hide suggestions immediately to allow for clicking on them
-            setTimeout(() => {
-                if (!elements.tagSuggestions.contains(document.activeElement)) {
-                    hideTagSuggestions();
-                }
-            }, 150);
-        });
+        // We won't use blur to hide suggestions, only mouse clicks outside
+        // This prevents the race condition between blur and tag click events
         
         // Close suggestions when clicking outside
-        document.addEventListener('click', (e) => {
+        document.addEventListener('mousedown', (e) => {
+            // If click is outside the tag search and suggestions area
+            // And not on a tag suggestion element itself
             if (!elements.tagSearch.contains(e.target) && 
                 !elements.tagSuggestions.contains(e.target)) {
                 hideTagSuggestions();
