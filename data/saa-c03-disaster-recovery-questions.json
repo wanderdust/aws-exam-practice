@@ -1,0 +1,472 @@
+[
+    {
+        "id": "dr-001",
+        "type": "multiple-choice",
+        "question": "A financial services company must achieve an RPO of 15 minutes for its critical database running on Amazon RDS for PostgreSQL. Which backup strategy BEST meets this objective with minimal operational effort?",
+        "options": [
+            "Enable automated backups with a 15-minute backup window and use point-in-time recovery",
+            "Take manual snapshots every 15 minutes using AWS Backup",
+            "Export RDS logs to Amazon S3 and rebuild the database if needed",
+            "Configure cross-Region read replicas and promote the replica after a disaster"
+        ],
+        "correctIndex": 0,
+        "explanation": "Automated backups capture transaction logs continuously, allowing point-in-time recovery up to the last 5 minutes, easily meeting a 15-minute RPO. Manual snapshots every 15 minutes add management overhead and risk drift. Log exports alone cannot guarantee a 15-minute RPO without additional tooling. Read replicas help with availability but do not provide granular recovery points.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "Backup and Restore"
+        ]
+    },
+    {
+        "id": "dr-002",
+        "type": "multiple-choice",
+        "question": "An ecommerce platform requires an RTO of 1 hour and an RPO of 1 day for its order history stored on Amazon DynamoDB. Which disaster-recovery approach is MOST cost effective?",
+        "options": [
+            "Configure global tables across two Regions",
+            "Continuously replicate DynamoDB streams to an Amazon Aurora cluster",
+            "Use AWS Backup with a daily backup plan and restore on demand",
+            "Enable DynamoDB Point-in-Time Recovery and export to S3 daily"
+        ],
+        "correctIndex": 1,
+        "explanation": "Replicating DynamoDB streams to Aurora provides a warm standby that can be promoted within an hour, while the stream ensures near-real-time data capture satisfying a 1-day RPO. Point-in-Time Recovery plus export requires full table restore and data reload, which may exceed the 1-hour RTO. Global tables meet tighter objectives but at higher cost. AWS Backup alone may not restore large tables within 1 hour.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "DynamoDB",
+            "Disaster Recovery"
+        ]
+    },
+    {
+        "id": "dr-003",
+        "type": "multiple-choice",
+        "question": "A media company migrates a 50 TB on-premises file share to AWS with a requirement to minimize downtime and network impact. Which service combination BEST satisfies the requirement?",
+        "options": [
+            "Direct Connect dedicated connection plus rsync",
+            "AWS Transfer Family SFTP with scheduled uploads",
+            "AWS Snowball Edge for initial seed and AWS DataSync for ongoing delta replication",
+            "AWS Storage Gateway file gateway only"
+        ],
+        "correctIndex": 2,
+        "explanation": "Snowball Edge allows bulk physical transfer without saturating the network. DataSync can then incrementally sync changes over the wire, reducing downtime. A file gateway keeps data on premises but does not migrate it. Transfer Family and rsync over Direct Connect can take days and risk extended cutover windows.",
+        "tags": [
+            "High-Performing Architectures",
+            "Snowball",
+            "DataSync"
+        ]
+    },
+    {
+        "id": "dr-004",
+        "type": "multiple-choice",
+        "question": "Which disaster-recovery strategy typically incurs the LOWEST ongoing monthly cost while offering the LONGEST RTO?",
+        "options": [
+            "Warm Standby",
+            "Pilot Light",
+            "Multi-Site Active-Active",
+            "Backup and Restore"
+        ],
+        "correctIndex": 3,
+        "explanation": "Backup and Restore relies solely on backups stored in AWS with no running compute resources, resulting in the lowest ongoing cost but requiring the longest time to restore infrastructure and data.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Disaster Recovery",
+            "RTO"
+        ]
+    },
+    {
+        "id": "dr-005",
+        "type": "multiple-choice",
+        "question": "A global company needs to migrate a production Oracle database to Amazon Aurora PostgreSQL with minimal downtime. Which tools should be used?",
+        "options": [
+            "AWS Database Migration Service with AWS Schema Conversion Tool",
+            "Aurora read replica of the Oracle instance",
+            "mysqldump followed by Aurora import",
+            "AWS DataSync and AWS Backup"
+        ],
+        "correctIndex": 0,
+        "explanation": "DMS supports heterogeneous migrations with continuous replication and minimal downtime, while SCT converts schema objects from Oracle to PostgreSQL. The other options do not handle engine conversion or require significant downtime.",
+        "tags": [
+            "Resilient Architectures",
+            "DMS",
+            "SCT"
+        ]
+    },
+    {
+        "id": "dr-006",
+        "type": "multiple-choice",
+        "question": "Which AWS feature prevents deletion of recovery points for a regulatory backup vault while still allowing restores?",
+        "options": [
+            "S3 Object Lock Governance mode",
+            "KMS key policy with deny delete",
+            "AWS Backup Vault Lock",
+            "S3 Versioning"
+        ],
+        "correctIndex": 2,
+        "explanation": "Backup Vault Lock enforces WORM protection on backups, preventing deletion by any user or role while permitting restores. S3 Versioning and Object Lock apply only to S3 objects. KMS key policy does not stop deletion of recovery points.",
+        "tags": [
+            "Secure Architectures",
+            "AWS Backup",
+            "Compliance"
+        ]
+    },
+    {
+        "id": "dr-007",
+        "type": "multiple-choice",
+        "question": "During a region-wide outage, an application running on EC2 presents stale DNS entries for its failover endpoint. Which Route 53 feature can automatically route traffic to the standby site?",
+        "options": [
+            "Weighted routing policy with equal weights",
+            "Failover routing policy with health checks",
+            "Latency routing policy",
+            "Geolocation routing policy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Failover routing with health checks monitors the primary endpoint and automatically redirects to the secondary when the health check fails. Other policies do not provide automatic failover based on endpoint health.",
+        "tags": [
+            "Resilient Architectures",
+            "Route 53",
+            "DNS Failover"
+        ]
+    },
+    {
+        "id": "dr-008",
+        "type": "multiple-choice",
+        "question": "A SaaS provider wants an RTO of 0 and an RPO of near-zero for a multi-AZ Amazon Aurora MySQL cluster. Which additional configuration achieves these goals across regions?",
+        "options": [
+            "Configure cross-Region snapshot copy every hour",
+            "Use AWS Backup with 15-minute frequency",
+            "Enable Aurora global database with a secondary Region",
+            "Add a read replica in the same Region"
+        ],
+        "correctIndex": 2,
+        "explanation": "Aurora global database replicates data to another Region with a lag typically under 1 second. In the event of a regional failure, the secondary can be promoted in about 1 minute, achieving near-zero RPO and low RTO. Same-Region replicas do not cover regional outages. Backup snapshots take time to restore and introduce data loss.",
+        "tags": [
+            "High-Performing Architectures",
+            "Aurora",
+            "Global Database"
+        ]
+    },
+    {
+        "id": "dr-009",
+        "type": "multiple-choice",
+        "question": "A development team uses AWS Application Migration Service (MGN) for lift-and-shift. Which statement about network cutover is TRUE?",
+        "options": [
+            "You must manually update any hard-coded IPs after launching the cutover instances",
+            "MGN supports live block-level replication only over Direct Connect",
+            "MGN requires that the source VMs be shut down before replication begins",
+            "MGN can perform automated DNS cutover by updating Route 53 records"
+        ],
+        "correctIndex": 0,
+        "explanation": "After cutover, instances receive new private IPs unless you use Elastic IPs or bring your own. Any hard-coded references must be updated manually. MGN does not automatically edit DNS or require initial shutdown. Replication occurs over the public internet or DX.",
+        "tags": [
+            "Operational Excellence",
+            "MGN",
+            "Networking"
+        ]
+    },
+    {
+        "id": "dr-010",
+        "type": "multiple-choice",
+        "question": "For a pilot-light strategy, which components are MOST likely to run continuously in the DR Region?",
+        "options": [
+            "All application servers but in stopped state",
+            "Only static website assets stored in S3",
+            "No resources are required until a disaster occurs",
+            "Core database services and minimal infrastructure to support replication"
+        ],
+        "correctIndex": 3,
+        "explanation": "Pilot light keeps critical data resources, such as databases and replication infrastructure, always on and replicating. Application servers are recreated on demand. Static assets alone do not satisfy pilot-light requirements. Having no resources equates to backup-and-restore.",
+        "tags": [
+            "Resilient Architectures",
+            "Pilot Light",
+            "RTO"
+        ]
+    },
+    {
+        "id": "dr-011",
+        "type": "multiple-choice",
+        "question": "An architect must replicate 200 GB of daily log files from EC2 instances to a secondary Region with strong consistency. Which solution offers the LOWEST cost while ensuring durability?",
+        "options": [
+            "S3 replication using Transfer Acceleration",
+            "S3 Cross-Region Replication to S3 Glacier Instant Retrieval in the target Region",
+            "AWS Backup vault copy from EBS snapshots",
+            "Kinesis Data Firehose delivering to S3 Standard in the target Region"
+        ],
+        "correctIndex": 1,
+        "explanation": "S3 CRR automatically and asynchronously replicates objects to a destination bucket. Targeting S3 Glacier Instant Retrieval provides eleven nines durability at a lower storage price, meeting logging retention needs cost effectively. Firehose incurs ingestion costs and higher storage class. Transfer Acceleration charges extra and does not replicate. EBS snapshots are block-level and costlier for logs.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "S3",
+            "CRR"
+        ]
+    },
+    {
+        "id": "dr-012",
+        "type": "multiple-choice",
+        "question": "A company backs up on-premises VMware virtual machines to Amazon S3. They must retain immutable copies for 7 years. Which solution meets this requirement?",
+        "options": [
+            "Use AWS Backup gateway with Vault Lock and a 7-year retention policy",
+            "Configure S3 Lifecycle rules to transition to Glacier Flexible Retrieval",
+            "Use Snowball Edge every year and store devices offline",
+            "Use Storage Gateway tape gateway and recycle tapes annually"
+        ],
+        "correctIndex": 0,
+        "explanation": "Backup gateway stores backup data directly in AWS Backup vaults, and Vault Lock enforces immutable retention. Tape gateway tapes can be deleted or overwritten. Snowball devices offline are not durable or integrated. Lifecycle rules alone do not guarantee immutability.",
+        "tags": [
+            "Secure Architectures",
+            "AWS Backup",
+            "VMware"
+        ]
+    },
+    {
+        "id": "dr-013",
+        "type": "multiple-choice",
+        "question": "Which metric combination BEST expresses business impact during a disaster event?",
+        "options": [
+            "RTO and RPO",
+            "MTBF and MTTR",
+            "Availability Zone count and SLA",
+            "CPUUtilization and NetworkIn"
+        ],
+        "correctIndex": 0,
+        "explanation": "Recovery Time Objective and Recovery Point Objective quantify allowable downtime and data loss, directly translating to business impact. MTBF/MTTR relate to reliability engineering but not data loss. Resource metrics are operational, not business facing.",
+        "tags": [
+            "Operational Excellence",
+            "RTO",
+            "RPO"
+        ]
+    },
+    {
+        "id": "dr-014",
+        "type": "multiple-choice",
+        "question": "Which AWS service provides block-level continuous replication between on-premises servers and AWS without requiring application changes?",
+        "options": [
+            "AWS DataSync",
+            "AWS Backup",
+            "AWS DMS",
+            "AWS Application Migration Service"
+        ],
+        "correctIndex": 3,
+        "explanation": "MGN replicates the entire source server at the block level, enabling lift-and-shift without modifying applications. DMS is for databases, DataSync is file-oriented, and AWS Backup is snapshot based.",
+        "tags": [
+            "High-Performing Architectures",
+            "MGN",
+            "Lift and Shift"
+        ]
+    },
+    {
+        "id": "dr-015",
+        "type": "multiple-choice",
+        "question": "During a warm standby failover, which action is typically required before routing production traffic to the standby environment?",
+        "options": [
+            "Update IAM user passwords",
+            "Create a new VPC",
+            "Manually copy S3 objects",
+            "Scale the standby environment to full capacity"
+        ],
+        "correctIndex": 3,
+        "explanation": "Warm standby keeps a scaled-down copy running. Before cutover, it must be scaled up (for example by increasing Auto Scaling desired counts). Creating a new VPC, copying S3 objects, or rotating passwords is not part of the standard warm standby process.",
+        "tags": [
+            "Resilient Architectures",
+            "Warm Standby",
+            "Auto Scaling"
+        ]
+    },
+    {
+        "id": "dr-016",
+        "type": "multiple-choice",
+        "question": "A healthcare provider must ensure cross-Region replication of Amazon EFS data with a recovery window of less than 15 minutes. Which solution meets the requirement?",
+        "options": [
+            "Mount the same EFS file system in two Regions",
+            "Run rsync via a VPN tunnel",
+            "Configure EFS replication to a secondary Region",
+            "Use DataSync once per day"
+        ],
+        "correctIndex": 2,
+        "explanation": "EFS replication asynchronously copies file system changes to another Region with a recovery point typically within 15 minutes. Mounting across Regions is unsupported. DataSync daily cannot meet the objective. rsync over VPN may not meet performance or reliability requirements.",
+        "tags": [
+            "High-Performing Architectures",
+            "EFS",
+            "Replication"
+        ]
+    },
+    {
+        "id": "dr-017",
+        "type": "multiple-choice",
+        "question": "Which AWS service helps assess server dependencies before migrating to AWS to avoid missing critical components?",
+        "options": [
+            "AWS Global Accelerator",
+            "AWS Snowcone",
+            "AWS Migration Hub Strategy Recommendations",
+            "AWS SCT"
+        ],
+        "correctIndex": 2,
+        "explanation": "Migration Hub Strategy Recommendations analyzes discovered data to map dependencies and recommend strategies. SCT is for database schema conversion. Snowcone is a transport device. Global Accelerator routes traffic.",
+        "tags": [
+            "Operational Excellence",
+            "Migration",
+            "Discovery"
+        ]
+    },
+    {
+        "id": "dr-018",
+        "type": "multiple-choice",
+        "question": "A pilot light environment holds a regularly updated Amazon Machine Image (AMI). Which AWS feature automates creation of new AMIs while preserving application-specific metadata?",
+        "options": [
+            "Elastic Beanstalk",
+            "CodePipeline",
+            "CloudFormation Change Sets",
+            "EC2 Image Builder"
+        ],
+        "correctIndex": 3,
+        "explanation": "EC2 Image Builder automates image pipeline creation, tagging, and distribution, ensuring AMIs are current. Elastic Beanstalk deploys applications but not AMI pipelines. Change Sets track infrastructure updates. CodePipeline orchestrates CI/CD but does not produce AMIs directly.",
+        "tags": [
+            "Operational Excellence",
+            "EC2",
+            "Image Builder"
+        ]
+    },
+    {
+        "id": "dr-019",
+        "type": "multiple-choice",
+        "question": "Which Snow family device offers on-device compute capability that allows pre-processing data before transfer to AWS?",
+        "options": [
+            "Snowcone",
+            "Snowmobile",
+            "Snowball Edge Storage Optimized",
+            "Snowball Edge Compute Optimized"
+        ],
+        "correctIndex": 3,
+        "explanation": "Snowball Edge Compute Optimized includes EC2 instances and Lambda functions for edge compute tasks. Storage Optimized focuses on capacity. Snowmobile is exabyte-scale without compute. Snowcone has limited compute capacity.",
+        "tags": [
+            "High-Performing Architectures",
+            "Snowball",
+            "Edge"
+        ]
+    },
+    {
+        "id": "dr-020",
+        "type": "multiple-choice",
+        "question": "Which action reduces EBS snapshot storage costs without compromising backup integrity?",
+        "options": [
+            "Move snapshots to Glacier Instant Retrieval",
+            "Copy snapshots to S3 Standard and delete originals",
+            "Convert snapshots to Amazon Machine Images and delete snapshots",
+            "Enable incremental snapshots and delete older redundant snapshots"
+        ],
+        "correctIndex": 3,
+        "explanation": "EBS snapshots are incremental by default. Deleting snapshots that are no longer needed while retaining a chain of snapshots minimizes storage costs. Converting to AMIs still relies on snapshots. Copying to S3 is not supported. Glacier storage classes are not applicable to EBS snapshots.",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "EBS",
+            "Snapshots"
+        ]
+    },
+    {
+        "id": "dr-021",
+        "type": "open-ended",
+        "question": "Describe the differences between Backup and Restore, Pilot Light, Warm Standby, and Multi-Site Active-Active strategies in terms of RTO, RPO, and ongoing cost.",
+        "answer": "Backup and Restore has the lowest cost since only backups are stored, but it has the longest RTO (hours to days) and an RPO equal to the last backup. Pilot Light keeps critical systems such as databases continuously replicated, resulting in moderate cost, shorter RTO (tens of minutes to hours), and RPO near the replication lag. Warm Standby runs a scaled-down full stack in the DR Region, incurring higher cost than Pilot Light but achieving lower RTO (minutes) and minimal RPO. Multi-Site Active-Active operates full production workloads in multiple Regions simultaneously, leading to the highest ongoing cost but delivering near-zero RTO and RPO.",
+        "tags": [
+            "Resilient Architectures",
+            "Disaster Recovery",
+            "Cost"
+        ]
+    },
+    {
+        "id": "dr-022",
+        "type": "open-ended",
+        "question": "Explain how AWS Database Migration Service achieves minimal downtime during homogeneous migrations such as MySQL to MySQL.",
+        "answer": "DMS performs an initial load of existing data while the source database remains online. After the bulk load, it captures ongoing changes through Change Data Capture (CDC) by reading the database logs. The target stays nearly in sync. During cutover, applications are pointed to the target database, resulting in only a brief outage to switch endpoints, thereby minimizing downtime.",
+        "tags": [
+            "High-Performing Architectures",
+            "DMS",
+            "CDC"
+        ]
+    },
+    {
+        "id": "dr-023",
+        "type": "open-ended",
+        "question": "Outline a process to test disaster-recovery readiness for a warm standby architecture without impacting production.",
+        "answer": "1. Use CloudFormation or Terraform to version control both primary and standby stacks. 2. Conduct scheduled failover drills by deploying new test resources in the standby Region. 3. Scale the standby environment to full capacity and use Route 53 weighted routing to send a small percentage of traffic. 4. Validate application functionality, performance, and data consistency. 5. Scale down the standby to its pre-test size and remove test traffic weight. 6. Review logs and metrics, document gaps, and update runbooks.",
+        "tags": [
+            "Operational Excellence",
+            "Warm Standby",
+            "Testing"
+        ]
+    },
+    {
+        "id": "dr-024",
+        "type": "open-ended",
+        "question": "How does AWS Backup integrate with AWS Organizations to enforce centralized backup policies across multiple accounts?",
+        "answer": "By enabling AWS Backup\u2019s cross-account management, administrators can designate a management account to create backup plans and assign them to Organizational Units (OUs). These plans apply automatically to member accounts, ensuring consistent backup schedules, retention, and Vault Lock settings. Policies propagate new rules without requiring manual configuration in each account, simplifying governance.",
+        "tags": [
+            "Secure Architectures",
+            "AWS Backup",
+            "Organizations"
+        ]
+    },
+    {
+        "id": "dr-025",
+        "type": "open-ended",
+        "question": "Discuss considerations for meeting an aggressive 5-minute RPO for transaction data stored on Amazon RDS MySQL.",
+        "answer": "Enable automated backups and binary log retention to allow point-in-time recovery up to the last 5 minutes. Configure multi-AZ for synchronous failover to protect against AZ failures. For cross-Region, set up an RDS read replica or Aurora global database to replicate data near-real-time. Monitor replication lag with CloudWatch and alarms. Ensure backups are copied cross-Region if compliance demands geographic redundancy.",
+        "tags": [
+            "Resilient Architectures",
+            "RDS",
+            "RPO"
+        ]
+    },
+    {
+        "id": "dr-026",
+        "type": "open-ended",
+        "question": "Provide a migration plan for lifting a monolithic on-premises Java application to AWS using AWS Application Migration Service and converting it to a microservices architecture post-migration.",
+        "answer": "Phase 1: Discovery \u2013 Run agentless discovery to map dependencies. Phase 2: Replication \u2013 Use MGN to replicate servers to AWS, maintaining block-level sync. Phase 3: Cutover \u2013 Launch EC2 instances, update DNS, and validate functionality. Phase 4: Refactor \u2013 Containerize components using ECS or EKS, leveraging Application Load Balancer for service routing. Phase 5: Optimization \u2013 Implement Auto Scaling, CI/CD, and IaC to enhance agility and resilience.",
+        "tags": [
+            "Operational Excellence",
+            "MGN",
+            "Microservices"
+        ]
+    },
+    {
+        "id": "dr-027",
+        "type": "open-ended",
+        "question": "Explain the role of AWS Snowmobile in large-scale data center migrations and list two limitations compared with network-based transfers.",
+        "answer": "Snowmobile is a secure 100-PB semi-trailer that physically transports massive datasets to AWS, suitable for petabyte-scale migrations where network transfer would take months. Limitations include scheduling logistics that require upfront planning, and inability to provide incremental synchronization, meaning data changes after loading must be transferred separately.",
+        "tags": [
+            "High-Performing Architectures",
+            "Snowmobile",
+            "Migration"
+        ]
+    },
+    {
+        "id": "dr-028",
+        "type": "open-ended",
+        "question": "Describe how S3 Object Lock differs from AWS Backup Vault Lock and when to choose each.",
+        "answer": "S3 Object Lock applies WORM protection at the object level in an S3 bucket, supporting governance or compliance modes with retention periods and legal holds. It is ideal for immutable storage of logs or records. AWS Backup Vault Lock enforces immutability on recovery points across multiple AWS services stored in a backup vault, ensuring backups cannot be altered or deleted. Choose Object Lock for application data stored directly in S3, and Vault Lock for centralized backups from services like EBS, RDS, and DynamoDB.",
+        "tags": [
+            "Secure Architectures",
+            "S3",
+            "AWS Backup"
+        ]
+    },
+    {
+        "id": "dr-029",
+        "type": "open-ended",
+        "question": "List three ways to optimize data transfer costs when replicating backups across Regions.",
+        "answer": "- Use AWS Backup\u2019s incremental forever model to copy only changed blocks\n- Enable compression or deduplication where supported (for example, EFS replication)\n- Select cost-effective storage classes like Glacier Flexible Retrieval or Glacier Deep Archive for long-term retention",
+        "tags": [
+            "Cost-Optimized Architectures",
+            "Data Transfer",
+            "Replication"
+        ]
+    },
+    {
+        "id": "dr-030",
+        "type": "open-ended",
+        "question": "Explain how Recovery Time Objective influences architecture decisions in multi-Region deployments.",
+        "answer": "A low RTO pushes architects toward always-on resources across Regions, such as active-active or warm standby architectures, to minimize startup time during a disaster. It influences the selection of globally distributed databases, automated DNS failover, Infrastructure as Code for rapid scaling, and pre-provisioned capacity. Conversely, a higher RTO allows reliance on backups and on-demand provisioning, reducing operational cost at the expense of longer recovery time.",
+        "tags": [
+            "Resilient Architectures",
+            "RTO",
+            "Multi-Region"
+        ]
+    }
+]
