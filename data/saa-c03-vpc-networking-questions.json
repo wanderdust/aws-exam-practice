@@ -12,10 +12,8 @@
         "correctIndex": 1,
         "explanation": "The Internet Gateway allows outbound and inbound internet connectivity for resources that have a public IP. The NAT Gateway, deployed in a public subnet with an Elastic IP, enables instances in private subnets to initiate outbound connections while remaining unreachable from the internet. Options A and B lack one of the required components. Option C uses a NAT instance, which is a legacy choice and does not provide managed high availability.",
         "tags": [
-            "Resilient Architectures",
-            "VPC",
-            "Internet Gateway",
-            "NAT Gateway"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -31,8 +29,6 @@
         "correctIndex": 2,
         "explanation": "VPC Flow Logs can be enabled at the Elastic Network Interface (ENI) level with the REJECT filter to capture rejected traffic for specific instances. Enabling at the VPC level captures all traffic and may introduce unnecessary noise. Traffic Mirroring captures the full packet payload and is more complex. CloudTrail does not log packet-level network activity.",
         "tags": [
-            "Secure Architectures",
-            "VPC Flow Logs",
             "Security"
         ]
     },
@@ -49,9 +45,8 @@
         "correctIndex": 0,
         "explanation": "VPC Peering provides a one-to-one connection with low latency that is highly available and requires no additional hops or transitive routing. Transit Gateway introduces an additional hop and cost. VPN tunnels add latency and are not needed for same-Region traffic. PrivateLink is for accessing services over interface endpoints, not general VPC-to-VPC communication.",
         "tags": [
-            "Resilient Architectures",
-            "VPC Peering",
-            "Networking"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -67,9 +62,8 @@
         "correctIndex": 3,
         "explanation": "Gateway VPC endpoints for S3 are free and highly available within a Region. Deploying one endpoint per AZ removes a single point of failure. NAT Gateways and instances incur data processing charges and additional latency. Interface endpoints for S3 are more costly and unnecessary for a gateway-supported service.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "S3",
-            "VPC Endpoints"
+            "Cost Optimization",
+            "Storage"
         ]
     },
     {
@@ -85,9 +79,9 @@
         "correctIndex": 3,
         "explanation": "Systems Manager Session Manager uses the SSM Agent and an outbound connection, eliminating the need for inbound SSH access. It logs session activity in CloudTrail and CloudWatch. A Bastion Host still requires inbound SSH exposure. Client VPN allows network access but not direct session auditing. Step Functions is not designed for interactive administration.",
         "tags": [
-            "Secure Architectures",
-            "Systems Manager",
-            "Operational Excellence"
+            "DevOps & Ops",
+            "Monitoring & Logging",
+            "Security"
         ]
     },
     {
@@ -103,9 +97,8 @@
         "correctIndex": 0,
         "explanation": "A single Direct Connect dedicated connection can be paired with a VPN configured with BGP. If the DX connection fails, routes are withdrawn and traffic fails over to the VPN automatically. Two DX connections would be more resilient but exceed the consistent 500 Mbps requirement and cost more. Direct Connect Gateway alone lacks VPN failover. Client VPN is user based, not site to site.",
         "tags": [
-            "Resilient Architectures",
-            "Direct Connect",
-            "VPN"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -121,9 +114,8 @@
         "correctIndex": 2,
         "explanation": "172.16.0.0/16 is within the private 172.16.0.0/12 range, supports 65,536 addresses, and does not overlap the existing 10.0.0.0/8 range. 172.31.0.0/16 overlaps if the corporate network uses that range. 192.168.0.0/16 provides only 65,536 addresses but may be in use in local networks. 100.64.0.0/16 is carrier-grade NAT space, not standard private IP space.",
         "tags": [
-            "High-Performing Architectures",
-            "CIDR",
-            "VPC"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -139,9 +131,8 @@
         "correctIndex": 0,
         "explanation": "Security groups are stateful and operate at the instance level, allowing inbound HTTPS and automatically permitting return traffic while restricting outbound to HTTPS only. Network ACLs are stateless and require matching return rules. AWS Network Firewall is an advanced solution and may be overkill. Traffic Mirroring is for inspection, not enforcement.",
         "tags": [
-            "Secure Architectures",
-            "Security Groups",
-            "Networking"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -157,9 +148,8 @@
         "correctIndex": 0,
         "explanation": "First, add an IPv6 CIDR block to the VPC, then configure each subnet and instance with IPv6 addresses. An Egress-Only Internet Gateway is optional and only controls outbound traffic. There is no 'dual-stack' toggle; adding the IPv6 block accomplishes this. Elastic IPv6 addresses are not a feature in EC2.",
         "tags": [
-            "High-Performing Architectures",
-            "IPv6",
-            "VPC"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -175,9 +165,8 @@
         "correctIndex": 1,
         "explanation": "Gateway VPC endpoints for S3 eliminate data processing charges that occur when traffic passes through NAT Gateways. NAT instances incur similar or higher costs and add operational overhead. Interface endpoints have per-hour and data processing fees. Transfer Acceleration improves global upload speed but not cost for internal traffic.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "VPC Endpoints",
-            "S3"
+            "Cost Optimization",
+            "Storage"
         ]
     },
     {
@@ -193,9 +182,7 @@
         "correctIndex": 3,
         "explanation": "Equal-Cost Multi-Path (ECMP) routing on a Transit Gateway can load-balance traffic across multiple VPN tunnels, effectively aggregating bandwidth. Connect attachments are used for SD-WAN devices. There is no feature called VPN Accelerated endpoints. Segment Routing Policy is not applicable to AWS TGW.",
         "tags": [
-            "Resilient Architectures",
-            "Transit Gateway",
-            "VPN"
+            "Resilience & DR"
         ]
     },
     {
@@ -211,9 +198,7 @@
         "correctIndex": 3,
         "explanation": "/26 provides 64 total addresses. AWS reserves 5 addresses per subnet, leaving 59. However, two more addresses (network and broadcast) are already among the 5 reserved, so the correct usable count is 59. Wait, in AWS the reserved 5 include network, broadcast, default gateway, DNS multicast, and future use, leaving 59 usable addresses. Answer 59 is therefore correct.",
         "tags": [
-            "High-Performing Architectures",
-            "CIDR",
-            "Subnets"
+            "Performance"
         ]
     },
     {
@@ -229,9 +214,7 @@
         "correctIndex": 1,
         "explanation": "An Egress-Only Internet Gateway provides outbound-only internet access for IPv6 traffic from private subnets, blocking unsolicited inbound connections. NAT Gateways handle IPv4. Public subnets already have internet access via IGW. Hosting a public API requires inbound traffic, not provided by egress-only gateways.",
         "tags": [
-            "Resilient Architectures",
-            "Egress-Only IGW",
-            "IPv6"
+            "Resilience & DR"
         ]
     },
     {
@@ -247,9 +230,7 @@
         "correctIndex": 1,
         "explanation": "AWS Network Firewall integrated with Transit Gateway allows centralized inspection by routing traffic through a firewall VPC. It scales horizontally and requires limited route configuration. A VPC peering mesh is unmanageable. NAT Gateway logs do not provide deep packet inspection. Running appliances in every VPC increases cost and management.",
         "tags": [
-            "Secure Architectures",
-            "AWS Network Firewall",
-            "Transit Gateway"
+            "Security"
         ]
     },
     {
@@ -265,9 +246,8 @@
         "correctIndex": 2,
         "explanation": "Network ACLs are stateless and evaluate rules in ascending numerical order until a match is found, then apply allow or deny. They operate at the subnet level. The default NACL allows all traffic.",
         "tags": [
-            "Secure Architectures",
-            "NACLs",
-            "Networking"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -283,9 +263,8 @@
         "correctIndex": 2,
         "explanation": "Storing update files in S3 and accessing them through a Gateway VPC endpoint removes NAT Gateway traffic and associated charges while providing scalable throughput. NAT instances still incur processing charges. Scheduling alone does not reduce cost if the data volume remains. Adding another NAT Gateway doubles the processing cost.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "S3",
-            "VPC Endpoints"
+            "Cost Optimization",
+            "Storage"
         ]
     },
     {
@@ -301,9 +280,7 @@
         "correctIndex": 2,
         "explanation": "/23 provides 512*2 = 1024 total addresses. After AWS reserves 5, 1019 remain usable, satisfying the 900 address requirement with minimal overhead. /22 provides 4096 addresses, more than needed. /24 and /25 are too small.",
         "tags": [
-            "High-Performing Architectures",
-            "CIDR",
-            "Subnets"
+            "Performance"
         ]
     },
     {
@@ -319,9 +296,8 @@
         "correctIndex": 2,
         "explanation": "Geoproximity routing can route traffic based on geographic location and bias weight, effectively combining proximity and weight. Latency routing optimizes for latency only. Weighted spreads evenly but ignores latency. Multivalue Answer returns up to eight healthy records without latency awareness.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "DNS"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -337,9 +313,7 @@
         "correctIndex": 1,
         "explanation": "Intra-Region VPC Peering routes traffic over the AWS backbone and is billed at 0.01 USD per GB, which is half the cost of communication via public IP (0.02 USD per GB). Placement Groups do not affect AZ charges. Inter-Region peering is more expensive. Savings Plans reduce compute costs, not network transfer.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "VPC Peering",
-            "Networking Costs"
+            "Cost Optimization"
         ]
     },
     {
@@ -355,9 +329,8 @@
         "correctIndex": 2,
         "explanation": "VPC Traffic Mirroring duplicates network traffic from ENIs to target appliances for deep inspection. Flow Logs record metadata only. GuardDuty analyzes logs rather than packets. Network Firewall enforces rules but does not capture full packets.",
         "tags": [
-            "Secure Architectures",
-            "VPC Traffic Mirroring",
-            "Monitoring"
+            "Monitoring & Logging",
+            "Security"
         ]
     },
     {
@@ -373,9 +346,7 @@
         "correctIndex": 0,
         "explanation": "A cluster placement group places instances in the same rack with low-latency, high-bandwidth network connectivity. Partition groups spread instances across racks. Spread groups place each instance on separate racks for HA, reducing bandwidth. No placement group may scatter instances across hardware.",
         "tags": [
-            "High-Performing Architectures",
-            "Placement Groups",
-            "Compute"
+            "Performance"
         ]
     },
     {
@@ -391,9 +362,7 @@
         "correctIndex": 2,
         "explanation": "Interface endpoints create Elastic Network Interfaces in your subnet with private IP addresses, enabling private connectivity to supported AWS or partner services. They rely on DNS rather than route tables. Gateway endpoints, not interface endpoints, support DynamoDB and S3. Interface endpoints incur hourly and data processing charges.",
         "tags": [
-            "Secure Architectures",
-            "PrivateLink",
-            "VPC Endpoints"
+            "Security"
         ]
     },
     {
@@ -409,9 +378,8 @@
         "correctIndex": 0,
         "explanation": "High Resiliency uses two dedicated connections at separate Direct Connect locations for one data center, providing redundancy if one location fails. Maximum Resiliency requires two data centers. Dev/Test uses a single connection. Backup VPN provides lower throughput.",
         "tags": [
-            "Resilient Architectures",
-            "Direct Connect",
-            "Networking"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -427,9 +395,8 @@
         "correctIndex": 2,
         "explanation": "Source/destination checks prevent an instance from forwarding traffic that is not addressed to or from itself. Disabling the check allows a NAT instance to forward traffic on behalf of private instances. The other options are unrelated.",
         "tags": [
-            "High-Performing Architectures",
-            "NAT Instance",
-            "Networking"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -438,9 +405,7 @@
         "question": "Explain the differences between security groups and network ACLs, including their statefulness, scope, and ideal use cases.",
         "answer": "Security groups are stateful, operating at the instance (ENI) level. If a request is allowed in, the response is automatically allowed out and vice versa. They evaluate all rules permissively and are primarily used to control inbound and outbound traffic for individual resources such as EC2 instances or ENIs.\nNetwork ACLs are stateless, operating at the subnet level. Both inbound and outbound rules must be explicitly defined, and return traffic is not automatically allowed. Rules are evaluated in numerical order from lowest to highest until a match. Network ACLs are ideal for coarse-grained control such as blocking specific IP ranges across an entire subnet or setting subnet-wide allow/deny lists.",
         "tags": [
-            "Secure Architectures",
-            "Security Groups",
-            "NACLs"
+            "Security"
         ]
     },
     {
@@ -449,9 +414,8 @@
         "question": "Describe how a Transit Gateway simplifies VPC connectivity compared to full-mesh VPC peering and explain its cost considerations.",
         "answer": "Transit Gateway acts as a central hub that connects multiple VPCs, on-premises networks, and VPNs through attachments. Instead of configuring and managing N-to-N VPC peering connections, each VPC attaches once to the TGW, enabling transitive routing by default. This reduces routing table complexity and scales to thousands of attachments. Cost is based on attachment hourly charges and data processing per GB, which can be higher than intra-Region VPC peering but offsets operational overhead. Additional savings can be achieved by sharing the TGW across accounts with AWS RAM.",
         "tags": [
-            "Resilient Architectures",
-            "Transit Gateway",
-            "Cost Optimization"
+            "Cost Optimization",
+            "Resilience & DR"
         ]
     },
     {
@@ -460,9 +424,8 @@
         "question": "Outline the key steps to set up a Site-to-Site VPN connection between an on-premises data center and an AWS VPC.",
         "answer": "1. Create a Virtual Private Gateway (VGW) and attach it to the target VPC.\n2. Create a Customer Gateway (CGW) resource, specifying the on-premises router's public IP and BGP ASN.\n3. Create a Site-to-Site VPN connection that links the VGW and CGW. AWS automatically provisions two IPSec tunnels for redundancy.\n4. Download the VPN configuration and apply it to the on-premises router.\n5. Update the VPC route table with propagated routes or add static routes pointing to the VGW.\n6. Verify tunnel status and configure health checks or failover if necessary.",
         "tags": [
-            "Resilient Architectures",
-            "VPN",
-            "Networking"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -471,9 +434,8 @@
         "question": "Discuss the cost differences between using a NAT Gateway and a Gateway VPC endpoint for accessing Amazon S3 from private subnets.",
         "answer": "A NAT Gateway charges per hour and per GB processed for all traffic that passes through it. When instances in private subnets access S3 via NAT, every byte incurs the data processing fee plus cross-AZ data transfer if the NAT Gateway is in a different AZ.\nA Gateway VPC endpoint for S3 is free of hourly charges and data processing. Traffic stays on the AWS backbone, and there is no per-GB fee. Therefore, for S3 access, a Gateway endpoint is significantly more cost-effective and eliminates the NAT as a performance bottleneck.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "S3",
-            "VPC Endpoints"
+            "Cost Optimization",
+            "Storage"
         ]
     },
     {
@@ -482,9 +444,7 @@
         "question": "Explain how AWS Network Firewall integrates with a Transit Gateway to provide centralized egress filtering for multiple VPCs.",
         "answer": "Each spoke VPC attaches to the Transit Gateway. A dedicated inspection VPC contains the Network Firewall endpoints and also attaches to the TGW. Route tables on the TGW are configured so that all outbound traffic from spoke VPCs is routed through the firewall VPC attachment before reaching the internet gateway. The firewall evaluates traffic against stateful and stateless rules and can allow, block, or alert. Centralizing the firewall reduces operational overhead and maintains consistent security policies across many VPCs.",
         "tags": [
-            "Secure Architectures",
-            "AWS Network Firewall",
-            "Transit Gateway"
+            "Security"
         ]
     },
     {
@@ -493,9 +453,8 @@
         "question": "Provide best practices for designing IPv4 CIDR allocations across multiple VPCs to avoid address exhaustion and overlap.",
         "answer": "1. Use a hierarchical allocation strategy where the corporate network reserves large CIDR blocks (for example, 10.0.0.0/8) and subdivides them by environment (prod, dev, test) and Region.\n2. Assign non-overlapping VPC CIDRs, typically /16, giving each VPC 65,536 addresses while allowing future subnet growth.\n3. Track allocations centrally, using an IP address management (IPAM) tool or AWS IPAM to automate assignments and prevent overlap.\n4. Plan for growth by reserving unused CIDRs for future VPCs or expansion.\n5. Avoid using the entire private range to leave room for on-premises networks and other clouds.\n6. For multi-Region architectures, consider using different Class A private ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to prevent accidental overlap and simplify routing.",
         "tags": [
-            "High-Performing Architectures",
-            "CIDR",
-            "VPC"
+            "Performance",
+            "VPC & Networking"
         ]
     }
 ]

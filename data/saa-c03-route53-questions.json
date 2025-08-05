@@ -12,9 +12,8 @@
         "correctIndex": 2,
         "explanation": "Weighted routing lets you assign precise percentages to multiple records. By setting one record to weight 10 and the other to weight 90, Route 53 returns the desired proportion of DNS responses. Latency-based routing chooses endpoints by network latency, simple routing would randomly distribute traffic, and failover routing is intended for active-passive setups, not traffic splitting.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "High Availability"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -30,9 +29,8 @@
         "correctIndex": 2,
         "explanation": "Geolocation routing lets you direct traffic based on the requester\u2019s country code. A record for Germany can direct users to the German-language site, while a default record handles all other locations. GeoProximity works on region coordinates and bias, latency-based chooses the lowest RTT, and multi-value merely returns several healthy records.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "Localization"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -48,9 +46,9 @@
         "correctIndex": 1,
         "explanation": "Root (apex) domains cannot use CNAME records per DNS RFCs. Route 53 provides an Alias A record that points directly to AWS resources, including S3 website endpoints, and can be used at the zone apex. AAAA records would only cover IPv6, and weighted records require specific IPs, which S3 does not expose.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "S3"
+            "Resilience & DR",
+            "Storage",
+            "VPC & Networking"
         ]
     },
     {
@@ -66,9 +64,8 @@
         "correctIndex": 1,
         "explanation": "Failover routing designates a primary (active) and secondary (standby) record. A health check on the primary ALB will trigger Route 53 to return the standby record when the primary becomes unhealthy. Latency-based routing cannot guarantee active-passive behavior, weighted 100/0 is functionally identical but less explicit, and simple routing gives no health-aware failover.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "Disaster Recovery"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -84,9 +81,8 @@
         "correctIndex": 2,
         "explanation": "Maintaining both a public and a private hosted zone with identical domain names allows different record sets for internal and external resolution. Private hosted zones are visible only to associated VPCs, while the public hosted zone serves internet clients. Resolver endpoints provide hybrid DNS, but they do not create split horizons on their own.",
         "tags": [
-            "Secure Architectures",
-            "Route 53",
-            "VPC"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -102,9 +98,8 @@
         "correctIndex": 3,
         "explanation": "Setting a low TTL (for example, 60 seconds) ensures resolvers expire cached records quickly, allowing near-real-time blue-green cut-over. The downside is increased DNS traffic to Route 53, which may raise costs. TTLs under one second are not supported, and Route 53 does not auto-set TTLs except for Alias records to AWS resources.",
         "tags": [
-            "Operational Excellence",
-            "Route 53",
-            "Deployment"
+            "DevOps & Ops",
+            "VPC & Networking"
         ]
     },
     {
@@ -120,9 +115,8 @@
         "correctIndex": 0,
         "explanation": "Multi-value answer routing returns multiple healthy records (maximum 8) so the client can choose among them, providing rudimentary client-side load balancing and improved availability. Simple routing can hold several values but returns them without health checks. Weighted and GeoProximity return a single record per query.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "Load Balancing"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -138,9 +132,8 @@
         "correctIndex": 1,
         "explanation": "Domain Name System Security Extensions (DNSSEC) provide origin authentication and data integrity for DNS responses. Route 53 supports DNSSEC signing of public hosted zones. Shield Advanced protects against DDoS, KMS keys encrypt data but are unrelated to DNS validation, and Resolver logging only records queries.",
         "tags": [
-            "Secure Architectures",
-            "Route 53",
-            "DNSSEC"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -156,9 +149,8 @@
         "correctIndex": 0,
         "explanation": "Route 53 Resolver endpoints let you establish inbound (on-prem to AWS) and outbound (AWS to on-prem) DNS forwarding. Conditional forwarding rules route specific domains correctly without extra servers. Private hosted zones handle AWS names only, Direct Connect public VIF does not solve DNS, and BIND servers add operational complexity.",
         "tags": [
-            "Secure Architectures",
-            "Route 53",
-            "Hybrid Networking"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -174,9 +166,8 @@
         "correctIndex": 0,
         "explanation": "You can delegate DNS management to Route 53 by creating a public hosted zone and replacing the registrar's NS records with the four Route 53 name servers. A formal domain transfer is optional. Alias records at the registrar are not standard DNS and private hosted zones do not serve public internet users.",
         "tags": [
-            "Operational Excellence",
-            "Route 53",
-            "Domain Registration"
+            "DevOps & Ops",
+            "VPC & Networking"
         ]
     },
     {
@@ -192,9 +183,8 @@
         "correctIndex": 1,
         "explanation": "When creating or editing a Route 53 health check, you can enable string matching and define the exact phrase that must appear in the response body. TCP checks ignore response bodies, CloudWatch alarms require separate metrics, and calculated health checks aggregate other checks rather than evaluate strings.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "Health Checks"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -210,9 +200,8 @@
         "correctIndex": 1,
         "explanation": "Latency-based routing records require you to specify the AWS Region in which the resource resides so Route 53 can build its latency map. Weights apply to weighted routing, bias applies to GeoProximity, and Alias is optional depending on the target resource type.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "Latency"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -228,9 +217,8 @@
         "correctIndex": 3,
         "explanation": "When you create an Alias record that targets an AWS resource such as an ELB, CloudFront distribution, or S3 website, Route 53 always returns the target service\u2019s own TTL, ignoring any TTL you specify for the Alias record. This behavior ensures consistency with the managed service.",
         "tags": [
-            "Operational Excellence",
-            "Route 53",
-            "Caching"
+            "DevOps & Ops",
+            "VPC & Networking"
         ]
     },
     {
@@ -246,9 +234,8 @@
         "correctIndex": 3,
         "explanation": "GeoProximity routing lets you apply a bias to increase or decrease traffic flow to specific resources. A positive bias (up to +99) for the us-west-2 resource draws proportionally more traffic compared to its geodesic coverage area.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "Traffic Shaping"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -264,9 +251,8 @@
         "correctIndex": 3,
         "explanation": "If all weighted records have a weight of 0, Route 53 returns all records equally because no record has a higher relative weight. This allows manual exclusion (0 weight) without disabling the record.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "Traffic Control"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -282,9 +268,8 @@
         "correctIndex": 3,
         "explanation": "IP-based routing lets you specify CIDR ranges that map to distinct endpoints, ensuring that users from given IP ranges (such as an ISP) are directed to the desired resource. Standard multi-value and latency policies do not evaluate client IP addresses.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Route 53",
-            "Networking"
+            "Cost Optimization",
+            "VPC & Networking"
         ]
     },
     {
@@ -300,9 +285,8 @@
         "correctIndex": 0,
         "explanation": "Calculated health checks are virtual; no external health checkers probe the endpoint. Instead, Route 53 derives the calculated status from the states of the referenced child health checks.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "Health Checks"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -318,9 +302,8 @@
         "correctIndex": 1,
         "explanation": "As of the exam blueprint, Route 53 charges USD 0.50 per hosted zone per month for public or private hosted zones. DNS queries and optional features such as health checks incur additional charges.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Route 53",
-            "Pricing"
+            "Cost Optimization",
+            "VPC & Networking"
         ]
     },
     {
@@ -336,9 +319,8 @@
         "correctIndex": 2,
         "explanation": "CNAME records alias one hostname to another but violate DNS standards if created at the root of a domain (zone apex). A and AAAA map hostnames to IP addresses, while NS records delegate zones.",
         "tags": [
-            "Resilient Architectures",
-            "DNS",
-            "Route 53"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -354,9 +336,8 @@
         "correctIndex": 1,
         "explanation": "Route 53 considers an endpoint healthy when more than 18 percent of its health checkers report it healthy. This threshold balances resilience against outlier failures in routing traffic.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "Health Checks"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -372,9 +353,9 @@
         "correctIndex": 0,
         "explanation": "Resolver query logging records DNS queries that come from resources within your VPCs and can deliver those logs to CloudWatch Logs, an S3 bucket, or Kinesis Data Firehose. It must be explicitly configured, and encryption is optional via the chosen destination.",
         "tags": [
-            "Secure Architectures",
-            "Route 53",
-            "Monitoring"
+            "Monitoring & Logging",
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -390,9 +371,8 @@
         "correctIndex": 0,
         "explanation": "Private hosted zones can be shared across accounts by using AWS RAM. The owning account shares the zone, and the target accounts accept the resource share. DNSSEC is unrelated to association, overlapping CIDRs are not required, and Resolver endpoints are unnecessary for VPC-to-VPC associations.",
         "tags": [
-            "Operational Excellence",
-            "Route 53",
-            "Multi-Account"
+            "DevOps & Ops",
+            "VPC & Networking"
         ]
     },
     {
@@ -409,9 +389,8 @@
         "correctIndex": 4,
         "explanation": "Alias records can target certain AWS services such as CloudFront distributions, Elastic Load Balancers, S3 website endpoints, and API Gateway custom domain names. They cannot target RDS instance endpoints or EC2 instance DNS names directly.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "Alias"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -427,9 +406,8 @@
         "correctIndex": 1,
         "explanation": "Geolocation routing allows you to direct DNS queries from a specific state within the United States to a particular record. This satisfies the requirement to limit canary exposure to users in a single state, while other users continue to receive the normal endpoint.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "Deployment"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -438,9 +416,9 @@
         "question": "Explain how Route 53 health checks can integrate with Amazon CloudWatch alarms to enable DNS failover for private resources that are not reachable from the public internet.",
         "answer": "For private endpoints, public Route 53 health checkers cannot probe the resource directly. Instead, you create a custom CloudWatch metric that represents the private resource\u2019s health, configure a CloudWatch alarm to change state when that metric crosses a threshold, and then create a Route 53 health check of type \u2018CloudWatch alarm\u2019. Route 53 updates the health check status based on the alarm\u2019s state. You can attach this health check to DNS records within a failover or multi-value routing policy, enabling automatic DNS failover even though the endpoint itself is private.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "CloudWatch"
+            "Monitoring & Logging",
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -449,9 +427,8 @@
         "question": "Describe the sequence of DNS resolution steps that occur when a user types a URL into a browser, starting with the browser cache and ending with receiving an A record from Route 53.",
         "answer": "1) The browser checks its internal DNS cache for an unexpired record. 2) If not found, the operating system resolver checks the local OS cache. 3) The request is sent to the configured recursive resolver (often the user\u2019s ISP or corporate DNS). 4) The resolver checks its own cache. 5) If still unresolved, it queries a root name server, which replies with the TLD name servers. 6) The resolver queries the TLD server for the authoritative name servers of the domain. 7) The resolver then queries Route 53\u2019s authoritative name servers (listed in the domain\u2019s NS records). 8) Route 53 returns the requested record set, for example an A record with an IP address. 9) The recursive resolver caches the response for the specified TTL and passes it back to the OS resolver and browser, which can now initiate an HTTP(S) connection to the resolved IP.",
         "tags": [
-            "Resilient Architectures",
-            "DNS",
-            "Route 53"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -460,9 +437,8 @@
         "question": "Compare geolocation and latency-based routing policies in Route 53. When would you choose one over the other?",
         "answer": "Geolocation routing directs traffic based on the source location of the DNS query, determined by the requester\u2019s IP address. It is ideal for content localization, regulatory compliance, or controlled feature rollouts where user location dictates the endpoint. Latency-based routing uses measured round-trip latency between AWS edge locations and your resources to send users to the Region offering the lowest network latency. It is best for maximizing performance when you have identical stacks in multiple Regions and primary selection criteria is speed rather than user locale. Choose geolocation when location specificity outweighs latency; choose latency-based when performance is the priority and all regions provide the same content.",
         "tags": [
-            "High-Performing Architectures",
-            "Route 53",
-            "Routing Policies"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -471,9 +447,8 @@
         "question": "Outline the steps and AWS services involved in creating a private hosted zone that is resolvable from two VPCs in different AWS Regions belonging to different AWS accounts.",
         "answer": "1) In the owner account, create a private hosted zone for the desired domain. 2) Associate the hosted zone with the first VPC in Region A. 3) Share the private hosted zone using AWS Resource Access Manager (RAM), selecting \u2018Share with AWS accounts\u2019 and adding the target account ID. 4) In the target account, accept the shared resource. 5) Associate the hosted zone with the second VPC in Region B. 6) Ensure both VPCs have \u2018enableDnsHostnames\u2019 and \u2018enableDnsSupport\u2019 set to true. 7) Test resolution from resources in both VPCs. No Resolver endpoints are necessary because VPC-to-VPC associations handle routing.",
         "tags": [
-            "Secure Architectures",
-            "Route 53",
-            "Multi-Account"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -482,9 +457,8 @@
         "question": "Discuss three cost-optimization strategies when using Amazon Route 53 in large-scale multi-tenant SaaS platforms.",
         "answer": "1) Consolidate domains and subdomains into shared hosted zones where feasible to reduce the USD 0.50 per hosted zone monthly fee, using subdomain records rather than separate zones. 2) Use higher TTL values (for example 300\u2013900 seconds) for stable records to reduce query volume and associated costs, while reserving low TTLs for dynamic or deployment-sensitive records. 3) Prefer Alias records to AWS resources like CloudFront and ALB to avoid per-query costs for those lookups and leverage Route 53\u2019s free internal alias resolution. Additionally, monitor query logs to identify noisy tenants and optimize or bill back excess traffic.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Route 53",
-            "Pricing"
+            "Cost Optimization",
+            "VPC & Networking"
         ]
     },
     {
@@ -493,9 +467,8 @@
         "question": "Explain the operational steps to set up Route 53 DNS failover from an active application in Region A to a warm standby in Region B, including health checks and record configuration.",
         "answer": "1) Deploy the primary application stack in Region A behind an ELB and the standby stack in Region B. 2) Create a public health check that probes the primary ELB endpoint (for example, HTTPS /health). 3) In Route 53, create two records with identical names: a primary Alias record pointing to the Region A ELB and a secondary Alias record pointing to the Region B ELB. 4) Set the routing policy to \u2018Failover\u2019, designating the Region A record as PRIMARY and associating the health check. 5) Leave the Region B record without a health check and mark it as SECONDARY. 6) Set an appropriate TTL (for example 60 seconds) for rapid failover. 7) Optionally enable health-check alarm notifications in CloudWatch. When the health check fails, Route 53 automatically starts returning the standby record, directing traffic to Region B.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "Disaster Recovery"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     }
 ]

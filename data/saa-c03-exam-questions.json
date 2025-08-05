@@ -12,11 +12,10 @@
         "correctIndex": 0,
         "explanation": "An Application Load Balancer (ALB) distributes HTTP/HTTPS traffic across multiple AZs. By configuring a single Auto Scaling group that spans multiple AZs, the application gains high availability and automatic scaling with minimal operational effort. The other options either lack multi-AZ redundancy, do not provide layer-7 load balancing, or complicate the architecture unnecessarily.",
         "tags": [
-            "exam",
-            "Resilient Architectures",
-            "EC2",
-            "Auto Scaling",
-            "ELB"
+            "Compute",
+            "Resilience & DR",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -32,10 +31,9 @@
         "correctIndex": 0,
         "explanation": "S3 Standard-IA is designed for data that is accessed infrequently but requires millisecond retrieval. It offers lower storage cost than S3 Standard with a retrieval fee, meeting the requirement for immediate access. S3 Glacier classes require minutes or hours for retrieval, and One Zone-IA does not provide multi-AZ resilience.",
         "tags": [
-            "exam",
-            "Cost-Optimized Architectures",
-            "S3",
-            "Storage"
+            "Cost Optimization",
+            "Storage",
+            "exam"
         ]
     },
     {
@@ -51,11 +49,10 @@
         "correctIndex": 2,
         "explanation": "A serverless architecture using Kinesis Data Streams for ingestion and Lambda for processing minimizes operational management. Writing processed data to S3 allows the use of Athena for ad hoc queries. This solution scales automatically and avoids server management. The other options involve managing EC2 instances or inappropriate services for clickstream analytics.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "Kinesis",
-            "Lambda",
-            "Serverless"
+            "Analytics",
+            "Performance",
+            "Serverless",
+            "exam"
         ]
     },
     {
@@ -71,11 +68,9 @@
         "correctIndex": 2,
         "explanation": "Enabling SSE-S3 encrypts objects at rest with AWS-managed keys automatically and requires no additional key management from the customer, providing the simplest solution. SSE-KMS requires key management and additional costs, SSE-C requires providing keys with each request, and client-side encryption increases client complexity.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "S3",
-            "Encryption",
-            "KMS"
+            "Security",
+            "Storage",
+            "exam"
         ]
     },
     {
@@ -91,11 +86,10 @@
         "correctIndex": 0,
         "explanation": "Transitioning backups to S3 Glacier Deep Archive after 30 days offers the lowest storage cost for long-term retention, while expiring them after 7 years meets compliance. The other options have higher storage costs or do not meet the retention requirement.",
         "tags": [
-            "exam",
-            "Cost-Optimized Architectures",
-            "S3",
-            "Lifecycle",
-            "Disaster Recovery"
+            "Cost Optimization",
+            "Resilience & DR",
+            "Storage",
+            "exam"
         ]
     },
     {
@@ -111,10 +105,9 @@
         "correctIndex": 0,
         "explanation": "AWS Direct Connect provides a dedicated network connection with consistent, low-latency performance compared to VPN over the public internet. A private virtual interface (VIF) enables access to VPC resources with improved stability. VPN solutions traverse the internet and have variable latency.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "Direct Connect",
-            "Networking"
+            "Performance",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -130,10 +123,9 @@
         "correctIndex": 3,
         "explanation": "Attaching an IAM role to the EC2 instance profile provides temporary credentials that are rotated automatically, eliminating the need to manage static keys and adhering to the principle of least privilege. The other options involve static credentials and higher security risk.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "EC2",
-            "IAM"
+            "Compute",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -149,10 +141,9 @@
         "correctIndex": 2,
         "explanation": "Network ACLs operate at the subnet level and can allow or deny traffic between subnets. Security groups operate at the instance level, and route tables dictate network flow but not security. AWS WAF is for web-layer filtering, not VPC internal traffic.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "VPC",
-            "Network ACLs"
+            "Security",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -168,11 +159,11 @@
         "correctIndex": 0,
         "explanation": "Hosting the static site on S3 and fronting it with CloudFront provides a globally distributed, highly available, and cost-effective solution. EC2 or Beanstalk introduces unnecessary compute cost and management overhead. Lightsail is not as globally distributed as CloudFront.",
         "tags": [
-            "exam",
-            "Cost-Optimized Architectures",
-            "S3",
-            "CloudFront",
-            "Static Website"
+            "Cost Optimization",
+            "Media & CDN",
+            "Storage",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -188,11 +179,11 @@
         "correctIndex": 0,
         "explanation": "DynamoDB auto scaling adjusts provisioned write capacity in response to traffic, preventing throttling during message spikes without code changes. Manually increasing WCUs may be cost-inefficient, adjusting visibility timeout only delays processing, and adding Kinesis introduces complexity.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "DynamoDB",
-            "Auto Scaling",
-            "SQS"
+            "Compute",
+            "Database",
+            "Integration & Messaging",
+            "Performance",
+            "exam"
         ]
     },
     {
@@ -208,10 +199,8 @@
         "correctIndex": 0,
         "explanation": "Rotating IAM access keys limits their lifetime, reducing the blast radius if they are compromised and meeting rotation requirements. Password policy applies to console passwords, user groups do not enforce rotation, and service-linked roles are managed by AWS services.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "IAM",
-            "Security"
+            "Security",
+            "exam"
         ]
     },
     {
@@ -227,11 +216,9 @@
         "correctIndex": 0,
         "explanation": "ElastiCache for Redis with Multi-AZ provides in-memory caching with automatic failover, enhancing performance and availability. Memcached lacks multi-AZ failover, DAX is specific to DynamoDB, and CloudFront caches at edge locations but not within a VPC for application tier caching.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "ElastiCache",
-            "Redis",
-            "Caching"
+            "Database",
+            "Performance",
+            "exam"
         ]
     },
     {
@@ -247,11 +234,10 @@
         "correctIndex": 1,
         "explanation": "An AWS Config rule can continuously evaluate whether RDS instances have encryption enabled and notify or remediate noncompliant resources across accounts using AWS Config Aggregator.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "RDS",
-            "Config",
-            "Encryption"
+            "Database",
+            "Monitoring & Logging",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -267,11 +253,9 @@
         "correctIndex": 0,
         "explanation": "Using API Gateway with Lambda provides a serverless, fully managed solution that scales automatically, requires no server administration, and is highly available by default.",
         "tags": [
-            "exam",
-            "Resilient Architectures",
+            "Resilience & DR",
             "Serverless",
-            "API Gateway",
-            "Lambda"
+            "exam"
         ]
     },
     {
@@ -287,10 +271,9 @@
         "correctIndex": 3,
         "explanation": "Amazon Redshift RA3 nodes decouple compute and storage using Redshift Managed Storage (RMS), enabling independent scaling of workloads at petabyte scale, while remaining fully managed.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "Redshift",
-            "Analytics"
+            "Analytics",
+            "Performance",
+            "exam"
         ]
     },
     {
@@ -306,11 +289,10 @@
         "correctIndex": 2,
         "explanation": "Systems Manager Parameter Store provides secure, hierarchical storage for configuration and secrets, integrates with IAM, and requires minimal code change. Dynamic references are not supported in Lambda environment variables; Secrets Manager is optimized for secrets, not all configs. S3 storage and embedded parameters require additional management.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "Systems Manager",
-            "Lambda",
-            "Configuration"
+            "Monitoring & Logging",
+            "Security",
+            "Serverless",
+            "exam"
         ]
     },
     {
@@ -326,11 +308,9 @@
         "correctIndex": 3,
         "explanation": "DAX is an in-memory cache that accelerates DynamoDB read performance with API compatibility, requiring no code changes beyond SDK configuration. Streams, global tables, and backups do not improve query performance directly.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "DynamoDB",
-            "DAX",
-            "Caching"
+            "Database",
+            "Performance",
+            "exam"
         ]
     },
     {
@@ -346,10 +326,8 @@
         "correctIndex": 0,
         "explanation": "Multi-site active-active across Regions offers the lowest RTO and RPO by running full-capacity workloads in multiple Regions simultaneously. Warm standby and pilot light have longer recovery times, and backup/restore is the slowest.",
         "tags": [
-            "exam",
-            "Resilient Architectures",
-            "Disaster Recovery",
-            "High Availability"
+            "Resilience & DR",
+            "exam"
         ]
     },
     {
@@ -365,11 +343,9 @@
         "correctIndex": 3,
         "explanation": "A NAT gateway placed in a public subnet enables outbound internet access for resources in private subnets without allowing unsolicited inbound traffic. An internet gateway attaches to the VPC but requires public IPs. Peering and VPN do not provide internet egress.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "VPC",
-            "NAT Gateway",
-            "Networking"
+            "Security",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -385,10 +361,10 @@
         "correctIndex": 3,
         "explanation": "An organization trail created in the management account automatically enables CloudTrail logging for all member accounts and Regions. SCPs cannot enforce service configuration, and per-account solutions scale poorly.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "CloudTrail",
-            "Organizations"
+            "Governance & Compliance",
+            "Monitoring & Logging",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -404,11 +380,9 @@
         "correctIndex": 0,
         "explanation": "AWS Cloud Map integrates with ECS to provide service discovery by registering task endpoints and automatically updating DNS records, enabling microservices to discover each other easily.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "ECS",
-            "Fargate",
-            "Service Discovery"
+            "Containers",
+            "Performance",
+            "exam"
         ]
     },
     {
@@ -424,10 +398,9 @@
         "correctIndex": 1,
         "explanation": "A Multi-AZ deployment synchronously replicates data to a standby instance in a different AZ and automatically fails over during maintenance or AZ failure, minimizing downtime. Automated backups do not provide standby; read replicas are asynchronous and used for read scaling, and Multi-Region replicas are for cross-Region DR with manual promotion.",
         "tags": [
-            "exam",
-            "Resilient Architectures",
-            "RDS",
-            "High Availability"
+            "Database",
+            "Resilience & DR",
+            "exam"
         ]
     },
     {
@@ -443,11 +416,11 @@
         "correctIndex": 3,
         "explanation": "Storing objects in S3 and distributing them via CloudFront edge locations delivers durability, scalability, and low-latency access worldwide at low cost. EFS is not optimal for large media distribution, and instance store is ephemeral.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "S3",
-            "CloudFront",
-            "Media"
+            "Media & CDN",
+            "Performance",
+            "Storage",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -456,10 +429,9 @@
         "question": "Explain the differences between security groups and network ACLs in a VPC and describe appropriate use cases for each.",
         "answer": "Security groups are stateful, instance-level virtual firewalls that allow inbound and outbound rules. Return traffic is automatically allowed. They are ideal for controlling access to individual EC2 instances or ENIs. Network ACLs are stateless, subnet-level filters that evaluate both inbound and outbound rules. They are processed in order and require explicit return-traffic rules. Use NACLs for coarse-grained subnet protection and to block specific IP ranges before traffic reaches instances.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "VPC",
-            "Security"
+            "Security",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -475,10 +447,9 @@
         "correctIndex": 2,
         "explanation": "Aurora MySQL is drop-in compatible with MySQL, automatically scales storage in 10 GB increments up to 128 TB without downtime, and offers high performance and availability.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "Aurora",
-            "Database"
+            "Database",
+            "Performance",
+            "exam"
         ]
     },
     {
@@ -494,11 +465,11 @@
         "correctIndex": 1,
         "explanation": "An IAM policy can include a Condition element on ec2:InstanceType to deny all RunInstances actions except the specified types. SCPs apply to accounts, not individual users.",
         "tags": [
-            "exam",
-            "Cost-Optimized Architectures",
-            "EC2",
-            "IAM",
-            "Governance"
+            "Compute",
+            "Cost Optimization",
+            "Governance & Compliance",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -514,11 +485,10 @@
         "correctIndex": 3,
         "explanation": "ElastiCache Redis offers sub-millisecond latency and can be deployed in cluster mode across AZs, making it ideal for session management in serverless apps.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "ElastiCache",
-            "Redis",
-            "Serverless"
+            "Database",
+            "Performance",
+            "Serverless",
+            "exam"
         ]
     },
     {
@@ -534,11 +504,10 @@
         "correctIndex": 2,
         "explanation": "Firewall Manager integrates with AWS Organizations to centrally configure and manage AWS WAF, Shield Advanced, and VPC Network Firewall rules across accounts.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "Firewall Manager",
-            "Networking",
-            "Organizations"
+            "Governance & Compliance",
+            "Security",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -547,10 +516,10 @@
         "question": "Describe how Amazon S3 Transfer Acceleration works and when it should be used.",
         "answer": "S3 Transfer Acceleration speeds up uploads and downloads by routing traffic through AWS edge locations using optimized network paths and TCP window sizing. Data enters the AWS backbone at the closest edge location and traverses private links to the S3 bucket\u2019s Region, reducing latency for geographically dispersed clients. Use it for large objects or users far from the target Region when performance gains offset the additional cost.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "S3",
-            "Networking"
+            "Performance",
+            "Storage",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -566,11 +535,9 @@
         "correctIndex": 1,
         "explanation": "Enabling SSL/TLS on the RDS instance and requiring SSL connections allows clients to negotiate encrypted sessions without additional code changes, handled by the database engine.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "RDS",
-            "Encryption",
-            "TLS"
+            "Database",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -586,11 +553,9 @@
         "correctIndex": 1,
         "explanation": "Spot Instances offer up to 90% discount over On-Demand pricing and are ideal for interruptible, flexible batch workloads.",
         "tags": [
-            "exam",
-            "Cost-Optimized Architectures",
-            "EC2",
-            "Spot",
-            "Batch"
+            "Compute",
+            "Cost Optimization",
+            "exam"
         ]
     },
     {
@@ -606,10 +571,9 @@
         "correctIndex": 1,
         "explanation": "CloudTrail Lake captures, stores, and allows querying of CloudTrail events in near real time for centralized auditing across accounts.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "CloudTrail",
-            "Monitoring"
+            "Monitoring & Logging",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -618,10 +582,9 @@
         "question": "What are the benefits of using Amazon Route 53 alias records over CNAME records at the zone apex?",
         "answer": "Alias records allow mapping the zone apex to AWS resources such as CloudFront distributions, ELB load balancers, and S3 static websites without requiring an additional DNS lookup. They are free (no query charges) and support both IPv4 and IPv6. Unlike CNAMEs, alias records can coexist with other record types at the apex and comply with DNS RFCs.",
         "tags": [
-            "exam",
-            "Resilient Architectures",
-            "Route 53",
-            "DNS"
+            "Resilience & DR",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -637,10 +600,9 @@
         "correctIndex": 3,
         "explanation": "KMS is a managed service for creating and controlling encryption keys, integrates with AWS CloudTrail for audit logs, and is HIPAA eligible.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "KMS",
-            "Compliance"
+            "Governance & Compliance",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -656,10 +618,9 @@
         "correctIndex": 0,
         "explanation": "RA3 separates compute and storage and supports pause/resume, allowing the cluster to be offline outside ETL windows and billing primarily for storage.",
         "tags": [
-            "exam",
-            "Cost-Optimized Architectures",
-            "Redshift",
-            "Analytics"
+            "Analytics",
+            "Cost Optimization",
+            "exam"
         ]
     },
     {
@@ -675,11 +636,10 @@
         "correctIndex": 0,
         "explanation": "Presigned URLs allow time-limited, permission-scoped access to S3 for specific objects without revealing credentials. Cognito unauthenticated roles still expose AWS credentials in the app, and proxying through Lambda/API increases cost and latency.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "S3",
-            "Presigned URL",
-            "Mobile"
+            "Mobile",
+            "Security",
+            "Storage",
+            "exam"
         ]
     },
     {
@@ -688,10 +648,9 @@
         "question": "How does AWS Global Accelerator improve application availability and performance?",
         "answer": "Global Accelerator uses the AWS global network to route user traffic to optimal endpoints based on health, geography, and routing policies. It provides two static Anycast IP addresses, performs continuous health checks, and automatically fails over to healthy endpoints, reducing latency and improving availability during regional outages.",
         "tags": [
-            "exam",
-            "Resilient Architectures",
-            "Global Accelerator",
-            "Networking"
+            "Resilience & DR",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -707,10 +666,9 @@
         "correctIndex": 3,
         "explanation": "Patch Manager, a capability of Systems Manager, automates patching across instances, supports compliance reports, and works across Regions and accounts via Quick Setup.",
         "tags": [
-            "exam",
-            "Operational Excellence",
-            "Systems Manager",
-            "Patching"
+            "DevOps & Ops",
+            "Monitoring & Logging",
+            "exam"
         ]
     },
     {
@@ -726,10 +684,10 @@
         "correctIndex": 0,
         "explanation": "Presigned URLs provide time-limited, secure access to private S3 objects over HTTPS without making the bucket public, meeting security and performance needs.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "S3",
-            "Sharing"
+            "Mobile",
+            "Security",
+            "Storage",
+            "exam"
         ]
     },
     {
@@ -745,11 +703,11 @@
         "correctIndex": 3,
         "explanation": "S3 Glacier Deep Archive provides the lowest-cost long-term storage. Lifecycle policies can transition logs from S3 Standard to Deep Archive automatically.",
         "tags": [
-            "exam",
-            "Cost-Optimized Architectures",
-            "CloudTrail",
-            "S3",
-            "Compliance"
+            "Cost Optimization",
+            "Governance & Compliance",
+            "Monitoring & Logging",
+            "Storage",
+            "exam"
         ]
     },
     {
@@ -758,10 +716,8 @@
         "question": "What are the main benefits of deploying workloads using AWS Elastic Beanstalk?",
         "answer": "Elastic Beanstalk abstracts infrastructure provisioning by automatically creating and managing resources such as EC2, Auto Scaling, and ELB. It provides built-in monitoring, scaling, and rolling deployments, enabling developers to focus on code. It supports multiple runtimes and offers full control through configuration files when customization is needed.",
         "tags": [
-            "exam",
-            "Operational Excellence",
-            "Elastic Beanstalk",
-            "DevOps"
+            "DevOps & Ops",
+            "exam"
         ]
     },
     {
@@ -777,10 +733,10 @@
         "correctIndex": 0,
         "explanation": "Snowball Edge is an exabyte-scale data transport device that can transfer large datasets offline and import them to S3 within the required timeframe.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "Snowball",
-            "Migration"
+            "Performance",
+            "Resilience & DR",
+            "Storage",
+            "exam"
         ]
     },
     {
@@ -796,11 +752,9 @@
         "correctIndex": 0,
         "explanation": "IRSA allows EKS pods to assume IAM roles and fetch Secrets Manager secrets securely at runtime without storing long-lived credentials in the cluster.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "EKS",
-            "Secrets Manager",
-            "IRSA"
+            "Containers",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -816,10 +770,8 @@
         "correctIndex": 1,
         "explanation": "AWS WAF inspects HTTP/HTTPS traffic and can block common web exploits such as SQL injection and XSS.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "WAF",
-            "Security"
+            "Security",
+            "exam"
         ]
     },
     {
@@ -828,10 +780,9 @@
         "question": "Explain the difference between vertical and horizontal scaling in AWS and give an example service or feature that facilitates each.",
         "answer": "Vertical scaling (scale-up) adds more resources to a single instance, such as changing an EC2 instance type to one with more vCPUs and RAM. Horizontal scaling (scale-out) adds more instances to distribute load, such as using an EC2 Auto Scaling group behind an Application Load Balancer. RDS instance class modification is vertical scaling; ECS with Fargate tasks is horizontal scaling.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "Auto Scaling",
-            "Architecture"
+            "Compute",
+            "Performance",
+            "exam"
         ]
     },
     {
@@ -847,10 +798,8 @@
         "correctIndex": 3,
         "explanation": "A Network Load Balancer provides two static IPs per AZ. Point the legacy application to these IPs. During migration, update the NLB target group to the new backend without changing client configuration, minimizing downtime.",
         "tags": [
-            "exam",
-            "Resilient Architectures",
-            "NLB",
-            "Migration"
+            "Resilience & DR",
+            "exam"
         ]
     },
     {
@@ -866,10 +815,9 @@
         "correctIndex": 2,
         "explanation": "Lambda versioning creates immutable versions of the function code and configuration, ensuring deployed versions remain unchanged. Aliases point to versions but can be changed.",
         "tags": [
-            "exam",
-            "Operational Excellence",
-            "Lambda",
-            "DevOps"
+            "DevOps & Ops",
+            "Serverless",
+            "exam"
         ]
     },
     {
@@ -885,10 +833,9 @@
         "correctIndex": 2,
         "explanation": "HTTP/2 multiplexing allows multiple requests over a single connection, reducing latency and improving performance during traffic bursts. The other features address different use cases.",
         "tags": [
-            "exam",
-            "High-Performing Architectures",
-            "ELB",
-            "HTTP2"
+            "Performance",
+            "VPC & Networking",
+            "exam"
         ]
     },
     {
@@ -897,10 +844,9 @@
         "question": "Describe the Shared Responsibility Model for AWS and provide two examples of responsibilities that AWS manages and two responsibilities that the customer manages.",
         "answer": "AWS is responsible for security **of** the cloud\u2014physical infrastructure, Regions, AZs, networking, and managed service hardware/firmware. Customers are responsible for security **in** the cloud\u2014configuring IAM, encrypting data, and patching guest OS on EC2. Example AWS responsibilities: maintaining data center facilities, edge network. Example customer responsibilities: configuring security groups, managing S3 bucket permissions.",
         "tags": [
-            "exam",
-            "Secure Architectures",
-            "Governance",
-            "Compliance"
+            "Governance & Compliance",
+            "Security",
+            "exam"
         ]
     },
     {
@@ -916,11 +862,10 @@
         "correctIndex": 2,
         "explanation": "A CloudWatch alarm configured on the ConsumedReadCapacityUnits metric with the appropriate period and threshold will trigger notifications when utilization crosses the set limit for the specified evaluation periods.",
         "tags": [
-            "exam",
-            "Operational Excellence",
-            "DynamoDB",
-            "CloudWatch",
-            "Monitoring"
+            "Database",
+            "DevOps & Ops",
+            "Monitoring & Logging",
+            "exam"
         ]
     }
 ]

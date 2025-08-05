@@ -12,9 +12,8 @@
         "correctIndex": 2,
         "explanation": "Price Class 200 includes North America and Europe (plus a few other mid-priced Regions) but excludes the highest-cost edge locations in South America, Africa, and Australia. It therefore balances cost savings with performance for the required geographies. Price Class 100 omits most European locations, increasing latency. Price Class All is the most expensive. Regional Edge Caches cannot be selected without a price class and do not affect data-transfer pricing.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "CloudFront",
-            "Pricing"
+            "Cost Optimization",
+            "VPC & Networking"
         ]
     },
     {
@@ -30,10 +29,9 @@
         "correctIndex": 1,
         "explanation": "Origin Access Control creates a signed Origin Access Identity for CloudFront and enforces SigV4 authentication on each request to S3, so the bucket can block all public access. A bucket policy alone can be bypassed if wide permissions are mis-configured. Signed URLs restrict who can request content but do not stop direct S3 access. Field-Level Encryption protects form data sent to the origin, not the origin itself.",
         "tags": [
-            "Secure Architectures",
-            "CloudFront",
-            "S3",
-            "Origin Access Control"
+            "Security",
+            "Storage",
+            "VPC & Networking"
         ]
     },
     {
@@ -49,10 +47,8 @@
         "correctIndex": 1,
         "explanation": "CloudFront can use a VPC origin (through an ALB, NLB, or EC2 instance in private subnets) and terminate TLS at the edge, providing global reach and caching where possible. Direct Connect and private Route 53 are limited to on-prem or VPC-constrained networks. Global Accelerator requires the ALB to be public or exposed through a VPC subnet with an Elastic IP; the question specifies the ALB is private-only.",
         "tags": [
-            "High-Performing Architectures",
-            "CloudFront",
-            "VPC",
-            "ALB"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -68,9 +64,8 @@
         "correctIndex": 1,
         "explanation": "Geo Restriction (Geo Blocking) allows allowlists or blocklists by ISO country code to be configured per distribution. The other options serve different purposes: OAC secures S3 origins, signed cookies control authenticated sessions, and Field-Level Encryption protects form fields.",
         "tags": [
-            "Secure Architectures",
-            "CloudFront",
-            "Geo Restriction"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -86,9 +81,8 @@
         "correctIndex": 1,
         "explanation": "A targeted invalidation removes the object from all edge caches almost immediately, forcing CloudFront to fetch the new file. Lowering TTL helps future changes but does not purge current caches. Origin Shield reduces origin load but not cache staleness. The no-cache header requires another deploy and may still rely on existing cached copies until they expire.",
         "tags": [
-            "Operational Excellence",
-            "CloudFront",
-            "Cache Invalidation"
+            "DevOps & Ops",
+            "VPC & Networking"
         ]
     },
     {
@@ -104,9 +98,8 @@
         "correctIndex": 0,
         "explanation": "Including the client IP (or range) in the signed URL policy ties the URL to a specific user or network and prevents reuse elsewhere. Forcing HTTPS secures transport but not replay. OAC protects the origin, not token misuse. Simply reducing TTL may not stop immediate replay inside the short window.",
         "tags": [
-            "Secure Architectures",
-            "CloudFront",
-            "Signed URLs"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -122,9 +115,8 @@
         "correctIndex": 3,
         "explanation": "Global Accelerator gives two static anycast IPs, accelerates TCP/UDP traffic, and performs fast health-based failover without DNS changes. CloudFront is a CDN optimized for HTTP(S) with object caching. Route 53 is optional for both. Global Accelerator\u2019s failover is at network level, not DNS-TTL-bound.",
         "tags": [
-            "High-Performing Architectures",
-            "Global Accelerator",
-            "CloudFront"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -140,9 +132,8 @@
         "correctIndex": 3,
         "explanation": "Global Accelerator continuously health-checks endpoints and shifts traffic to the healthy region within seconds, providing deterministic failover without DNS propagation. CloudFront origin groups work only for HTTP(S) content and do not provide static IPs. Weighted Route 53 records do not automatically fail back and rely on DNS TTLs. S3 CRR is unrelated.",
         "tags": [
-            "Resilient Architectures",
-            "Global Accelerator",
-            "ALB"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -158,9 +149,8 @@
         "correctIndex": 0,
         "explanation": "Origin Shield adds an additional caching tier between the edge and the origin, lowering the number of origin fetches and improving cache hit ratio. The other options do not provide this aggregation function.",
         "tags": [
-            "High-Performing Architectures",
-            "CloudFront",
-            "Performance"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -176,9 +166,8 @@
         "correctIndex": 1,
         "explanation": "The Viewer Protocol Policy can be set per behavior to automatically redirect HTTP to HTTPS without code changes. Route 53 cannot filter by protocol. WAF operates at layer 7 but blocking port 80 would drop rather than redirect. Application-level redirects add latency and require code changes.",
         "tags": [
-            "Secure Architectures",
-            "CloudFront",
-            "TLS"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -194,10 +183,8 @@
         "correctIndex": 2,
         "explanation": "CloudFront allows 1,000 invalidation paths per month at no charge; subsequent paths are billed per path. Other listed costs do not apply directly to the invalidation API.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "CloudFront",
-            "Pricing",
-            "Cache Invalidation"
+            "Cost Optimization",
+            "VPC & Networking"
         ]
     },
     {
@@ -206,10 +193,8 @@
         "question": "Describe how CloudFront signed URLs and signed cookies work, highlighting suitable use cases for each and the elements required to generate them.",
         "answer": "Signed URLs embed an encrypted policy that includes resource path, expiration date, optional IP range, and a signature created with a trusted key pair. They are ideal for granting one-off access to individual objects such as private downloads. Signed cookies store the policy in cookies set on the client, allowing access to multiple protected objects (for example, streaming video segments) without appending a token to each URL. Both mechanisms rely on a CloudFront key group or legacy trusted key pair, require HTTPS distribution, and are enforced at the edge before the origin request is made.",
         "tags": [
-            "Secure Architectures",
-            "CloudFront",
-            "Signed URLs",
-            "Signed Cookies"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -218,11 +203,8 @@
         "question": "Explain the steps to serve a private web application that runs on an ALB in private subnets through CloudFront, ensuring that traffic never traverses the public internet to the ALB.",
         "answer": "1) Place the ALB in private subnets without public IPs. 2) Create an internal NLB in the same VPC with AWS PrivateLink to expose a VPC endpoint service. 3) Configure CloudFront with a VPC origin that targets the NLB\u2019s endpoint or use an interface VPC endpoint for CloudFront to connect internally. 4) Add an Origin Access Control policy allowing CloudFront\u2019s service principal to reach the NLB. 5) Attach a custom SSL certificate to CloudFront for the application domain, and set Viewer Protocol Policy to HTTPS. 6) Optionally enable Origin Shield and WAF for additional protection. All edge connections enter AWS at the nearest POP and travel entirely inside the AWS backbone to the private ALB.",
         "tags": [
-            "Secure Architectures",
-            "CloudFront",
-            "VPC",
-            "ALB",
-            "Origin Access Control"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -231,10 +213,9 @@
         "question": "Compare CloudFront and AWS Global Accelerator in terms of caching, protocol support, IP addressing, and failover behavior. When would you choose one over the other?",
         "answer": "CloudFront is a CDN for HTTP(S) that caches objects at hundreds of edge locations, supports edge compute (Lambda@Edge/Functions@Edge), and uses DNS hostnames that map users to optimal POPs. It excels at static or dynamic web content acceleration and reducing origin load. Global Accelerator is a global anycast service for TCP and UDP that does no caching. It provides two static IP addresses, supports BYOIP, and offers sub-second health-based failover between regional endpoints without DNS changes. Choose CloudFront for web page assets, APIs, and streaming media where caching matters. Choose Global Accelerator for non-HTTP protocols, low-latency gaming, VoIP, or multi-region active-active load balancing that needs fixed IPs and instant failover.",
         "tags": [
-            "High-Performing Architectures",
-            "CloudFront",
-            "Global Accelerator",
-            "Resilient Architectures"
+            "Performance",
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -243,10 +224,9 @@
         "question": "Outline three strategies to keep CloudFront caches fresh after frequent origin updates, and discuss their cost or operational trade-offs.",
         "answer": "1) **Object versioning**: include a unique path or query string (for example, /app/v2/logo-abcd1234.png). Pros: no invalidation cost; caches naturally expire old versions. Cons: requires build-time automation and may leave stale objects until TTL. 2) **Targeted invalidations**: issue invalidation API calls for updated paths. Pros: immediate global purge; no URL changes. Cons: small fee after 1,000 paths per month and operational overhead to script deployments. 3) **Reduced TTL with cache-control headers**: lower max-age or set must-revalidate so edges revalidate often. Pros: automatic; no invalidation charges. Cons: increases origin traffic and latency because of frequent revalidation or fetches.",
         "tags": [
-            "Operational Excellence",
-            "CloudFront",
-            "Cache Invalidation",
-            "Cost-Optimized Architectures"
+            "Cost Optimization",
+            "DevOps & Ops",
+            "VPC & Networking"
         ]
     }
 ]

@@ -12,9 +12,8 @@
         "correctIndex": 2,
         "explanation": "Fargate is serverless for containers. You specify CPU and memory per task, and AWS provisions and scales the capacity. EC2 launch type and EKS require managing EC2 nodes. App Runner automatically builds and deploys from source or an image but does not support task-level IAM roles or service discovery like ECS.",
         "tags": [
-            "High-Performing Architectures",
-            "ECS",
-            "Fargate"
+            "Containers",
+            "Performance"
         ]
     },
     {
@@ -30,9 +29,8 @@
         "correctIndex": 3,
         "explanation": "The task role is intended for application-level permissions and is isolated per task. The instance profile is for the ECS agent and infrastructure operations. Hard-coding or injecting long-lived credentials is less secure.",
         "tags": [
-            "Secure Architectures",
-            "ECS",
-            "IAM"
+            "Containers",
+            "Security"
         ]
     },
     {
@@ -48,9 +46,9 @@
         "correctIndex": 1,
         "explanation": "Capacity providers with managed scaling can evaluate both CPU and memory reservation. Adding the correct scaling metric for memory triggers instance provisioning when memory is constrained. CPU-only scaling does not solve memory shortages.",
         "tags": [
-            "Resilient Architectures",
-            "ECS",
-            "Auto Scaling"
+            "Compute",
+            "Containers",
+            "Resilience & DR"
         ]
     },
     {
@@ -66,9 +64,9 @@
         "correctIndex": 3,
         "explanation": "ALB supports path-based routing and integrates with ECS service registries to register targets in private subnets. NLB is L4 and lacks path routing. CLB is legacy. Gateway LB is for appliance fleets.",
         "tags": [
-            "High-Performing Architectures",
-            "ECS",
-            "ELB"
+            "Containers",
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -84,9 +82,8 @@
         "correctIndex": 2,
         "explanation": "EventBridge emits Task State Change events. A rule can invoke SNS, Lambda, or Step Functions when lastStatus changes to STOPPED, enabling graceful workflows without polling.",
         "tags": [
-            "Operational Excellence",
-            "ECS",
-            "EventBridge"
+            "Containers",
+            "DevOps & Ops"
         ]
     },
     {
@@ -102,9 +99,9 @@
         "correctIndex": 1,
         "explanation": "EFS is a regional, multi-AZ NFS file system and is supported natively by Fargate. EBS and instance store are single-AZ. Mounting S3 as a file system is unsupported and unreliable for POSIX workloads.",
         "tags": [
-            "High-Performing Architectures",
-            "ECS",
-            "EFS"
+            "Containers",
+            "Performance",
+            "Storage"
         ]
     },
     {
@@ -120,8 +117,8 @@
         "correctIndex": 3,
         "explanation": "EKS offers managed control planes, managed node groups that can run spot instances, and IRSA for pod-level IAM. The other options do not meet all criteria.",
         "tags": [
-            "Resilient Architectures",
-            "EKS",
+            "Containers",
+            "Resilience & DR",
             "Security"
         ]
     },
@@ -138,9 +135,8 @@
         "correctIndex": 1,
         "explanation": "Fargate runs each pod in its own micro-VM. DaemonSets require scheduling pods on every node, which is not compatible with the Fargate execution model. ConfigMaps, Secrets, and HPA are fully supported.",
         "tags": [
-            "High-Performing Architectures",
-            "EKS",
-            "Fargate"
+            "Containers",
+            "Performance"
         ]
     },
     {
@@ -156,8 +152,8 @@
         "correctIndex": 0,
         "explanation": "FSx ONTAP via CSI provides a shared file system across AZs with NFS/iSCSI, supporting failover and high performance. EBS volumes are single-AZ. Multi-Attach cannot span AZs safely for write-heavy workloads. EFS One Zone lacks AZ redundancy.",
         "tags": [
-            "Resilient Architectures",
-            "EKS",
+            "Containers",
+            "Resilience & DR",
             "Storage"
         ]
     },
@@ -174,9 +170,9 @@
         "correctIndex": 1,
         "explanation": "LimitRange sets default CPU/memory requests and hard limits within a namespace. NetworkPolicy governs traffic, PodSecurityPolicy is deprecated in Kubernetes 1.25+, and HPA scales pods.",
         "tags": [
-            "Secure Architectures",
-            "EKS",
-            "Governance"
+            "Containers",
+            "Governance & Compliance",
+            "Security"
         ]
     },
     {
@@ -192,9 +188,7 @@
         "correctIndex": 2,
         "explanation": "App Runner integrates directly with GitHub or ECR, performs automated builds, deploys, and scales a web service. ECS and EKS require manual pipelines. Lambda is event-driven and may not suit full HTTP servers with persistent connections.",
         "tags": [
-            "Operational Excellence",
-            "App Runner",
-            "CI/CD"
+            "DevOps & Ops"
         ]
     },
     {
@@ -210,8 +204,7 @@
         "correctIndex": 1,
         "explanation": "App Runner automatically provisions TLS certificates and exposes an HTTPS URL without extra configuration. ECS requires an ALB and ACM certificate. Both services support VPC access, IAM roles, and scaling.",
         "tags": [
-            "High-Performing Architectures",
-            "App Runner",
+            "Performance",
             "Security"
         ]
     },
@@ -228,9 +221,8 @@
         "correctIndex": 0,
         "explanation": "App2Container creates a Dockerfile and builds an image pushed to ECR. It can optionally generate CloudFormation or ECS task definitions, but the image is required for any deployment target.",
         "tags": [
-            "Migration",
-            "App2Container",
-            "Containers"
+            "Containers",
+            "Resilience & DR"
         ]
     },
     {
@@ -246,10 +238,10 @@
         "correctIndex": 1,
         "explanation": "Application Auto Scaling supports target-tracking on Amazon SQS metrics. CloudWatch provides the ApproximateNumberOfMessagesVisible metric and the alarm triggers scaling policies.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "ECS",
-            "Auto Scaling",
-            "SQS"
+            "Compute",
+            "Containers",
+            "Cost Optimization",
+            "Integration & Messaging"
         ]
     },
     {
@@ -265,9 +257,8 @@
         "correctIndex": 0,
         "explanation": "IAM Roles for Service Accounts (IRSA) uses an OIDC identity provider to map a Kubernetes service account to an IAM role. Nodes keep a minimal instance profile, and each pod gets fine-grained permissions.",
         "tags": [
-            "Secure Architectures",
-            "EKS",
-            "IAM"
+            "Containers",
+            "Security"
         ]
     },
     {
@@ -283,9 +274,8 @@
         "correctIndex": 0,
         "explanation": "The eksctl CLI orchestrates control-plane updates and can automatically create new managed node groups with the target Kubernetes version, drain old nodes, and promote new ones with no downtime.",
         "tags": [
-            "Operational Excellence",
-            "EKS",
-            "Upgrades"
+            "Containers",
+            "DevOps & Ops"
         ]
     },
     {
@@ -301,9 +291,8 @@
         "correctIndex": 2,
         "explanation": "ECR provides native image scanning (basic or enhanced) and can be integrated with Security Hub for compliance. Inspector Classic scans EC2 instances, not images. GuardDuty detects threats in logs, not image CVEs. CloudFront is unrelated.",
         "tags": [
-            "Secure Architectures",
-            "ECS",
-            "ECR"
+            "Containers",
+            "Security"
         ]
     },
     {
@@ -319,9 +308,9 @@
         "correctIndex": 0,
         "explanation": "Calico is supported by AWS as an optional add-on to enforce Kubernetes NetworkPolicy on EKS clusters. The default VPC CNI does not interpret NetworkPolicy. Cilium is possible but community managed. kube-proxy handles service routing, not policies.",
         "tags": [
-            "Secure Architectures",
-            "EKS",
-            "Networking"
+            "Containers",
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -337,9 +326,8 @@
         "correctIndex": 3,
         "explanation": "App Runner needs a VPC connector to establish ENIs in a private subnet for outbound traffic to RDS. Making RDS public violates security. Ingress controllers are EKS concepts. Environment variables store secrets but do not enable network reachability.",
         "tags": [
-            "Secure Architectures",
-            "App Runner",
-            "Networking"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -355,9 +343,7 @@
         "correctIndex": 3,
         "explanation": "App2Container requires admin rights to inspect IIS, read registry, and package binaries. It depends on .NET for analysis scripts. Docker is not needed on the source machine.",
         "tags": [
-            "Migration",
-            "App2Container",
-            "Windows"
+            "Resilience & DR"
         ]
     },
     {
@@ -366,9 +352,8 @@
         "question": "Describe how ECS rolling updates work in a service using CodeDeploy blue/green deployments and explain two advantages over the default rolling update strategy.",
         "answer": "When integrated with CodeDeploy, ECS creates a new task set (green) alongside the existing one (blue). CodeDeploy shifts a configurable percentage of traffic through an ALB listener to the green tasks, monitors CloudWatch alarms and container health, and continues shifting until 100 % or rolls back automatically. Advantages: (1) zero-downtime testing with real production traffic on a small subset before full cutover, reducing risk; (2) automatic rollback if alarms breach, avoiding manual intervention required with default rolling where tasks are replaced incrementally without traffic controls.",
         "tags": [
-            "Resilient Architectures",
-            "ECS",
-            "CodeDeploy"
+            "Containers",
+            "Resilience & DR"
         ]
     },
     {
@@ -377,9 +362,8 @@
         "question": "Explain the security benefits of using IAM Roles for Service Accounts (IRSA) in EKS and outline the high-level steps to enable it for a pod that needs to access Amazon S3.",
         "answer": "IRSA maps a Kubernetes service account to a dedicated IAM role using the cluster\u2019s OIDC provider, eliminating the need to distribute node-wide credentials. Each pod receives a signed token projected into the file system, which AWS STS validates before issuing temporary credentials scoped by the role policy. Steps: 1) Enable the OIDC provider in the EKS console or eksctl. 2) Create an IAM role with trust policy referencing the provider and condition on the service account name/namespace. 3) Attach an S3 access policy to the role. 4) Create a Kubernetes service account annotated with the role ARN. 5) Reference that service account in the pod spec. The pod now uses least-privilege, short-lived credentials to call S3.",
         "tags": [
-            "Secure Architectures",
-            "EKS",
-            "IAM"
+            "Containers",
+            "Security"
         ]
     },
     {
@@ -388,9 +372,8 @@
         "question": "Compare App Runner and ECS Fargate for stateless web applications in terms of deployment workflow, scaling controls, and cost transparency.",
         "answer": "App Runner abstracts the infrastructure: developers push code or an image, and App Runner builds, deploys, auto provisions TLS, and scales instances based on concurrent requests. Scaling is automatic with min/max instance settings but less granular than Fargate task counts. Pricing is per vCPU-sec and memory-sec for running instances plus build minutes. ECS Fargate requires a task definition and service; deployment pipelines (e.g., CodePipeline) must build images separately. Fargate scales by changing desired task count via Application Auto Scaling policies; it offers fine control over CPU/memory per task. Costs are transparent per task-hour but you manage load balancers and CI/CD. App Runner is simpler; Fargate is more flexible and can be cheaper at very low or very high loads depending on configuration.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "App Runner",
-            "ECS"
+            "Containers",
+            "Cost Optimization"
         ]
     },
     {
@@ -399,10 +382,8 @@
         "question": "Outline an end-to-end migration path using App2Container to move an on-premises Java Spring Boot application to AWS EKS, including CI/CD considerations.",
         "answer": "1) Install App2Container on the source server, analyze the running Spring Boot process, and generate a Dockerfile. 2) Use App2Container to build the image and push to ECR. 3) Generate the Kubernetes deployment YAML and service manifest. 4) Commit the manifests to a Git repository. 5) Create a build pipeline (CodeBuild or Jenkins) to rebuild the image on code changes and update the tag in a Helm chart. 6) Use CodePipeline or Argo CD to deploy to an EKS namespace, leveraging blue/green strategy via a Kubernetes service. 7) Enable IRSA for S3/Secrets access, configure the ALB Ingress Controller, and set HPA for scaling. 8) Monitor with Container Insights and set CloudWatch alarms. This pipeline provides automated build, containerization, and continuous delivery on managed Kubernetes.",
         "tags": [
-            "Migration",
-            "App2Container",
-            "EKS",
-            "CI/CD"
+            "Containers",
+            "Resilience & DR"
         ]
     }
 ]

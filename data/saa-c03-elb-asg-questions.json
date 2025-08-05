@@ -12,11 +12,9 @@
         "correctIndex": 1,
         "explanation": "Using an Application Load Balancer distributes traffic evenly across instances, while target tracking scaling automatically adds or removes instances when a specified metric threshold is breached. This provides horizontal scalability with minimal management. Merely increasing instance size (Option B) offers vertical scaling but caps performance and costs more. Moving to Lambda (Option C) could work but requires a full refactor and may not suit long-running processes. Manually adding instances (Option D) is operationally intensive and slow to react.",
         "tags": [
-            "Resilient Architectures",
-            "High Availability",
-            "EC2",
-            "Auto Scaling",
-            "ELB"
+            "Compute",
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -32,11 +30,9 @@
         "correctIndex": 0,
         "explanation": "CloudFront provides a globally distributed edge network that absorbs traffic spikes and caches content close to users for low latency. When paired with Shield Advanced, it offers managed DDoS protection. An Application Load Balancer behind CloudFront routes only clean, application-layer traffic to targets. Global Accelerator (Option B) aids performance but not L7 DDoS mitigation. Route 53 with NLB (Option C) doesn\u2019t provide edge caching or L7 protections. Secrets Manager (Option D) is unrelated to DDoS mitigation.",
         "tags": [
-            "Secure Architectures",
-            "Resilient Architectures",
-            "CloudFront",
-            "Shield",
-            "ELB"
+            "Resilience & DR",
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -52,10 +48,9 @@
         "correctIndex": 0,
         "explanation": "S3 provides durable, scalable object storage, and CloudFront caches objects at edge locations to reduce latency worldwide. This pairing is industry standard for media delivery. Options B and C rely on regional resources that can become bottlenecks or single points of failure. Option D lacks edge caching and would increase latency and operational burden.",
         "tags": [
-            "High-Performing Architectures",
-            "S3",
-            "CloudFront",
-            "Content Delivery"
+            "Performance",
+            "Storage",
+            "VPC & Networking"
         ]
     },
     {
@@ -71,10 +66,8 @@
         "correctIndex": 0,
         "explanation": "Sticky sessions create an ALB-generated or custom cookie that ties a client to a specific target for the session duration. Cross-zone load balancing (Option B) distributes traffic evenly but does not provide session stickiness. Gateway Load Balancer (Option C) is for third-party appliances, not session affinity. Enhanced networking (Option D) improves throughput on EC2 but doesn\u2019t handle load balancer session routing.",
         "tags": [
-            "High-Performing Architectures",
-            "ELB",
-            "Sticky Sessions",
-            "Application Load Balancer"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -90,10 +83,9 @@
         "correctIndex": 1,
         "explanation": "Lambda\u2019s pay-per-request model scales automatically to match traffic bursts and costs nothing when idle. Pairing Lambda with Kinesis offers real-time ingestion. Keeping EC2 On-Demand (Option B) wastes money during idle times. Scheduled scaling (Option C) handles predictable, not bursty, traffic. Reserved Instances (Option D) save on steady-state usage but still incur fixed costs during idle periods.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Serverless",
-            "Lambda",
-            "Kinesis"
+            "Analytics",
+            "Cost Optimization",
+            "Serverless"
         ]
     },
     {
@@ -109,10 +101,8 @@
         "correctIndex": 1,
         "explanation": "Using a pre-baked AMI eliminates lengthy package downloads at boot, enabling new instances to serve traffic quickly. Larger instances (Option B) cost more and still require installation time. Spot Instances (Option C) do not guarantee faster boot and may terminate unexpectedly. Increasing cooldown (Option D) delays additional scaling actions but doesn\u2019t solve the root problem.",
         "tags": [
-            "High-Performing Architectures",
-            "EC2",
-            "Auto Scaling",
-            "AMI"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -128,10 +118,8 @@
         "correctIndex": 1,
         "explanation": "A multi-Region active-passive setup with Route 53 health checks provides Regional redundancy with lower cost than active-active. Hosting in one Region (Option B) doesn\u2019t protect against Regional outages. Global Accelerator (Option C) improves performance but cannot serve traffic if the single Region is down. A read replica alone (Option D) doesn\u2019t cover compute tier failover.",
         "tags": [
-            "Resilient Architectures",
-            "Disaster Recovery",
-            "Route 53",
-            "Multi-Region"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -147,10 +135,9 @@
         "correctIndex": 3,
         "explanation": "On-demand capacity mode automatically adjusts RCUs (and WCUs) to accommodate workload spikes, charging only for consumed throughput. Permanently raising RCUs (Option B) wastes money during idle periods. DAX (Option C) can help but adds cost and complexity. Migrating to RDS (Option D) won\u2019t inherently resolve bursty read patterns and may introduce scaling limits.",
         "tags": [
-            "High-Performing Architectures",
-            "Cost-Optimized Architectures",
-            "DynamoDB",
-            "On-Demand"
+            "Cost Optimization",
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -166,9 +153,7 @@
         "correctIndex": 2,
         "explanation": "Gateway Load Balancer operates at layer 3 and can direct traffic through a fleet of security appliances for deep packet inspection. While WAF on ALB (Option B) filters at L7, it cannot run third-party IDS/IPS appliances. NLB (Option C) offers L4 passthrough but no inspection. CLB (Option D) is legacy and not ideal for inspection pipelines.",
         "tags": [
-            "Secure Architectures",
-            "Gateway Load Balancer",
-            "Traffic Inspection"
+            "Security"
         ]
     },
     {
@@ -184,10 +169,9 @@
         "correctIndex": 1,
         "explanation": "Enabling cross-zone load balancing ensures requests are evenly distributed to targets in all AZs, while configuring the Auto Scaling group to launch evenly removes capacity skew. Disabling cross-zone (Option B) would overwork the AZ with more instances. Converting to NLB (Option C) doesn\u2019t fix imbalance. Route 53 weighted routing (Option D) operates at DNS level and doesn\u2019t account for instance-level changes.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "ELB",
-            "Cross-Zone",
-            "Auto Scaling"
+            "Compute",
+            "Cost Optimization",
+            "VPC & Networking"
         ]
     },
     {
@@ -203,9 +187,8 @@
         "correctIndex": 2,
         "explanation": "ALB supports SSL/TLS termination, advanced HTTP features like path-based routing, and WebSocket. NLB (Option B) is L4 and lacks these L7 features. GWLB (Option C) is for traffic inspection, not application delivery. CLB (Option D) is legacy and doesn\u2019t provide modern routing features.",
         "tags": [
-            "High-Performing Architectures",
-            "ELB",
-            "Application Load Balancer"
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -221,10 +204,10 @@
         "correctIndex": 3,
         "explanation": "Publishing the ApproximateNumberOfMessagesVisible metric from SQS to CloudWatch allows step scaling based on queue depth. Scheduled scaling (Option B) cannot react to real-time queue length. Predictive scaling (Option C) forecasts based on historical metrics but may not align with queue bursts. Target tracking CPU (Option D) doesn\u2019t correlate with queue length.",
         "tags": [
-            "High-Performing Architectures",
-            "Auto Scaling",
-            "SQS",
-            "CloudWatch"
+            "Compute",
+            "Integration & Messaging",
+            "Monitoring & Logging",
+            "Performance"
         ]
     },
     {
@@ -240,10 +223,9 @@
         "correctIndex": 1,
         "explanation": "Gateway Endpoints route S3 traffic through the AWS backbone within the same Region, eliminating NAT gateway or internet gateway data transfer charges. Transfer Acceleration (Option B) is for cross-Region uploads/downloads and costs extra. Multipart Upload (Option C) improves throughput but doesn\u2019t change data transfer pricing. EFS (Option D) introduces higher per-GB storage costs.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "S3",
-            "VPC",
-            "Data Transfer"
+            "Cost Optimization",
+            "Storage",
+            "VPC & Networking"
         ]
     },
     {
@@ -259,10 +241,8 @@
         "correctIndex": 1,
         "explanation": "Placing an ALB in public subnets allows it to receive internet traffic, terminate TLS, and forward requests to EC2 targets in private subnets. NLB in private subnets (Option B) cannot receive internet traffic unless it has public subnets. An Internet Gateway (Option C) attaches at VPC level, not subnets, and exposing private subnets directly defeats isolation. Direct Connect (Option D) is for private network connections, not public internet access.",
         "tags": [
-            "Secure Architectures",
-            "VPC",
-            "ELB",
-            "Public and Private Subnets"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -278,11 +258,10 @@
         "correctIndex": 0,
         "explanation": "ELB access logs can be delivered to S3, and Lifecycle policies can transition objects to cheaper Glacier storage, meeting retention at low cost. Keeping CloudWatch Logs (Option B) for a year is more expensive. A logging appliance (Option C) adds complexity and cost. Packet capture (Option D) is unnecessary and costly.",
         "tags": [
-            "Operational Excellence",
-            "Cost-Optimized Architectures",
-            "ELB",
-            "S3",
-            "Logging"
+            "Cost Optimization",
+            "DevOps & Ops",
+            "Storage",
+            "VPC & Networking"
         ]
     },
     {
@@ -298,9 +277,8 @@
         "correctIndex": 0,
         "explanation": "Extending the health check grace period gives instances time to complete initialization before health checks start. Disabling instance protection (Option B) won\u2019t fix premature health failures. Shorter cooldown (Option C) may worsen instability. ELB checks (Option D) still fail if initialization is incomplete, though combined with increased grace period could help.",
         "tags": [
-            "High-Performing Architectures",
-            "Auto Scaling",
-            "Health Checks"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -316,10 +294,8 @@
         "correctIndex": 0,
         "explanation": "Dead-letter queues allow the slow consumer\u2019s messages to be isolated without affecting other queues. Using a single FIFO queue (Option B) removes parallelism and can delay all consumers. Message size (Option C) and publish rate throttling (Option D) don\u2019t solve consumer-side slowness.",
         "tags": [
-            "Resilient Architectures",
-            "SNS",
-            "SQS",
-            "DLQ"
+            "Integration & Messaging",
+            "Resilience & DR"
         ]
     },
     {
@@ -335,10 +311,8 @@
         "correctIndex": 3,
         "explanation": "Aurora Global Database replicates data asynchronously with sub-second lag and allows reads from regional clusters, minimizing read latency. Multi-AZ (Option B) is scoped to one Region. DynamoDB (Option C) provides global tables only if configured, but on-demand alone doesn\u2019t replicate. Redshift (Option D) is analytical, not transactional, and replication would be slow.",
         "tags": [
-            "High-Performing Architectures",
-            "Aurora",
-            "Global Database",
-            "Low Latency"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -354,10 +328,9 @@
         "correctIndex": 2,
         "explanation": "Target tracking maintains a metric near a set point and automatically calculates step sizes and cooldowns to reduce oscillation. Lowering the threshold (Option B) can increase churn. Disabling scale-in (Option C) eliminates oscillation but wastes resources. Scheduled scaling (Option D) isn\u2019t responsive to unexpected changes.",
         "tags": [
-            "High-Performing Architectures",
-            "Auto Scaling",
-            "CloudWatch",
-            "Target Tracking"
+            "Compute",
+            "Monitoring & Logging",
+            "Performance"
         ]
     },
     {
@@ -373,10 +346,8 @@
         "correctIndex": 2,
         "explanation": "Latency-based routing directs users to the lowest-latency Region, and when combined with health checks plus failover records, it redirects traffic on Regional outages. Weighted routing (Option B) distributes by percentage but not latency. Geolocation (Option C) routes by user location, not RTT. Simple routing (Option D) lacks health-based failover.",
         "tags": [
-            "Resilient Architectures",
-            "Route 53",
-            "Latency Routing",
-            "Failover"
+            "Resilience & DR",
+            "VPC & Networking"
         ]
     },
     {
@@ -392,9 +363,8 @@
         "correctIndex": 2,
         "explanation": "Aurora\u2019s cross-Region failover can promote a secondary cluster in seconds, delivering near-zero RPO/RTO. RDS snapshots (Option B) offer hours of RPO/RTO. Self-managed solutions (Option C) require custom scripting. DynamoDB global tables (Option D) aren\u2019t MySQL compatible.",
         "tags": [
-            "Resilient Architectures",
-            "Aurora",
-            "Disaster Recovery"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -410,10 +380,8 @@
         "correctIndex": 3,
         "explanation": "TLS termination at ALB with re-encryption to targets meets compliance, and KMS-encrypted EBS volumes secure data at rest. NLB passthrough (Option B) forces EC2 to handle certificates and offers no at-rest encryption. Options C and D leave data or network paths unencrypted.",
         "tags": [
-            "Secure Architectures",
-            "ELB",
-            "Encryption",
-            "KMS"
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -429,11 +397,9 @@
         "correctIndex": 2,
         "explanation": "Blue/green via CodeDeploy creates a new task set and shifts traffic using ALB, allowing instant rollback and zero downtime. Rolling (Option B) can cause short unavailability. Recreate (Option C) causes downtime. Canary on a single instance (Option D) lacks AZ redundancy.",
         "tags": [
-            "High-Performing Architectures",
-            "ECS",
-            "Fargate",
-            "Blue/Green",
-            "ELB"
+            "Containers",
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -449,9 +415,7 @@
         "correctIndex": 2,
         "explanation": "RDS Proxy pools and shares database connections across Lambda Invocations, preventing connection storms. Reserved concurrency (Option B) severely limits throughput. Security groups (Option C) don\u2019t throttle connections. Scaling RDS up (Option D) adds cost and may still be overwhelmed.",
         "tags": [
-            "High-Performing Architectures",
-            "Lambda",
-            "RDS Proxy",
+            "Performance",
             "Serverless"
         ]
     },
@@ -461,11 +425,9 @@
         "question": "Explain how cross-region replication in Amazon S3 can be used to design a disaster-recovery strategy with an RPO of minutes for static website assets. Include necessary bucket configurations and IAM considerations.",
         "answer": "Cross-region replication (CRR) automatically and asynchronously copies objects from a source bucket to a destination bucket in another AWS Region. To achieve an RPO of minutes, enable CRR with replication rules that include the relevant prefixes or the entire bucket. Turn on versioning on both buckets, and optionally enable replication metrics to monitor lag. IAM permissions must allow the S3 service role (typically 'aws-replication') to read objects in the source bucket and write to the destination. Optionally, enable S3 Replication Time Control (RTC) for a 15-minute SLA. On failover, update Route 53 or CloudFront origins to point to the destination bucket.",
         "tags": [
-            "Resilient Architectures",
-            "S3",
-            "Disaster Recovery",
-            "Replication",
-            "Security"
+            "Resilience & DR",
+            "Security",
+            "Storage"
         ]
     },
     {
@@ -474,10 +436,8 @@
         "question": "Describe the benefits and trade-offs of using Amazon ElastiCache for Redis as a read-through cache in front of DynamoDB for millisecond latency requirements.",
         "answer": "ElastiCache for Redis can store frequently accessed key-value pairs, reducing read calls to DynamoDB and improving latency to sub-millisecond levels. Benefits include reduced DynamoDB costs, lower read latency, and support for complex data structures. Trade-offs include cache invalidation complexity, eventual consistency, higher operational overhead compared to fully managed DynamoDB, and additional cost for the Redis cluster. Setting appropriate TTLs and using DynamoDB Streams with Lambda for cache updates can mitigate staleness.",
         "tags": [
-            "High-Performing Architectures",
-            "ElastiCache",
-            "DynamoDB",
-            "Caching"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -486,11 +446,9 @@
         "question": "When designing a Serverless microservices architecture on AWS, what patterns can be used to handle failures gracefully and ensure end-to-end resiliency?",
         "answer": "Patterns include: 1) Circuit Breaker to stop cascading failures between services; 2) Retry with exponential backoff for transient errors; 3) Dead-letter queues for asynchronous services like SQS to capture failed messages; 4) Idempotent operations for safe retries; 5) Saga pattern for coordinating distributed transactions; 6) Using Step Functions for orchestrating workflows with error handling and compensation; 7) Leveraging AWS Lambda destinations to route failed invocations. Applying these patterns with proper monitoring via CloudWatch and structured logging improves observability and resiliency.",
         "tags": [
-            "Resilient Architectures",
-            "Serverless",
-            "Lambda",
-            "Step Functions",
-            "Design Patterns"
+            "Integration & Messaging",
+            "Resilience & DR",
+            "Serverless"
         ]
     },
     {
@@ -499,11 +457,8 @@
         "question": "Outline the steps to implement a cost-optimized multi-environment CI/CD pipeline on AWS that supports blue/green deployments for a containerized application.",
         "answer": "1) Use AWS CodeCommit for source control (or integrate GitHub). 2) CodeBuild compiles and runs unit tests in an on-demand Docker environment. 3) Build artifacts are stored in Amazon ECR. 4) CodeDeploy deploys to ECS services using blue/green with an ALB target group swap. 5) CodePipeline orchestrates stages: source, build, test, deploy, and manual approval for production. 6) Use Fargate Spot for non-prod environments to cut costs. 7) Turn on artifact and build caching in CodeBuild to shorten build times. 8) Implement per-environment parameterization using Systems Manager Parameter Store. 9) Use CloudWatch Events to automatically delete stale preview environments.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "CI/CD",
-            "CodePipeline",
-            "ECS",
-            "Blue/Green"
+            "Containers",
+            "Cost Optimization"
         ]
     },
     {
@@ -512,10 +467,8 @@
         "question": "How does AWS Global Accelerator improve application performance and availability compared to using Amazon Route 53 alone?",
         "answer": "Global Accelerator provides two anycast static IPs that route traffic through the AWS global edge network using the optimal AWS backbone path. It continuously monitors endpoint health and client-to-endpoint latency, instantly directing users to the healthy Region with the lowest RTT. Unlike Route 53, which relies on DNS TTL and client resolver caching, Global Accelerator reacts to health or latency changes in seconds without waiting for DNS propagation. It supports TCP and UDP traffic, provides DDoS protection via AWS Shield, and maintains session affinity using flow hashing.",
         "tags": [
-            "High-Performing Architectures",
-            "Global Accelerator",
             "Performance",
-            "Availability"
+            "VPC & Networking"
         ]
     },
     {
@@ -524,10 +477,8 @@
         "question": "Discuss the considerations for choosing between vertical and horizontal scaling in AWS when migrating a legacy monolithic application with strict licensing tied to CPU cores.",
         "answer": "Vertical scaling (larger EC2 instances) may be necessary when software licenses are node-bound or require a specific CPU count, reducing licensing costs compared to many small nodes. However, it introduces single-point-of-failure risk and finite scale limits. Horizontal scaling (multiple smaller instances behind an ELB) offers higher availability, fault tolerance, and elastic capacity, but can increase license costs and require session management changes. Hybrid strategies like cluster placement groups for low-latency communication, or using Auto Scaling with license-aware metrics, can balance cost and resiliency. Evaluate application refactor effort, licensing models, downtime tolerance, and AWS Savings Plans.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "EC2",
-            "Licensing",
-            "Scaling Strategies"
+            "Compute",
+            "Cost Optimization"
         ]
     }
 ]

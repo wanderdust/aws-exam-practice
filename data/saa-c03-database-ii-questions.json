@@ -12,8 +12,8 @@
         "correctIndex": 2,
         "explanation": "DynamoDB on-demand automatically scales for unpredictable write throughput, delivers single-digit millisecond latency, and TTL removes stale items after 24 hours without administrative effort. RDS cannot scale writes that quickly, Redis is volatile and needs a separate persistence layer, and Timestream is optimized for analytical time-series queries rather than frequent key-value lookups for leaderboards.",
         "tags": [
-            "High-Performing Architectures",
-            "DynamoDB",
+            "Database",
+            "Performance",
             "Serverless"
         ]
     },
@@ -30,9 +30,8 @@
         "correctIndex": 0,
         "explanation": "Aurora stores six copies across three AZs, provides automatic failover typically under 30 seconds, and offers reader endpoints for read scaling\u2014all fully managed. Standard RDS Multi-AZ provides failover but stores only two copies and read replicas reside in a single AZ. Managing EC2 hosts increases overhead, and DynamoDB is nonrelational.",
         "tags": [
-            "Resilient Architectures",
-            "Aurora",
-            "High Availability"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -48,9 +47,7 @@
         "correctIndex": 2,
         "explanation": "Timestream is purpose-built for time-series data, automatically moves data from in-memory to magnetic storage, and supports SQL queries with built-in time-series functions, reducing management. RDS would require manual partitioning and scaling, DynamoDB is not optimized for time-based aggregations, and Redis is an in-memory cache not a durable store.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Timestream",
-            "Time Series"
+            "Cost Optimization"
         ]
     },
     {
@@ -66,9 +63,8 @@
         "correctIndex": 0,
         "explanation": "RDS Custom for Oracle lets customers customize the underlying OS and database while AWS manages backups, storage, and monitoring. Standard RDS does not allow such customizations; self-managing on EC2 increases operational burden; Aurora is not fully Oracle-compatible.",
         "tags": [
-            "Operational Excellence",
-            "RDS",
-            "Custom"
+            "Database",
+            "DevOps & Ops"
         ]
     },
     {
@@ -84,9 +80,8 @@
         "correctIndex": 0,
         "explanation": "DynamoDB global tables provide multi-master, active-active replication across Regions with single-digit millisecond latency and last-writer-wins conflict resolution. Aurora global offers fast cross-Region reads but writes funnel to one Region. RDS cross-Region replicas allow local reads only. Redis Global Datastore is volatile and not a durable system of record.",
         "tags": [
-            "High-Performing Architectures",
-            "DynamoDB",
-            "Global Tables"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -102,9 +97,8 @@
         "correctIndex": 2,
         "explanation": "DAX provides microsecond read latency and is API-compatible with DynamoDB, writing through to the durable backing store. Redis or Memcached alone risk data loss unless the app manages durability. RDS cannot meet sub-millisecond cache latency.",
         "tags": [
-            "High-Performing Architectures",
-            "DynamoDB",
-            "DAX"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -120,9 +114,7 @@
         "correctIndex": 3,
         "explanation": "Neptune is a fully managed graph database supporting property graph (Gremlin) and RDF (SPARQL) queries optimized for such relationships. The other services lack native graph query capabilities.",
         "tags": [
-            "High-Performing Architectures",
-            "Neptune",
-            "Graph"
+            "Performance"
         ]
     },
     {
@@ -138,9 +130,8 @@
         "correctIndex": 1,
         "explanation": "Redshift is an MPP, column-oriented data warehouse designed for large analytic queries and joins. RDS and Aurora are OLTP engines; DynamoDB offers limited SQL support and is not suited for heavy joins.",
         "tags": [
-            "High-Performing Architectures",
-            "Redshift",
-            "Analytics"
+            "Analytics",
+            "Performance"
         ]
     },
     {
@@ -156,9 +147,7 @@
         "correctIndex": 0,
         "explanation": "DocumentDB maintains MongoDB API compatibility, letting existing drivers connect with minimal changes and scaling storage independently. DynamoDB JSON support requires SDK changes and different query patterns. JSONB on RDS is limited by single-instance constraints, and Neptune is for graph.",
         "tags": [
-            "Migration",
-            "DocumentDB",
-            "NoSQL"
+            "Resilience & DR"
         ]
     },
     {
@@ -174,9 +163,8 @@
         "correctIndex": 3,
         "explanation": "Timestream provides built-in time-series functions (windowing, aggregates) via SQL and handles tiered storage automatically, ideal for clickstream analytics. Keyspaces and Redis streams need custom aggregation logic; RDS may not scale writes efficiently.",
         "tags": [
-            "Operational Excellence",
-            "Timestream",
-            "Analytics"
+            "Analytics",
+            "DevOps & Ops"
         ]
     },
     {
@@ -192,9 +180,8 @@
         "correctIndex": 1,
         "explanation": "DynamoDB meets the latency requirement, offers managed durability, and TTL automatically deletes old carts. Redis persistence requires extra operations, Aurora over-engineers the need, and S3 has higher latency for small objects.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "DynamoDB",
-            "TTL"
+            "Cost Optimization",
+            "Database"
         ]
     },
     {
@@ -210,8 +197,7 @@
         "correctIndex": 1,
         "explanation": "OpenSearch Serverless ingests JSON documents, indexes nested fields automatically, and scales the cluster without manual node management, providing powerful ad-hoc search. RDS requires capacity planning and limited scale, DocumentDB is document-oriented but less optimized for complex search, and DynamoDB needs indexes defined upfront.",
         "tags": [
-            "High-Performing Architectures",
-            "OpenSearch",
+            "Performance",
             "Serverless"
         ]
     },
@@ -228,9 +214,8 @@
         "correctIndex": 0,
         "explanation": "Aurora Multi-master allows writes on multiple nodes in the same Region with immediate consistency and sub-second failover. DynamoDB transactions are ACID but eventual global consistency unless carefully architected. Redis lacks durable ACID guarantees. Standard RDS failover times may exceed a minute.",
         "tags": [
-            "Secure Architectures",
-            "Aurora",
-            "Transactions"
+            "Database",
+            "Security"
         ]
     },
     {
@@ -246,9 +231,7 @@
         "correctIndex": 0,
         "explanation": "Neptune is optimized for graph traversals and efficiently computes multi-hop relationships. Recursive SQL on Aurora is slower and complex. DynamoDB lacks join capability. Memcached would need application-level traversal logic.",
         "tags": [
-            "High-Performing Architectures",
-            "Neptune",
-            "Graph"
+            "Performance"
         ]
     },
     {
@@ -257,9 +240,8 @@
         "question": "Discuss the factors that should influence a choice between Amazon Aurora Serverless v2 and Amazon RDS MySQL for a startup expecting unpredictable traffic growth.",
         "answer": "Aurora Serverless v2 scales compute in fine-grained increments based on actual load, so it handles unpredictable spikes without intervention and bills per second of capacity used, reducing idle cost. It delivers Aurora\u2019s higher availability with six-way replicated storage. However, cold-start latency can occur if capacity was scaled to zero, and some features (e.g., logical replication) may be limited. RDS MySQL offers lower baseline cost at small instance sizes, full MySQL feature parity, and predictable performance but requires manual instance scaling or auto-scale events that cause downtime. Teams should weigh expected idle periods, feature requirements, and acceptable scaling latency when deciding.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Aurora",
-            "RDS"
+            "Cost Optimization",
+            "Database"
         ]
     },
     {
@@ -268,9 +250,8 @@
         "question": "Explain how ElastiCache Redis Global Datastore differs from DynamoDB global tables in terms of durability, use cases, and conflict handling.",
         "answer": "Redis Global Datastore replicates in-memory data asynchronously across Regions, providing sub-second read latency for cache scenarios. It is volatile; if all primary and replica nodes fail, data is lost unless external persistence is enabled, so it suits session stores or transient leaderboards. Conflict resolution is last-write-wins but without versioning. DynamoDB global tables store data durably on SSD-backed storage with multi-master writes, automatically resolve conflicts via timestamps, and are appropriate as a system of record. DynamoDB incurs higher per-request cost but eliminates data loss risk, while Redis offers faster access for ephemeral data.",
         "tags": [
-            "Resilient Architectures",
-            "ElastiCache",
-            "DynamoDB"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -279,10 +260,9 @@
         "question": "Provide an architecture that ingests clickstream data with Amazon Kinesis Data Streams, writes to DynamoDB, and uses DynamoDB Streams to update an OpenSearch index in near real time.",
         "answer": "Client browsers send events to a Kinesis Data Stream partitioned by user ID. A Lambda consumer batch-writes items to a DynamoDB table with on-demand capacity. DynamoDB Streams capture inserts and trigger another Lambda that transforms the item into a search document and calls the OpenSearch bulk API. This decouples write ingestion from search indexing, provides retry logic, and allows DynamoDB to remain the source of truth while OpenSearch serves full-text queries.",
         "tags": [
-            "High-Performing Architectures",
-            "DynamoDB",
-            "OpenSearch",
-            "Lambda"
+            "Database",
+            "Performance",
+            "Serverless"
         ]
     },
     {
@@ -291,9 +271,7 @@
         "question": "Why might an application team choose Amazon Keyspaces over self-managed Cassandra on EC2 for an IoT workload with strict SLA requirements?",
         "answer": "Keyspaces is serverless, so it automatically scales partitions and throughput, provides single-digit millisecond performance, and eliminates operational tasks like patching, repairs, and capacity planning. It replicates data across three AZs, offers on-demand or provisioned capacity with auto-scaling, and integrates with AWS security and monitoring. Self-managing Cassandra requires expertise to tune, handle node failures, scale clusters, and meet SLAs, increasing risk and operational load.",
         "tags": [
-            "Operational Excellence",
-            "Keyspaces",
-            "NoSQL"
+            "DevOps & Ops"
         ]
     }
 ]

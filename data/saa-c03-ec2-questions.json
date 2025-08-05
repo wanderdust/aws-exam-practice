@@ -12,9 +12,8 @@
         "correctIndex": 2,
         "explanation": "Placement Groups with a Cluster strategy provide the lowest latency and highest packet-per-second performance for instances within a single Availability Zone. This is ideal for HPC applications that need tight node-to-node communication. Dedicated Hosts only provide dedicated physical servers but don't optimize network performance between instances. Reserved Instances are a billing concept and don't affect performance. Spot Instances with Capacity Blocks are for fault-tolerant workloads and don't specifically optimize for networking performance.",
         "tags": [
-            "EC2",
-            "High-Performing Architectures",
-            "Networking Services"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -23,10 +22,9 @@
         "question": "Explain the difference between EC2 Instance Store and EBS volumes, and when you would choose one over the other.",
         "answer": "EC2 Instance Store provides temporary block-level storage that is physically attached to the host computer where the EC2 instance runs. It offers high I/O performance but data is lost when the instance stops or terminates.\n\nEBS (Elastic Block Store) volumes are network-attached storage that persists independently from the life of an instance. Data on EBS volumes remains intact even if the EC2 instance is stopped or terminated.\n\nYou would choose Instance Store when:\n- You need the highest possible disk I/O performance\n- Your application can handle data loss or has built-in replication\n- You need temporary storage for buffers, caches, or scratch data\n\nYou would choose EBS volumes when:\n- Your data must persist beyond the lifecycle of the instance\n- You need the ability to snapshot data for backups\n- You need to be able to detach and reattach storage to different instances\n- Your data requires consistent long-term storage",
         "tags": [
-            "EC2",
-            "Storage Services",
-            "EBS",
-            "High-Performing Architectures"
+            "Compute",
+            "Performance",
+            "Storage"
         ]
     },
     {
@@ -42,10 +40,9 @@
         "correctIndex": 3,
         "explanation": "EC2 with Auto Scaling groups and CloudWatch alarms provides automatic scaling based on metrics like CPU utilization or network traffic, which is ideal for unpredictable workloads. This combination ensures you have the right number of instances available to handle the application load while minimizing costs by not over-provisioning. Reserved Instances provide discounts but don't automatically adjust capacity. Dedicated Instances are more expensive and don't provide auto-scaling capabilities. On-Demand Instances with Trusted Advisor only provides cost recommendations but doesn't automatically adjust capacity.",
         "tags": [
-            "EC2",
-            "Auto Scaling",
-            "CloudWatch",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Monitoring & Logging"
         ]
     },
     {
@@ -61,10 +58,8 @@
         "correctIndex": 0,
         "explanation": "Multiple EC2 instances in an Auto Scaling group spanning multiple Availability Zones provides the highest level of availability. This setup protects against both hardware failures and entire Availability Zone outages by distributing instances across physically separate infrastructure. A single EC2 instance with multiple ENIs still represents a single point of failure. Placement groups with a spread strategy in a single AZ only protect against hardware failures but not AZ outages. Enhanced Networking improves performance but doesn't address availability concerns.",
         "tags": [
-            "EC2",
-            "High Availability",
-            "Resilient Architectures",
-            "Auto Scaling"
+            "Compute",
+            "Resilience & DR"
         ]
     },
     {
@@ -73,9 +68,9 @@
         "question": "What are EC2 Spot Instances, and what strategies can you implement to minimize interruptions when using them?",
         "answer": "EC2 Spot Instances are spare EC2 compute capacity available at up to a 90% discount compared to On-Demand prices. However, they can be interrupted with a 2-minute warning when AWS needs the capacity back.\n\nStrategies to minimize interruptions when using Spot Instances include:\n\n1. **Use Spot Instance Pools**: Distribute your instances across multiple instance types, sizes, and Availability Zones to reduce the impact of interruptions.\n\n2. **Implement Checkpointing**: Regularly save application state to persistent storage so you can resume processing from the last saved point after an interruption.\n\n3. **Use Spot Fleet with Capacity-Optimized Allocation Strategy**: This chooses Spot Instances from pools with the lowest likelihood of interruption.\n\n4. **Graceful Shutdown Handling**: Design your application to catch the interruption notice (via instance metadata service or EventBridge events) and gracefully clean up before termination.\n\n5. **Combine with On-Demand or Reserved Instances**: Use Spot for interruptible workloads while keeping critical components on more stable instance types.\n\n6. **Use Spot Blocks**: For short-duration workloads, Spot Blocks can provide uninterrupted use of Spot Instances for 1-6 hours.\n\n7. **Implement Auto Scaling**: Configure Auto Scaling to replace interrupted instances quickly, potentially with On-Demand instances if Spot capacity isn't available.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures",
-            "Resilient Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Resilience & DR"
         ]
     },
     {
@@ -91,8 +86,8 @@
         "correctIndex": 3,
         "explanation": "Spot Instances offer discounts of up to 90 percent and are suitable for fault\u2011tolerant, interruption\u2011resilient workloads such as short\u2011lived batch simulations. The other options cost more and are intended for steady\u2011state or long\u2011term usage.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization"
         ]
     },
     {
@@ -108,9 +103,8 @@
         "correctIndex": 1,
         "explanation": "Cluster placement groups pack instances within a single rack in one AZ to maximize 10\u2013100 Gbps bandwidth and microsecond\u2011level latency. Spread distributes across racks and AZs, partition splits by rack for large fleets, and Dedicated Host affects tenancy, not network locality.",
         "tags": [
-            "EC2",
-            "High-Performing Architectures",
-            "Networking Services"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -126,9 +120,8 @@
         "correctIndex": 2,
         "explanation": "io2 Block Express supports up to 256 000 IOPS and delivers the lowest latency among EBS volumes. gp3 tops out at 16 000 IOPS, and HDD\u2011backed st1 and sc1 are throughput\u2011optimized, not IOPS\u2011optimized.",
         "tags": [
-            "EBS",
-            "High-Performing Architectures",
-            "Storage Services"
+            "Performance",
+            "Storage"
         ]
     },
     {
@@ -144,9 +137,8 @@
         "correctIndex": 1,
         "explanation": "Elastic IPs are static public IPv4 addresses you own until you release them, ensuring continuity across instance restarts at no cost while the address is attached. IPv6 does not guarantee static IPv4, Dedicated Hosts do not lock IPs, and secondary ENIs with auto\u2011assigned public IPs still change when the instance stops.",
         "tags": [
-            "EC2",
-            "Networking Services",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization"
         ]
     },
     {
@@ -162,9 +154,8 @@
         "correctIndex": 0,
         "explanation": "SSH timeouts almost always point to missing or mis\u2011configured security\u2011group rules. IAM roles do not affect network reachability. Network credits exhaustion would slow all traffic, and port 80 relates to HTTP, not SSH.",
         "tags": [
-            "EC2",
-            "Secure Architectures",
-            "Networking Services"
+            "Compute",
+            "Security"
         ]
     },
     {
@@ -180,9 +171,8 @@
         "correctIndex": 1,
         "explanation": "An Elastic Network Interface (ENI) can be detached from one instance and attached to another, preserving IPs, MAC, and security groups for rapid failover. EFA is for HPC traffic, and the gateways are VPC edge devices.",
         "tags": [
-            "EC2",
-            "Resilient Architectures",
-            "Networking Services"
+            "Compute",
+            "Resilience & DR"
         ]
     },
     {
@@ -198,8 +188,8 @@
         "correctIndex": 2,
         "explanation": "Partition placement groups distribute instances across logical partitions that do not share racks, providing hundreds of instances with isolation within and across AZs. Spread supports only 7 instances per AZ, and Cluster puts all nodes in one rack.",
         "tags": [
-            "EC2",
-            "Resilient Architectures"
+            "Compute",
+            "Resilience & DR"
         ]
     },
     {
@@ -215,9 +205,8 @@
         "correctIndex": 1,
         "explanation": "EBS Multi\u2011Attach, available on io2 and io3, lets multiple instances in the same AZ perform concurrent reads and writes. The other features relate to backup and restore, not shared attachment.",
         "tags": [
-            "EBS",
-            "Resilient Architectures",
-            "Storage Services"
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -233,8 +222,8 @@
         "correctIndex": 2,
         "explanation": "Hibernate snapshots RAM to the encrypted root volume at stop and restores it on start, cutting boot time. Storage type changes and instance store do not preserve RAM, and Spot Block was deprecated.",
         "tags": [
-            "EC2",
-            "High-Performing Architectures"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -250,9 +239,9 @@
         "correctIndex": 1,
         "explanation": "priceCapacityOptimized first filters pools that have sufficient capacity, then selects the lowest priced among them, giving a price\u2011to\u2011capacity balance. lowestPrice ignores capacity risk, diversified spreads across pools, and capacityOptimized focuses only on capacity.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures",
-            "Resilient Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Resilience & DR"
         ]
     },
     {
@@ -268,9 +257,9 @@
         "correctIndex": 1,
         "explanation": "gp3 decouples performance from capacity, allowing up to 16 000 IOPS and 1 000 MiB/s regardless of size. gp2 performance scales with size, io1 is provisioned IOPS SSD but not general purpose, and sc1 is HDD.",
         "tags": [
-            "EBS",
-            "High-Performing Architectures",
-            "Cost-Optimized Architectures"
+            "Cost Optimization",
+            "Performance",
+            "Storage"
         ]
     },
     {
@@ -286,9 +275,9 @@
         "correctIndex": 1,
         "explanation": "Dedicated Host On\u2011Demand gives a whole physical server to one customer with hourly billing, satisfying licensing isolation. Dedicated Instances do not guarantee host\u2011level isolation, and capacity reservations still share hardware.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures",
-            "Secure Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Security"
         ]
     },
     {
@@ -304,8 +293,7 @@
         "correctIndex": 3,
         "explanation": "EBS is replicated within an AZ, EFS is replicated across multiple AZs (or one zone variant), and Instance Store is tied to host hardware and lost on stop or termination.",
         "tags": [
-            "Storage Services",
-            "Resilient Architectures"
+            "Resilience & DR"
         ]
     },
     {
@@ -321,8 +309,7 @@
         "correctIndex": 1,
         "explanation": "EFS lifecycle management transparently transitions files between Standard and Infrequent Access (or Archive) classes based on the age you set. The other services do not apply to EFS.",
         "tags": [
-            "Storage Services",
-            "Cost-Optimized Architectures"
+            "Cost Optimization"
         ]
     },
     {
@@ -338,8 +325,7 @@
         "correctIndex": 2,
         "explanation": "Starting February 1 2024 AWS charges USD 0.005 per hour for each public IPv4 address that is allocated but not used (unattached). Attached Elastic IPs remain free. IPv6 and private IPs are not billed.",
         "tags": [
-            "Networking Services",
-            "Cost-Optimized Architectures"
+            "Cost Optimization"
         ]
     },
     {
@@ -348,9 +334,9 @@
         "question": "Explain how cluster, spread, and partition placement groups differ in terms of network performance, fault isolation, and maximum instance counts.",
         "answer": "Cluster placement groups pack instances within one rack in a single AZ to maximize bandwidth and minimize latency, ideal for HPC but vulnerable to a single rack or AZ failure and limited to the number of instances the rack can host. Spread placement groups place up to seven instances per AZ, each on distinct racks and optionally across AZs, giving the highest fault isolation but no enhanced networking performance. Partition placement groups subdivide a group into logical partitions that map to separate racks; each partition can contain hundreds of instances, balancing performance and isolation and allowing large distributed systems like HDFS or Kafka to survive rack failures.",
         "tags": [
-            "EC2",
-            "High-Performing Architectures",
-            "Resilient Architectures"
+            "Compute",
+            "Performance",
+            "Resilience & DR"
         ]
     },
     {
@@ -359,9 +345,8 @@
         "question": "Outline the safest method to encrypt an existing unencrypted EBS volume without downtime.",
         "answer": "1 \u2013 Create a snapshot of the unencrypted volume. 2 \u2013 Copy that snapshot and choose the Encrypt option with your desired KMS key, producing an encrypted snapshot. 3 \u2013 Create a new encrypted volume from the encrypted snapshot in the same AZ. 4 \u2013 Attach the new volume to the instance as a secondary device. 5 \u2013 Stop the application, synchronize file systems, detach the old volume, and mount the new one using the original device name, then restart services. Because data is never exposed in plaintext and the original volume remains intact until switchover, the process is low risk and involves only a brief cutover window.",
         "tags": [
-            "EBS",
-            "Secure Architectures",
-            "Storage Services"
+            "Security",
+            "Storage"
         ]
     },
     {
@@ -370,9 +355,8 @@
         "question": "Compare when you would favor EBS, EFS, or Instance Store for application data storage in a multi\u2011tier web application.",
         "answer": "EBS is optimal for persistent block storage per instance such as operating system, application binaries, or database volumes that need single\u2011instance attachment and strong, single\u2011AZ durability. EFS shines for shared file workloads like user\u2011uploaded assets or configuration files that many instances across multiple AZs must read and write concurrently with POSIX semantics. Instance Store is appropriate only for temporary data such as caches or scratch space because it offers high IOPS and is physically attached but is wiped on stop, terminate, or underlying hardware failure.",
         "tags": [
-            "Storage Services",
-            "High-Performing Architectures",
-            "Resilient Architectures"
+            "Performance",
+            "Resilience & DR"
         ]
     },
     {
@@ -381,9 +365,8 @@
         "question": "Describe the steps required to mount the same EFS file system on EC2 instances that reside in three different Availability Zones.",
         "answer": "Create the EFS file system with Regional scope (default). Attach a mount target in each AZ by selecting its subnet and security group. Ensure the security group allows NFS (TCP 2049) inbound from the EC2 security groups. On each instance, install the amazon\u2011efs\u2011utils package or NFS client, then mount via the DNS name that automatically resolves to the AZ\u2011local mount target, for example `sudo mount -t efs fs-123456:/ /mnt/efs`. Using the regional DNS name lets each instance connect to its closest mount target, ensuring low latency and HA across AZs.",
         "tags": [
-            "Storage Services",
-            "EC2",
-            "Resilient Architectures"
+            "Compute",
+            "Resilience & DR"
         ]
     },
     {
@@ -392,8 +375,8 @@
         "question": "Explain the differences among Capacity Reservations, Reserved Instances, and Savings Plans when planning for consistent compute availability and cost control.",
         "answer": "Capacity Reservations guarantee that the specified number of instances of a given type and AZ are always available, but you pay On\u2011Demand pricing unless combined with Savings Plans or convertible RIs. Reserved Instances provide a billing discount (up to 72 percent) for a specific instance family, platform, and scope but do not hold capacity. Savings Plans deliver equal or better discounts than Convertible RIs with greater flexibility, applying to any EC2 or Fargate usage that matches the plan, yet they also lack capacity guarantees. Therefore, use Capacity Reservations for assured availability, RIs or Savings Plans for cost reduction, and combine them to get both.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization"
         ]
     },
     {
@@ -409,9 +392,8 @@
         "correctIndex": 1,
         "explanation": "Target tracking scaling is the most cost-effective and automatic option as it dynamically adjusts capacity based on a target metric (like CPU utilization), adding or removing instances as needed to maintain the target. Simple scheduled scaling doesn't adapt to actual demand, step scaling requires multiple alarms and thresholds to be configured, and manual scaling doesn't respond automatically to load changes.",
         "tags": [
-            "EC2",
-            "Auto Scaling",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization"
         ]
     },
     {
@@ -427,9 +409,8 @@
         "correctIndex": 3,
         "explanation": "Instance Store volumes provide the highest possible I/O performance as they are physically attached to the host server of the EC2 instance. Since the data can be reconstructed if lost and is already replicated across instances, the ephemeral nature of Instance Store is acceptable. EBS volumes (including io2) have higher latency as they are network-attached, and EFS has even higher latency as a distributed file system.",
         "tags": [
-            "EC2",
-            "Storage Services",
-            "High-Performing Architectures"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -445,9 +426,9 @@
         "correctIndex": 3,
         "explanation": "Dedicated Hosts provide visibility and control over the exact physical server, including the number of sockets and physical cores. This makes it the best option for software licenses that are based on physical cores or sockets. The other options either share hardware with other customers, don't provide visibility into the physical hardware, or don't guarantee consistent availability.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures",
-            "Secure Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Security"
         ]
     },
     {
@@ -463,10 +444,10 @@
         "correctIndex": 3,
         "explanation": "Amazon RDS Multi-AZ with Provisioned IOPS is the most suitable solution as it provides high performance disk I/O via Provisioned IOPS along with automatic data persistence and failover through Multi-AZ deployment. EC2 with EBS Multi-Attach is limited to io1/io2 volumes and specific instance types, and doesn't provide automatic failover. Instance Store requires complex custom replication and doesn't persist data if the instance fails. DynamoDB is a NoSQL database, not suitable for all database workloads.",
         "tags": [
-            "EC2",
-            "RDS",
-            "Resilient Architectures",
-            "High-Performing Architectures"
+            "Compute",
+            "Database",
+            "Performance",
+            "Resilience & DR"
         ]
     },
     {
@@ -482,9 +463,9 @@
         "correctIndex": 3,
         "explanation": "Maintenance Windows in AWS Systems Manager allow you to define schedules for performing potentially disruptive actions on your instances, such as patching or updating software. This feature helps minimize disruption by allowing maintenance to be performed during predefined time windows when the impact on business is low. The other options don't specifically address maintenance scheduling - EC2 Instance Connect Endpoint provides secure SSH connection, Reachability Test checks network connectivity, and Capacity Reservations ensure instance capacity is available.",
         "tags": [
-            "EC2",
-            "Systems Manager",
-            "Resilient Architectures"
+            "Compute",
+            "Monitoring & Logging",
+            "Resilience & DR"
         ]
     },
     {
@@ -493,8 +474,8 @@
         "question": "Explain the differences between User Data and Instance Metadata in EC2 and provide use cases for each.",
         "answer": "User Data is information supplied by the user at instance launch time that can be used to perform common automated configuration tasks or run scripts after the instance starts. It's limited to 16 KB, is not encrypted, and is accessible to anyone who can view the instance attributes. User Data is typically used to automate instance configuration such as installing software, downloading necessary files, or configuring services at launch.\n\nInstance Metadata, accessed via http://169.254.169.254/latest/meta-data/, is data about the instance that applications can use to configure or manage the running instance. This includes information like instance ID, security groups, local IP address, AMI ID, and more. It's dynamically updated and available only to processes running on the instance. Instance Metadata is used by applications to adapt to their environment, for scripts to make decisions based on instance properties, and for tools that need to understand the EC2 instance context.\n\nKey differences: User Data is provided by users and doesn't change, while Instance Metadata is provided by AWS and updates to reflect the current state. User Data runs scripts at launch, while Instance Metadata is queried by running applications as needed.",
         "tags": [
-            "EC2",
-            "High-Performing Architectures"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -503,10 +484,9 @@
         "question": "Describe the steps and best practices for implementing an effective EC2 Auto Scaling solution for handling variable workloads.",
         "answer": "Implementing an effective EC2 Auto Scaling solution involves these key steps and best practices:\n\n1. **Choose appropriate instance types**: Select instance families that match your workload's CPU, memory, storage, and network requirements.\n\n2. **Create an optimized AMI**: Build a custom AMI with all required software pre-installed to minimize instance launch time and ensure consistency.\n\n3. **Configure Launch Templates**: Define the instance configuration in Launch Templates rather than Launch Configurations for versioning and additional features.\n\n4. **Set up appropriate scaling policies**:\n   - Use Target Tracking policies for stable workloads (e.g., maintain 70% CPU utilization)\n   - Use Step Scaling for more granular control based on alarm thresholds\n   - Configure Scheduled Scaling for predictable traffic patterns\n\n5. **Configure health checks**: Enable both EC2 and ELB health checks to detect both hardware and application failures.\n\n6. **Define proper warm-up periods**: Set appropriate warm-up times to prevent scaling decisions based on instances still initializing.\n\n7. **Implement cooldown periods**: Prevent rapid scaling activities by setting appropriate cooldown periods between scaling actions.\n\n8. **Use multiple Availability Zones**: Distribute instances across multiple AZs for high availability.\n\n9. **Set appropriate minimum, maximum, and desired capacity**: Keep minimum capacity to handle base load, set maximum to control costs, and let desired capacity adjust dynamically.\n\n10. **Create lifecycle hooks**: Implement lifecycle hooks to perform custom actions during instance launch or termination.\n\n11. **Monitor and optimize**: Use CloudWatch metrics and alarms to track performance and costs, and adjust policies as needed.\n\n12. **Consider using multiple instance types**: Implement a mix of On-Demand and Spot Instances to optimize costs while maintaining reliability.\n\n13. **Decouple dependencies**: Ensure your application can scale horizontally by removing session stickiness and using distributed caching or databases for shared state.\n\n14. **Implement graceful termination**: Configure termination policies that minimize disruption, such as terminating instances closest to the next billing hour.",
         "tags": [
-            "EC2",
-            "Auto Scaling",
-            "High-Performing Architectures",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Performance"
         ]
     },
     {
@@ -522,10 +502,9 @@
         "correctIndex": 0,
         "explanation": "A NAT Gateway deployed in a public subnet allows instances in private subnets to initiate outbound traffic to the internet (like downloading updates) while preventing inbound connections from the internet. The private subnets' route tables would direct internet-bound traffic to the NAT Gateway. Assigning Elastic IPs would make instances directly accessible from the internet, which violates the private subnet concept. Internet Gateways can't be directly attached to private subnets - they work with public subnets. VPC endpoints only connect to specific AWS services, not the general internet for software updates.",
         "tags": [
-            "EC2",
-            "VPC",
-            "Networking Services",
-            "Secure Architectures"
+            "Compute",
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -541,9 +520,9 @@
         "correctIndex": 1,
         "explanation": "Enabling X-Forwarded-For headers and access logs on the ALB is the correct solution. The X-Forwarded-For header preserves the client's IP address across the load balancer, and ALB access logs record which backend instance processed each request, along with request timestamps and response codes. CloudWatch agents monitor instance metrics but don't track request processing. Sticky sessions ensure users connect to the same instance but don't provide audit logging. Detailed monitoring increases the frequency of metric collection but doesn't track which instance handled specific requests.",
         "tags": [
-            "EC2",
-            "ELB",
-            "Secure Architectures"
+            "Compute",
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -552,8 +531,8 @@
         "question": "Compare and contrast the four AWS EC2 instance purchasing options: On-Demand, Reserved Instances, Spot Instances, and Savings Plans. When would you recommend each option?",
         "answer": "**On-Demand Instances**:\n- **Pricing**: Highest per-hour rate, pay only for what you use with no upfront costs or commitments\n- **Flexibility**: Can be launched and terminated any time with per-second billing\n- **Best for**: Unpredictable workloads, short-term projects, testing/development, applications that can't be interrupted\n- **Recommend when**: Organizations need maximum flexibility, are just starting with AWS, have truly unpredictable or spiky workloads, or are unwilling to make any commitments\n\n**Reserved Instances (RIs)**:\n- **Pricing**: Significant discounts (up to 72%) compared to On-Demand, requires 1 or 3-year commitment, with payment options (No upfront, partial upfront, all upfront)\n- **Types**: Standard RIs (most savings, limited changes) vs. Convertible RIs (more flexibility, less savings)\n- **Attributes**: Reserved by instance type, platform, tenancy, and region/AZ\n- **Best for**: Steady-state workloads with predictable usage\n- **Recommend when**: Organizations have stable, predictable workloads that will run for at least a year, know their compute requirements in advance, and want to achieve significant cost savings\n\n**Spot Instances**:\n- **Pricing**: Deepest discounts (up to 90% off On-Demand), but variable pricing based on supply/demand\n- **Availability**: Can be interrupted with 2-minute notice when EC2 needs capacity back\n- **Best for**: Fault-tolerant, flexible, stateless workloads that can handle interruptions\n- **Recommend when**: Organizations run batch processing, data analysis, CI/CD pipelines, containerized workloads, or other interruptible applications, and are focused on maximum cost savings\n\n**Savings Plans**:\n- **Pricing**: Similar discounts to RIs (up to 72%), with 1 or 3-year commitment to a specific dollar amount per hour\n- **Types**: Compute Savings Plans (most flexible, across EC2, Fargate, Lambda) vs. EC2 Instance Savings Plans (specific family, region)\n- **Flexibility**: Automatically applies to any instance family, size, OS, tenancy or region (for Compute SP)\n- **Best for**: Organizations wanting RI-like savings with more flexibility\n- **Recommend when**: Organizations want significant discounts but need flexibility in instance types, or use multiple compute services beyond just EC2\n\n**Strategic combinations**:\n- Use RIs or Savings Plans for baseline capacity\n- Use Spot Instances for flexible, fault-tolerant portions of workload\n- Use On-Demand for unpredictable peaks or critical components that can't be interrupted\n\nThis blended approach often provides the optimal balance between cost savings and operational requirements.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization"
         ]
     },
     {
@@ -569,9 +548,9 @@
         "correctIndex": 3,
         "explanation": "EC2 Auto Recovery is the most cost-effective high availability solution for a single instance scenario, as it automatically recovers the instance on the same host if hardware issues are detected, preserving instance ID, IP address, EBS volumes, and all instance metadata. Option 1 requires multiple instances running simultaneously, which increases cost. Option 2 with snapshots doesn't provide automated failover and would lose recent data. Option 4 with ASG min/max/desired=1 provides recovery but is more complex and may not maintain state as effectively as direct Auto Recovery.",
         "tags": [
-            "EC2",
-            "Resilient Architectures",
-            "Cost-Optimized Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Resilience & DR"
         ]
     },
     {
@@ -587,9 +566,8 @@
         "correctIndex": 2,
         "explanation": "Transit Gateway with VPN attachments is the correct choice for encrypting data in transit between VPCs. The VPN connections encrypt all traffic passing through them using IPsec tunnels. VPC Peering alone doesn't encrypt traffic; it just enables routing between VPCs. PrivateLink provides private connectivity but doesn't automatically encrypt traffic (TLS would need to be implemented at the application level). Direct Connect doesn't encrypt data by default and is meant for connecting to AWS from on-premises, not for VPC-to-VPC communication.",
         "tags": [
-            "EC2",
-            "Networking Services",
-            "Secure Architectures"
+            "Compute",
+            "Security"
         ]
     },
     {
@@ -605,10 +583,9 @@
         "correctIndex": 0,
         "explanation": "Target tracking scaling with a 50% CPU utilization target is the most appropriate strategy. It will automatically maintain the average CPU utilization around 50%, which provides a buffer above the normal 30% but keeps resources available for the spikes up to 80%. It's also the most hands-off approach that will continuously adjust capacity as needed. Simple scaling doesn't adjust gradually and might lead to overprovisioning. Step scaling requires more complex configuration and maintenance. Scheduled scaling is less adaptive to unexpected spikes that don't follow historical patterns.",
         "tags": [
-            "EC2",
-            "Auto Scaling",
-            "Cost-Optimized Architectures",
-            "High-Performing Architectures"
+            "Compute",
+            "Cost Optimization",
+            "Performance"
         ]
     },
     {
@@ -624,9 +601,8 @@
         "correctIndex": 1,
         "explanation": "Placing instances in a cluster placement group with enhanced networking (such as Elastic Network Adapter or Elastic Fabric Adapter) provides the lowest network latency and highest throughput between instances. Cluster placement groups keep instances in a single Availability Zone on a high-bisection bandwidth network segment, minimizing latency. Enhanced networking provides higher packet per second (PPS) performance and lower latencies. Distributing across AZs increases latency. Spread placement groups specifically separate instances across underlying hardware, which doesn't optimize for networking performance. Multiple network interfaces don't inherently improve performance between instances.",
         "tags": [
-            "EC2",
-            "Networking Services",
-            "High-Performing Architectures"
+            "Compute",
+            "Performance"
         ]
     },
     {
@@ -642,10 +618,9 @@
         "correctIndex": 3,
         "explanation": "VPC endpoints provide private connectivity between your VPC and supported AWS services without requiring an internet gateway, NAT device, VPN, or Direct Connect connection. All traffic remains within the AWS network and doesn't traverse the public internet. Interface endpoints (powered by AWS PrivateLink) or Gateway endpoints can be set up for various AWS services. NAT gateways and proxy servers route traffic through the public internet. Transit Gateway connects VPCs and on-premises networks but doesn't inherently provide private access to AWS services without VPC endpoints.",
         "tags": [
-            "EC2",
-            "VPC",
-            "Secure Architectures",
-            "Networking Services"
+            "Compute",
+            "Security",
+            "VPC & Networking"
         ]
     },
     {
@@ -654,9 +629,8 @@
         "question": "Describe the security implications of using EC2 Instance Metadata Service (IMDS) and best practices for securing it.",
         "answer": "EC2 Instance Metadata Service (IMDS) provides access to instance metadata and temporary credentials via a local endpoint (http://169.254.169.254) that can only be accessed from within the instance. However, it presents several security implications:\n\n1. **SSRF Vulnerabilities**: Server-Side Request Forgery attacks can exploit applications with URL input fields to access the metadata service, potentially exposing sensitive information including IAM role credentials.\n\n2. **Container Escape**: In containerized environments, containers might access host metadata if not properly isolated.\n\n3. **Role Credential Exposure**: Applications can unintentionally expose temporary credentials stored in environment variables or config files.\n\nBest practices for securing IMDS include:\n\n1. **Use IMDSv2**: Always use IMDSv2, which is session-oriented and protects against SSRF attacks by requiring a PUT request to establish a session with a token before retrieving metadata.\n\n2. **Require IMDSv2**: Disable IMDSv1 by setting the \"HttpTokens\" parameter to \"required\" in the instance metadata options.\n\n3. **Limit Hop Count**: Set the hop limit (TTL) to 1 to ensure metadata requests can't be forwarded beyond the instance.\n\n4. **Restrict Instance Profile Permissions**: Follow least privilege principles for IAM roles attached to EC2 instances.\n\n5. **Disable IMDS If Not Needed**: If an instance doesn't need IMDS, disable it completely by setting \"HttpEndpoint\" to \"disabled\".\n\n6. **Network Controls**: Implement security group rules or network ACLs to block access to the metadata IP address from unauthorized systems.\n\n7. **Application Controls**: Implement input validation and URL whitelisting in applications to prevent SSRF attacks.\n\n8. **Regular Auditing**: Monitor and audit access to the metadata service using tools like VPC Flow Logs or CloudTrail.\n\nBy implementing these practices, organizations can significantly reduce the risk of credential theft and unauthorized access through the EC2 Instance Metadata Service.",
         "tags": [
-            "EC2",
-            "Secure Architectures",
-            "IAM"
+            "Compute",
+            "Security"
         ]
     },
     {
@@ -665,9 +639,8 @@
         "question": "Explain how to design a cost-efficient EC2 deployment strategy for an application with variable but predictable workload patterns.",
         "answer": "Designing a cost-efficient EC2 deployment for variable but predictable workloads requires a strategic blend of instance types and purchasing options. Here's a comprehensive approach:\n\n1. **Workload Analysis**:\n   - Analyze historical usage patterns to identify base load, predictable peaks, and seasonality\n   - Categorize workloads by criticality, interruptibility, and resource requirements\n   - Identify predictable patterns like business hours vs. off-hours, weekday vs. weekend, or seasonal variations\n\n2. **Layered Instance Strategy**:\n   - **Base Layer**: Cover minimum constant load with Reserved Instances (RIs) or Savings Plans\n      - Use 3-year commitments for the most stable portion of your workload\n      - Use 1-year commitments for the moderately stable portion\n      - Select convertible RIs if flexibility between instance families might be needed\n   - **Predictable Variable Layer**: Use scheduled scaling with a mix of Savings Plans and On-Demand\n      - Schedule capacity increases before predictable peaks\n      - Configure Auto Scaling groups with scheduled actions to follow known patterns\n   - **Flexible Layer**: Use Spot Instances for non-critical, interruptible workloads\n      - Implement spot instance diversification strategies (multiple instance types and AZs)\n      - Set up fallback to On-Demand if Spot availability is low\n\n3. **Right-sizing Strategy**:\n   - Use CloudWatch metrics to identify underutilized instances\n   - Implement automated right-sizing recommendations using AWS Cost Explorer\n   - Select appropriate instance families based on workload characteristics (compute, memory, or storage optimized)\n\n4. **Scaling Optimization**:\n   - Implement predictive scaling using machine learning forecasting\n   - Set appropriate cooldown periods to avoid scaling thrashing\n   - Use target tracking scaling policies based on custom metrics that correlate with business outcomes\n\n5. **Storage Optimization**:\n   - Use instance store for temporary data when appropriate\n   - Select EBS volume types based on performance needs (gp3 for balanced, st1 for throughput, sc1 for cold data)\n   - Implement automated snapshot lifecycle policies based on recovery point objectives\n\n6. **Operational Efficiency**:\n   - Use AMIs with pre-installed applications to reduce instance initialization time\n   - Implement automated instance retirement and refresh to benefit from newer generation instances\n   - Deploy across multiple Availability Zones for reliability while balancing Regional price differences\n\n7. **Monitoring and Continuous Optimization**:\n   - Set up AWS Budgets and alerts for cost anomalies\n   - Use Cost Explorer to track savings over time and identify further optimization opportunities\n   - Implement tagging strategy for cost allocation and resource tracking\n   - Regularly review and adjust the strategy based on changing workload patterns\n\nThis layered approach ensures you're using the most cost-efficient purchasing options for each segment of your workload while maintaining appropriate performance and availability.",
         "tags": [
-            "EC2",
-            "Cost-Optimized Architectures",
-            "Auto Scaling"
+            "Compute",
+            "Cost Optimization"
         ]
     },
     {
@@ -683,9 +656,9 @@
         "correctIndex": 3,
         "explanation": "Using AWS Systems Manager Parameter Store to store certificates (or certificate references) and Run Command to execute updates is the most efficient approach. Parameter Store can securely store sensitive configuration data with encryption (using KMS), version tracking, and access controls via IAM. Systems Manager Run Command can execute the update commands on all instances simultaneously without requiring SSH access. The S3 polling method creates unnecessary API load and potential delays. Creating a new AMI and replacing instances is overkill for certificate updates and causes service interruption. Manual SSH is time-consuming, error-prone, and doesn't scale.",
         "tags": [
-            "EC2",
-            "Systems Manager",
-            "Secure Architectures"
+            "Compute",
+            "Monitoring & Logging",
+            "Security"
         ]
     },
     {
@@ -701,9 +674,9 @@
         "correctIndex": 0,
         "explanation": "Using an AWS License Manager golden AMI with Config rule monitoring is the best option for applications with strict OS configuration and compliance tracking requirements. License Manager helps maintain approved 'golden' AMIs with standardized, pre-approved configurations, ensuring consistency and compliance. AWS Config rules can monitor instances for drift from the approved configuration and report compliance violations. User data scripts for configuration (option 2) may not consistently produce identical environments and lack compliance tracking. Manual installation (option 3) introduces human error risk and inconsistency. Shared AMIs from other accounts (option 4) may not meet internal compliance requirements and create dependency on external parties.",
         "tags": [
-            "EC2",
-            "Secure Architectures",
-            "Resilient Architectures"
+            "Compute",
+            "Resilience & DR",
+            "Security"
         ]
     },
     {
@@ -712,10 +685,9 @@
         "question": "Detail the network security layers available for EC2 instances and explain how they should be implemented in a defense-in-depth strategy.",
         "answer": "A comprehensive defense-in-depth network security strategy for EC2 instances involves multiple complementary layers:\n\n1. **VPC Design and Network Segmentation**:\n   - Implement a multi-tier architecture with public, private, and restricted subnets\n   - Use separate VPCs for different environments (dev, test, prod)\n   - Implement Transit Gateway with route table associations and propagations to control inter-VPC communication\n   - Apply CIDR design that allows for future growth while minimizing overlaps\n\n2. **Network Access Controls**:\n   - **Network ACLs (NACLs)**: Implement stateless subnet-level filtering\n     - Configure to block known malicious traffic patterns and common attack vectors\n     - Set explicit DENY rules for prohibited traffic\n     - Apply different NACL rules based on subnet function (web, app, database)\n   - **Security Groups**: Implement stateful instance-level filtering\n     - Follow principle of least privilege - allow only necessary ports/protocols\n     - Use reference security groups instead of CIDR blocks where possible\n     - Create purpose-specific groups (web-tier-sg, app-tier-sg, db-tier-sg)\n     - Avoid overly permissive rules like 0.0.0.0/0\n\n3. **Traffic Flow Controls**:\n   - Use NAT Gateways for outbound-only internet access from private subnets\n   - Implement VPC endpoints for private access to AWS services\n   - Deploy AWS PrivateLink for secure connectivity to third-party services\n   - Configure VPC Flow Logs for traffic analysis and security monitoring\n\n4. **Edge Protection**:\n   - **AWS Shield**: Enable for DDoS protection\n   - **AWS WAF**: Configure with rules to protect against common web exploits\n   - **Network Firewall**: Deploy for deep packet inspection and intrusion detection\n   - **ALB/NLB**: Terminate TLS and implement security policies at the load balancer\n\n5. **Host-Based Security**:\n   - Install and configure host-based firewalls\n   - Deploy host-based IDS/IPS solutions\n   - Use EC2 Instance Connect for SSH/RDP access rather than opening management ports\n   - Implement Systems Manager Session Manager for shell access without open inbound ports\n\n6. **Encryption and Secure Communication**:\n   - Enforce TLS for all communications\n   - Implement VPN or Direct Connect for secure on-premises connectivity\n   - Use VPC Traffic Mirroring for network packet inspection\n\n7. **Access Management and Monitoring**:\n   - Implement IAM roles for EC2 with minimal permissions\n   - Use AWS Systems Manager for patch management\n   - Configure EC2 detailed monitoring\n   - Deploy GuardDuty for threat detection\n   - Enable AWS Config for configuration monitoring\n   - Set up CloudTrail for API activity logging\n\n8. **Automation and Compliance**:\n   - Implement infrastructure as code with security checks\n   - Use Security Hub to aggregate security findings\n   - Deploy Config Rules to enforce security standards\n   - Perform regular security assessments and penetration testing\n\nImplementation should follow a methodical approach:\n1. Start with the outer layers (VPC design, NACLs) and work inward\n2. Use automation to ensure consistent application of security controls\n3. Regularly test controls with security assessments\n4. Monitor and iterate on the security posture based on emerging threats\n5. Document security architecture and maintain runbooks for incident response\n\nBy implementing multiple security layers, organizations create a robust defense where the compromise of one layer doesn't lead to a complete system compromise.",
         "tags": [
-            "EC2",
-            "VPC",
-            "Secure Architectures",
-            "Networking Services"
+            "Compute",
+            "Security",
+            "VPC & Networking"
         ]
     }
 ]

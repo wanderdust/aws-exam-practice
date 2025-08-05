@@ -12,9 +12,9 @@
         "correctIndex": 2,
         "explanation": "Snowball Edge appliances move large data sets offline and bypass limited or congested links. At 1 Gbps, 800 TB would take more than a week, so Snowball is faster. DataSync and Transfer Acceleration still depend on the limited circuit. Storage Gateway only caches data on premises.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Snowball",
-            "Migration"
+            "Cost Optimization",
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -30,9 +30,8 @@
         "correctIndex": 0,
         "explanation": "Compute Optimized variants support onboard EC2 AMI-based instances and Lambda@Edge for local processing. Storage Optimized models focus on capacity and do not run user compute workloads. Both models offer encryption, tamper protection, and high-speed networking.",
         "tags": [
-            "High-Performing Architectures",
-            "Snowball",
-            "Edge Computing"
+            "Performance",
+            "Storage"
         ]
     },
     {
@@ -48,10 +47,8 @@
         "correctIndex": 1,
         "explanation": "Snowball Edge Compute Optimized can process data locally using EC2 or Lambda and store results. Once full, it is shipped back for offline ingestion. Outposts requires network connectivity. Storage Gateway and DataSync require stable bandwidth.",
         "tags": [
-            "Resilient Architectures",
-            "Snowball",
-            "Edge Computing",
-            "IoT"
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -67,9 +64,8 @@
         "correctIndex": 0,
         "explanation": "Snowball transfers payloads into the S3 bucket and prefix specified in the job manifest. Lifecycle rules can later transition data to Glacier. Import does not target EFS or FSx.",
         "tags": [
-            "Operational Excellence",
-            "Snowball",
-            "S3"
+            "DevOps & Ops",
+            "Storage"
         ]
     },
     {
@@ -86,9 +82,8 @@
         "correctIndex": 2,
         "explanation": "Snowball encrypts data with 256-bit keys locked in AWS KMS and uses tamper evident enclosures. X.509, SSM tunnels, and IAM roles do not provide device-level encryption or physical integrity.",
         "tags": [
-            "Secure Architectures",
-            "Snowball",
-            "Encryption"
+            "Security",
+            "Storage"
         ]
     },
     {
@@ -104,10 +99,7 @@
         "correctIndex": 1,
         "explanation": "FSx for Lustre is purpose-built for HPC, providing hundreds of GB/s throughput and POSIX compliance. Scratch deployment maximizes burst performance for temporary analytics. Windows FSx is SMB. ONTAP and OpenZFS are general purpose and lower throughput.",
         "tags": [
-            "High-Performing Architectures",
-            "FSx",
-            "Lustre",
-            "HPC"
+            "Performance"
         ]
     },
     {
@@ -123,10 +115,7 @@
         "correctIndex": 2,
         "explanation": "ONTAP supports SnapMirror and FlexClone technologies for near-instant snapshots and clones. Other FSx variants offer snapshots but not ONTAP-style replication and cloning. NFS, Backup integration, and mixed media tiers are supported by multiple variants.",
         "tags": [
-            "Resilient Architectures",
-            "FSx",
-            "ONTAP",
-            "Snapshots"
+            "Resilience & DR"
         ]
     },
     {
@@ -142,10 +131,7 @@
         "correctIndex": 0,
         "explanation": "FSx for Windows is a fully managed Windows file system supporting SMB, NTFS ACLs, Active Directory integration, and Distributed File System. It removes server maintenance. EC2 clusters require patching. Lustre is not Windows native. ONTAP works but adds unnecessary features.",
         "tags": [
-            "High-Performing Architectures",
-            "FSx",
-            "Windows",
-            "SMB"
+            "Performance"
         ]
     },
     {
@@ -161,9 +147,7 @@
         "correctIndex": 3,
         "explanation": "Persistent file systems replicate data within the AZ and survive node failures. Scratch deployments trade durability for speed. Multi-AZ is not offered for Lustre. OpenZFS is a different FSx service.",
         "tags": [
-            "Resilient Architectures",
-            "FSx",
-            "Lustre"
+            "Resilience & DR"
         ]
     },
     {
@@ -179,9 +163,7 @@
         "correctIndex": 1,
         "explanation": "FSx for OpenZFS provides NFS access, 0.5 ms latency, and snapshot support, making it ideal for build systems requiring fast file operations. Windows FSx uses SMB. S3 with Transfer Family is object storage and higher latency. EFS snapshots are slower and not on-prem-friendly.",
         "tags": [
-            "High-Performing Architectures",
-            "FSx",
-            "OpenZFS"
+            "Performance"
         ]
     },
     {
@@ -197,9 +179,8 @@
         "correctIndex": 1,
         "explanation": "Tape Gateway emulates a Virtual Tape Library that works with existing backup applications, writing virtual tapes to S3 Glacier, eliminating the need for physical tape handling. DataSync and Glacier alone require software changes. FSx is file storage.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Storage Gateway",
-            "Tape Gateway"
+            "Cost Optimization",
+            "Storage"
         ]
     },
     {
@@ -215,9 +196,8 @@
         "correctIndex": 3,
         "explanation": "Stored Volumes maintain the full data set locally for low-latency access and upload point-in-time EBS-compatible snapshots to S3. Cached Volumes keep only the working set locally.",
         "tags": [
-            "Resilient Architectures",
-            "Storage Gateway",
-            "Volume Gateway"
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -233,9 +213,8 @@
         "correctIndex": 3,
         "explanation": "File Gateway exposes an SMB or NFS share backed by S3 and caches recently accessed files locally, providing low latency while the authoritative copy resides in S3.",
         "tags": [
-            "High-Performing Architectures",
-            "Storage Gateway",
-            "File Gateway"
+            "Performance",
+            "Storage"
         ]
     },
     {
@@ -251,9 +230,8 @@
         "correctIndex": 3,
         "explanation": "The Hardware Appliance is a ready-to-deploy server from AWS that runs file, volume, or tape gateway with built-in cache drives. It integrates with CloudWatch metrics.",
         "tags": [
-            "Operational Excellence",
-            "Storage Gateway",
-            "Appliance"
+            "DevOps & Ops",
+            "Storage"
         ]
     },
     {
@@ -269,9 +247,8 @@
         "correctIndex": 2,
         "explanation": "Transfer Family provides managed SFTP, FTPS, or FTP endpoints backed by S3 or EFS, eliminating server management. DataSync and Storage Gateway are not FTPS endpoints.",
         "tags": [
-            "Secure Architectures",
-            "Transfer Family",
-            "S3"
+            "Security",
+            "Storage"
         ]
     },
     {
@@ -287,9 +264,7 @@
         "correctIndex": 1,
         "explanation": "A custom identity provider Lambda can retrieve user credentials and IAM roles from Secrets Manager for each login. Service managed users are stored in Transfer Family. AWS SSO does not directly integrate with FTPS/SFTP. SSH keys cover SFTP public key auth only.",
         "tags": [
-            "Secure Architectures",
-            "Transfer Family",
-            "Secrets Manager"
+            "Security"
         ]
     },
     {
@@ -305,9 +280,8 @@
         "correctIndex": 3,
         "explanation": "DataSync agents run on VMware, Hyper-V, or as an EC2 AMI for on-premises transfers. Agentless transfers are possible for AWS-to-AWS. Each agent can saturate up to 10 Gbps before throttling. Snowball Edge is optional for offline moves.",
         "tags": [
-            "High-Performing Architectures",
-            "DataSync",
-            "Migration"
+            "Performance",
+            "Resilience & DR"
         ]
     },
     {
@@ -323,9 +297,8 @@
         "correctIndex": 2,
         "explanation": "DataSync supports hourly recurring tasks, transfers NFS metadata, and integrates with EFS as a target. Storage Gateway volumes are block storage. Transfer Family is interactive. Snowball is offline.",
         "tags": [
-            "Operational Excellence",
-            "DataSync",
-            "EFS"
+            "DevOps & Ops",
+            "Storage"
         ]
     },
     {
@@ -341,9 +314,7 @@
         "correctIndex": 2,
         "explanation": "DataSync agents allow specifying a maximum bandwidth to avoid saturating links. The other options do not control DataSync traffic directly.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "DataSync",
-            "Bandwidth"
+            "Cost Optimization"
         ]
     },
     {
@@ -359,9 +330,7 @@
         "correctIndex": 3,
         "explanation": "DataSync performs wire-speed transfers with built-in encryption, checksum validation, incremental copy, and automatic retries, saving operational effort vs custom rsync. It supports large files.",
         "tags": [
-            "Operational Excellence",
-            "DataSync",
-            "Validation"
+            "DevOps & Ops"
         ]
     },
     {
@@ -377,9 +346,8 @@
         "correctIndex": 2,
         "explanation": "EBS volumes can be configured with Multi-Attach (io1 or io2 Block Express) in a single AZ, and Elastic Volumes can be snapshotted and restored; however cross-AZ replication for continuous I/O is not natively built in. For automatic cross-AZ file replication, EFS or FSx Multi-AZ is used. The question focuses on block storage, making EBS the correct choice.",
         "tags": [
-            "Resilient Architectures",
-            "EBS",
-            "Block Storage"
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -395,9 +363,7 @@
         "correctIndex": 0,
         "explanation": "Scratch deployment of FSx for Lustre offers short-lived, high-performance file storage without replication, ideal for temporary processing. EFS IA and Glacier are archival. Storage Gateway adds latency.",
         "tags": [
-            "High-Performing Architectures",
-            "FSx",
-            "Lustre"
+            "Performance"
         ]
     },
     {
@@ -413,9 +379,8 @@
         "correctIndex": 2,
         "explanation": "Intelligent-Tiering Archive Instant Access offers millisecond retrieval with archive level pricing. Glacier Flexible Retrieval expedited requests cost more per retrieval. Deep Archive takes hours. Tape Gateway also relies on Deep Archive retrieval times.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "S3",
-            "Storage Classes"
+            "Cost Optimization",
+            "Storage"
         ]
     },
     {
@@ -431,9 +396,8 @@
         "correctIndex": 2,
         "explanation": "File Gateway provides low-latency local access to cached data while synchronizing the master copy to S3 Standard or other classes. DataSync is batch, not cache. Transfer Family serves over FTP. Snowball is offline.",
         "tags": [
-            "High-Performing Architectures",
-            "Storage Gateway",
-            "Hybrid"
+            "Performance",
+            "Storage"
         ]
     },
     {
@@ -442,9 +406,8 @@
         "question": "Compare cached volumes and stored volumes in AWS Storage Gateway. Include use cases, data residency, and recovery considerations.",
         "answer": "Cached volumes keep the full data set in Amazon S3, while a local gateway appliance caches the working set for low-latency access. They minimize on-prem storage requirements and are ideal for migration to cloud backed storage. Stored volumes retain the entire data set on premises for local workloads that need full-dataset latency, with asynchronous backups to S3 as EBS snapshots for disaster recovery. Recovery for cached volumes involves rehydrating cache and mounting iSCSI targets, whereas stored volumes allow quick on-prem restoration plus the option to create new EBS volumes from snapshots in AWS.",
         "tags": [
-            "Resilient Architectures",
-            "Storage Gateway",
-            "Disaster Recovery"
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -453,10 +416,8 @@
         "question": "Outline the process of using AWS DataSync together with Snowball Edge to migrate 2 PB of data when the site has intermittent connectivity.",
         "answer": "1) Order Snowball Edge Storage Optimized devices with the DataSync option enabled. 2) Deploy the devices on premises; DataSync agent pre-installed reads local NFS/SMB shares. 3) Run DataSync tasks to copy data to the Snowball locally at wire speed regardless of internet stability. 4) Ship devices back to AWS, where data is imported directly into the chosen S3 bucket or FSx/EFS. 5) After bulk migration, activate a standard DataSync agent over the WAN for incremental transfers to capture changes, ensuring minimal cut-over downtime.",
         "tags": [
-            "Resilient Architectures",
-            "DataSync",
-            "Snowball",
-            "Migration"
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -465,9 +426,7 @@
         "question": "Describe three advantages of FSx for OpenZFS over self-managed ZFS on EC2.",
         "answer": "FSx for OpenZFS is fully managed, so AWS handles patching, failover, and backups, eliminating server maintenance. It delivers consistent sub-millisecond latency and up to 1 million IOPS thanks to purpose built hardware. It supports features like automatic snapshots, data compression, and point-in-time clones exposed over NFS without the operational overhead of configuring ZFS pools and RAID on EC2.",
         "tags": [
-            "Operational Excellence",
-            "FSx",
-            "OpenZFS"
+            "DevOps & Ops"
         ]
     },
     {
@@ -476,10 +435,8 @@
         "question": "Explain how AWS Transfer Family integrates with IAM to control user access to specific S3 prefixes.",
         "answer": "Each Transfer Family user is mapped to an IAM role via a service managed or custom identity provider. The role's trust policy allows the transfer service principal and defines an S3 access policy limiting the user to a prefix with conditions such as ${transfer:UserName}. At login, Transfer Family assumes the role on behalf of the user, ensuring directory-style isolation inside the bucket without separate credentials.",
         "tags": [
-            "Secure Architectures",
-            "Transfer Family",
-            "IAM",
-            "S3"
+            "Security",
+            "Storage"
         ]
     },
     {
@@ -488,10 +445,8 @@
         "question": "What are the durability and security measures applied to data stored on an AWS Snowball Edge during transit and after ingestion into AWS?",
         "answer": "Data is encrypted with 256-bit keys managed in AWS KMS before it is written to the device. Keys never leave AWS. The appliance uses tamper evident seals and Trusted Platform Module chips. Upon return, AWS performs an erasure of the device after successful import to S3, verified via software and physical inspection. Chain-of-custody tracking and shipping logs further protect data integrity.",
         "tags": [
-            "Secure Architectures",
-            "Snowball",
-            "KMS",
-            "Encryption"
+            "Security",
+            "Storage"
         ]
     },
     {
@@ -500,11 +455,8 @@
         "question": "Provide a strategy to build a cross-platform shared file system for containers running on Amazon ECS and on-prem Kubernetes, keeping data synchronized with minimal administration.",
         "answer": "Deploy FSx for NetApp ONTAP with multi-protocol NFS and SMB support. Mount the NFS export in ECS tasks via EFS mount helper or NFS driver, and mount the same share on on-prem Kubernetes nodes over AWS Direct Connect or VPN. Use ONTAP SnapMirror or FSx File Replication for disaster recovery. ONTAP handles snapshots, tiering, and automatic growth, giving administrators a single pane of glass for both environments.",
         "tags": [
-            "High-Performing Architectures",
-            "FSx",
-            "ONTAP",
             "Containers",
-            "Hybrid"
+            "Performance"
         ]
     }
 ]

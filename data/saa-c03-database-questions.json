@@ -12,10 +12,8 @@
         "correctIndex": 2,
         "explanation": "Modifying an RDS instance to enable Multi-AZ creates a standby in a different Availability Zone and provides synchronous replication with automatic failover. Read replicas (Options 2 and 3) are designed for scaling reads, not standby-only failover, and failover between Regions is manual. Managing EC2 databases (Option 4) adds considerable operational overhead.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "High Availability",
-            "MultiAZ"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -31,10 +29,9 @@
         "correctIndex": 0,
         "explanation": "RDS Proxy manages and pools database connections, dramatically reducing the number of open connections from Lambda functions. Vertical scaling (Option 2) does not solve connection storm issues. Aurora Serverless v2 (Option 3) changes the engine and pricing model but still faces connection storms. Redis caching (Option 4) helps with read latency, not connection pooling.",
         "tags": [
-            "High-Performing Architectures",
-            "RDS",
-            "RDS Proxy",
-            "Lambda"
+            "Database",
+            "Performance",
+            "Serverless"
         ]
     },
     {
@@ -50,10 +47,8 @@
         "correctIndex": 0,
         "explanation": "Only ElastiCache for Redis supports replication, persistence (AOF or RDB), and automatic failover. Memcached lacks built-in persistence and replication, so Options 2 and 3 cannot meet the requirements. S3 with CloudFront (Option 4) is not a suitable low-latency session store.",
         "tags": [
-            "Resilient Architectures",
-            "ElastiCache",
-            "Redis",
-            "High Availability"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -69,10 +64,9 @@
         "correctIndex": 3,
         "explanation": "Aurora read replicas share the same storage layer, provide near-real-time replication, and allow offloading reads through the reader endpoint without affecting the writer. Fast cloning (Option 2) incurs additional storage on write and still requires running an extra instance. Snapshot export and Athena (Option 3) introduce data latency and extra processing steps. Scaling up the writer (Option 4) adds cost and does not isolate the workload.",
         "tags": [
-            "High-Performing Architectures",
-            "Aurora",
-            "Read Replicas",
-            "Analytics"
+            "Analytics",
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -88,10 +82,9 @@
         "correctIndex": 0,
         "explanation": "RDS automated backups capture daily snapshots and transaction logs, enabling point-in-time recovery (PITR) up to the retention period. Setting retention to 30 days satisfies the compliance need. Manual snapshots (Option 2) provide specific points, not PITR. AWS Backup (Option 3) can manage RDS backups but still relies on RDS retention settings. Changing log frequency (Option 4) is not customer-configurable.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "Backups",
-            "Compliance"
+            "Database",
+            "Governance & Compliance",
+            "Resilience & DR"
         ]
     },
     {
@@ -107,10 +100,9 @@
         "correctIndex": 3,
         "explanation": "RDS Custom for Oracle allows shell access to the underlying EC2 instance while still providing managed monitoring, backups, and patch orchestration. Standard RDS (Option 2) blocks OS access. EC2 self-managed (Option 3) loses managed maintenance. Aurora with Babelfish (Option 4) is PostgreSQL-compatible, not Oracle.",
         "tags": [
-            "Secure Architectures",
-            "RDS",
-            "RDS Custom",
-            "Migration"
+            "Database",
+            "Resilience & DR",
+            "Security"
         ]
     },
     {
@@ -126,10 +118,8 @@
         "correctIndex": 2,
         "explanation": "Aurora global database offers managed planned failover (or unplanned for disaster) that promotes a secondary Region typically in under one minute. Parameter changes (Option 2) do not trigger promotion. Snapshot restore (Option 3) is slow. Cross-replica conversions (Option 4) are not supported.",
         "tags": [
-            "Resilient Architectures",
-            "Aurora",
-            "Global Database",
-            "Disaster Recovery"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -146,10 +136,8 @@
         "correctIndex": 1,
         "explanation": "Both RDS MySQL and Aurora MySQL support native IAM database authentication. RDS Proxy with Secrets Manager (Option 3) still uses stored credentials, not temporary IAM tokens. Redis (Option 4) and DynamoDB (Option 5) are different services.",
         "tags": [
-            "Secure Architectures",
-            "RDS",
-            "Aurora",
-            "IAM"
+            "Database",
+            "Security"
         ]
     },
     {
@@ -165,9 +153,8 @@
         "correctIndex": 1,
         "explanation": "Read replicas are strictly read-only. Any attempted writes are either denied or silently discarded depending on the client driver. Replication lag (Option 2) only affects replication from the primary. Time zone (Option 3) and isolation level (Option 4) are irrelevant to write capability.",
         "tags": [
-            "High-Performing Architectures",
-            "RDS",
-            "Read Replicas"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -183,10 +170,8 @@
         "correctIndex": 3,
         "explanation": "ElastiCache for Redis supports both in-flight and at-rest encryption, replication, and automatic failover when Multi-AZ is enabled. Memcached (Option 2) lacks encryption at rest and replication. Self-managed EC2 (Option 3) requires undifferentiated heavy lifting. Cluster mode without replicas (Option 4) lacks failover.",
         "tags": [
-            "Secure Architectures",
-            "ElastiCache",
-            "Redis",
-            "Encryption"
+            "Database",
+            "Security"
         ]
     },
     {
@@ -202,10 +187,8 @@
         "correctIndex": 1,
         "explanation": "Fast database cloning uses the underlying distributed storage and copy-on-write, creating a new cluster instantly while incurring storage cost only for changed blocks. Snapshot export (Option 2) and promotion (Option 3) require full data copies. DMS (Option 4) reads and writes the entire dataset.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Aurora",
-            "Cloning",
-            "Testing"
+            "Cost Optimization",
+            "Database"
         ]
     },
     {
@@ -221,10 +204,8 @@
         "correctIndex": 3,
         "explanation": "Enabling Multi-AZ on a running RDS instance initiates snapshot creation and syncs a standby without pausing writes. There is no live re-sharding feature for RDS, and the other options are not RDS terms.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "MultiAZ",
-            "Zero Downtime"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -240,10 +221,8 @@
         "correctIndex": 3,
         "explanation": "Cross-Region read replicas replicate asynchronously in near real time and can be promoted quickly, achieving an RPO of minutes with little management. AWS Backup (Option 2) and snapshots (Option 3) have longer RPOs. DMS (Option 4) adds complexity and still depends on binlog lag.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "Disaster Recovery",
-            "Read Replicas"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -259,10 +238,9 @@
         "correctIndex": 3,
         "explanation": "Aurora Serverless v2 adds or removes fractionally sized compute capacity on demand without connection interruptions. Provisioned Aurora uses fixed instance sizes. Storage auto-growth exists in both models, and provisioned charges for instance uptime, not actual usage.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Aurora",
-            "Serverless",
-            "Autoscaling"
+            "Cost Optimization",
+            "Database",
+            "Serverless"
         ]
     },
     {
@@ -278,9 +256,8 @@
         "correctIndex": 2,
         "explanation": "S3 is purpose-built for object storage and offers lower cost, infinite scalability, and native durability. Storing large binaries in the database is inefficient. Aurora (Option 2) and compression (Option 3) still keep data in the database. Auto-scaling (Option 4) only postpones cost issues.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "S3",
-            "RDS",
+            "Cost Optimization",
+            "Database",
             "Storage"
         ]
     },
@@ -297,9 +274,8 @@
         "correctIndex": 3,
         "explanation": "Write-through updates the cache whenever the database is updated, keeping cache entries fresh but adding latency to write operations. Lazy loading (Option 2) may return stale data. High TTL (Option 3) increases staleness risk. Negative caching (Option 4) is unrelated to freshness.",
         "tags": [
-            "High-Performing Architectures",
-            "ElastiCache",
-            "Caching Patterns"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -315,10 +291,8 @@
         "correctIndex": 1,
         "explanation": "RDS encryption requires restoring from an encrypted snapshot. There is no in-place toggle for existing clusters. Parameter groups (Option 3) and TDE settings (Option 4) do not encrypt storage.",
         "tags": [
-            "Secure Architectures",
-            "Aurora",
-            "Encryption",
-            "KMS"
+            "Database",
+            "Security"
         ]
     },
     {
@@ -335,10 +309,8 @@
         "correctIndex": 3,
         "explanation": "Failover priority tiering promotes the highest priority replica quickly. RDS Proxy keeps connections warm, reducing application recovery time. Read replicas (Option 1) help but are not a feature pair; only one answer is needed. Cross-Region snapshots (Option 4) and Backtrack (Option 5) do not affect immediate failover.",
         "tags": [
-            "Resilient Architectures",
-            "Aurora",
-            "Failover",
-            "RDS Proxy"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -354,10 +326,9 @@
         "correctIndex": 0,
         "explanation": "RDS audit or error logs record failed login attempts and can be exported to CloudWatch Logs for centralized monitoring. AWS Config (Option 2) tracks configuration, not logins. VPC Flow Logs (Option 3) capture network metadata, not authentication context. Contributor Insights (Option 4) analyzes query patterns, not failed logins.",
         "tags": [
-            "Secure Architectures",
-            "RDS",
-            "CloudWatch",
-            "Logging"
+            "Database",
+            "Monitoring & Logging",
+            "Security"
         ]
     },
     {
@@ -373,10 +344,8 @@
         "correctIndex": 3,
         "explanation": "Redis with AOF persistence and Multi-AZ delivers in-memory performance, durability, and automatic failover. DynamoDB + DAX (Option 2) offers low latency but eventual consistency with DAX and higher cost for leaderboard sorting. RDS MySQL (Option 3) cannot reach sub-millisecond latency. Neptune (Option 4) is a graph database, not optimized for leaderboard queries.",
         "tags": [
-            "High-Performing Architectures",
-            "ElastiCache",
-            "Redis",
-            "Latency"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -392,10 +361,9 @@
         "correctIndex": 2,
         "explanation": "VPC peering provides private IP connectivity between VPCs in the same Region. Subnet placement (Option 2) is impossible across VPCs. NAT Gateway (Option 3) is for outbound internet access. Direct Connect (Option 4) is for on-premises connectivity.",
         "tags": [
-            "High-Performing Architectures",
-            "VPC",
-            "RDS",
-            "Networking"
+            "Database",
+            "Performance",
+            "VPC & Networking"
         ]
     },
     {
@@ -411,10 +379,9 @@
         "correctIndex": 1,
         "explanation": "Aurora Serverless v2 scales compute on demand in fine-grained increments and bills per second, ideal for spiky workloads. Reserved instances (Option 2) are cost-effective only for steady usage. Provisioned Aurora (Option 3) incurs constant instance cost. EC2 self-managed (Option 4) adds overhead and slower scaling.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "Aurora",
-            "Serverless",
-            "Autoscaling"
+            "Cost Optimization",
+            "Database",
+            "Serverless"
         ]
     },
     {
@@ -430,10 +397,9 @@
         "correctIndex": 1,
         "explanation": "Restoring a manual snapshot to a new instance isolates analytics from production and does not interfere with automated backups. Pausing backups (Option 2) breaks compliance. Backtrack (Option 3) works only for Aurora. Glue (Option 4) still queries live production.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "Snapshots",
-            "Analytics"
+            "Analytics",
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -449,10 +415,7 @@
         "correctIndex": 0,
         "explanation": "RDS Custom permits SSH access for customized OS changes. Standard RDS blocks OS access. All other features are available in both offerings.",
         "tags": [
-            "Secure Architectures",
-            "RDS Custom",
-            "Customization",
-            "Operations"
+            "Security"
         ]
     },
     {
@@ -468,10 +431,8 @@
         "correctIndex": 3,
         "explanation": "The reader endpoint automatically distributes incoming connections across available replicas for read scaling. Cluster endpoint (Option 2) points to the writer. Writer and instance endpoints (Options 3 and 4) map to specific instances.",
         "tags": [
-            "High-Performing Architectures",
-            "Aurora",
-            "Read Replicas",
-            "Load Balancing"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -480,10 +441,9 @@
         "question": "Explain how the Aurora storage layer achieves durability and fault tolerance without requiring traditional RAID configurations.",
         "answer": "Aurora decouples compute from storage. Every cluster stores six copies of each data block across three Availability Zones, with two copies in each AZ. Writes are considered durable when at least four of the six copies acknowledge the write, and reads require three of six. Peer-to-peer replication and continuous scrubbing detect and repair bad blocks automatically. This distributed, quorum-based model removes the need for RAID on a single node and provides high durability and availability even if an entire AZ or multiple volumes fail.",
         "tags": [
-            "Resilient Architectures",
-            "Aurora",
-            "Storage",
-            "Durability"
+            "Database",
+            "Resilience & DR",
+            "Storage"
         ]
     },
     {
@@ -492,10 +452,8 @@
         "question": "Describe the differences between RDS Multi-AZ deployments and read replicas, focusing on use cases, replication type, and failover behavior.",
         "answer": "Multi-AZ deployments provide high availability for writes. A synchronous replica is created in a different Availability Zone. The standby cannot serve traffic, but automatic failover to the standby occurs transparently via the same DNS name if the primary fails. Read replicas are designed for read scaling and disaster recovery. Replication is asynchronous, so replicas are eventually consistent. They can serve read traffic and can be promoted manually to a standalone primary. However, promotion involves a DNS or connection string change and possible data loss equal to the replication lag at promotion time.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "MultiAZ",
-            "Read Replicas"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -504,10 +462,7 @@
         "question": "What advantages does RDS Proxy provide during a database failover event compared to connecting directly to the database endpoint?",
         "answer": "RDS Proxy maintains a pool of persistent connections to the database. When a failover occurs, the proxy automatically redirects traffic to the new instance without waiting for clients to refresh DNS. Existing client sessions stay open because they connect to the proxy endpoint, not directly to the database. The proxy also reduces cold-start latency by reusing existing authenticated connections, leading to faster application recovery and fewer connection errors during failover.",
         "tags": [
-            "Resilient Architectures",
-            "RDS Proxy",
-            "Failover",
-            "Connection Pooling"
+            "Resilience & DR"
         ]
     },
     {
@@ -516,10 +471,9 @@
         "question": "Outline a cost-optimized disaster recovery strategy for an RDS PostgreSQL production database that must meet an RPO of 15 minutes and an RTO of 8 hours.",
         "answer": "Implement a cross-Region read replica in a smaller, cost-effective instance class. Because replication lag is typically well below 15 minutes, the RPO is satisfied. During normal operations the replica is stopped outside business hours (up to seven days at a time) to reduce cost, then started daily via an automation script. Automated backups are retained in both Regions. If disaster strikes, start the replica (if stopped), promote it to primary, grow instance size as needed, and point applications to the new endpoint. This meets the 8-hour RTO while keeping standby costs low.",
         "tags": [
-            "Cost-Optimized Architectures",
-            "RDS",
-            "Disaster Recovery",
-            "Read Replicas"
+            "Cost Optimization",
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -528,10 +482,8 @@
         "question": "Explain how IAM database authentication improves security posture compared to traditional username and password methods in RDS MySQL.",
         "answer": "IAM authentication replaces static passwords with short-lived authentication tokens generated through AWS Security Token Service. Users and applications assume an IAM role and request a signed token valid for 15 minutes. Because tokens are ephemeral, there is no long-term secret to rotate or compromise. Access can be centrally managed through IAM policies and revoked immediately. This reduces credential leakage risks, simplifies rotation, and supports fine-grained, audited access control across the AWS account.",
         "tags": [
-            "Secure Architectures",
-            "RDS",
-            "IAM",
-            "Authentication"
+            "Database",
+            "Security"
         ]
     },
     {
@@ -547,10 +499,8 @@
         "correctIndex": 3,
         "explanation": "RDS Multi-AZ maintains a single DNS endpoint. During failover, AWS remaps that endpoint to the new primary, so applications continue using the same connection string without changes. Standby instances do not present separate writable endpoints.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "MultiAZ",
-            "Endpoints"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -566,10 +516,8 @@
         "correctIndex": 2,
         "explanation": "The reader endpoint abstracts the list of Aurora Replicas and spreads connections among them, providing a single host name for scalable reads.",
         "tags": [
-            "High-Performing Architectures",
-            "Aurora",
-            "Read Replicas",
-            "Endpoints"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -585,10 +533,8 @@
         "correctIndex": 3,
         "explanation": "In standard RDS (non-Aurora), each DB instance\u2014including the primary\u2014has its own endpoint. Only the primary endpoint accepts writes; replicas are read-only and have separate endpoints. RDS does not provide cluster-level writer or reader endpoints outside Aurora.",
         "tags": [
-            "High-Performing Architectures",
-            "RDS",
-            "Read Replicas",
-            "Connection Strings"
+            "Database",
+            "Performance"
         ]
     },
     {
@@ -604,10 +550,8 @@
         "correctIndex": 3,
         "explanation": "Each Aurora cluster exposes one writer endpoint. Blue-green can be achieved by creating a new cluster (green), then swapping the DNS CNAME so the writer endpoint in Route 53 now targets the green cluster, requiring no code change\u2014just an update to DNS.",
         "tags": [
-            "Resilient Architectures",
-            "Aurora",
-            "Endpoints",
-            "Blue-Green Deployment"
+            "Database",
+            "Resilience & DR"
         ]
     },
     {
@@ -616,11 +560,8 @@
         "question": "Compare the endpoint architecture of standard Amazon RDS versus Amazon Aurora. Highlight how connection strings differ for write and read workloads and how this affects failover handling.",
         "answer": "Standard RDS exposes one endpoint per DB instance. The primary instance endpoint handles reads and writes, while each read replica has its own read-only endpoint. During a Multi-AZ failover, AWS remaps the single primary endpoint to the new primary, so applications keep the same connection string. Aurora introduces additional abstraction: a cluster (writer) endpoint that always targets the current writer, a reader endpoint that load-balances across all replicas, and individual instance endpoints for fine-grained connections. Because the writer and reader endpoints are stable DNS hostnames, applications don\u2019t need to track instance IDs\u2014failover within the cluster is transparent, and scaling reads simply adds replicas behind the same reader endpoint.",
         "tags": [
-            "Resilient Architectures",
-            "RDS",
-            "Aurora",
-            "Endpoints",
-            "Connection Strings"
+            "Database",
+            "Resilience & DR"
         ]
     }
 ]
